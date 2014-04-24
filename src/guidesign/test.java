@@ -8,7 +8,7 @@ package guidesign;
 
 /**
  *
- * @author Zoracka
+ * aa
  */
 public class test {
     
