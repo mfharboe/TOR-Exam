@@ -11,5 +11,9 @@ package guidesign;
  * @author Zoracka
  */
 public class test {
+    private String davs(){
+        return null;
+        
+    }
     
 }
