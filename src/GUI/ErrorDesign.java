@@ -2,18 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package guidesign;
+package GUI;
 
 /**
  *
  * @author Morten
  */
-public class fejlDesign extends javax.swing.JFrame {
+public class ErrorDesign extends javax.swing.JFrame {
 
     /**
      * Creates new form fejlDesign
      */
-    public fejlDesign() {
+    public ErrorDesign() {
         initComponents();
     }
 
@@ -97,7 +97,7 @@ public class fejlDesign extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(20, 30, 440, 190);
         jPanel1.add(jPanel5);
-        jPanel5.setBounds(140, 540, 100, 100);
+        jPanel5.setBounds(140, 540, 10, 10);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fejl/Mangler", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel6.setLayout(null);
@@ -150,20 +150,20 @@ public class fejlDesign extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fejlDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fejlDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fejlDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fejlDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fejlDesign().setVisible(true);
+                new ErrorDesign().setVisible(true);
             }
         });
     }
