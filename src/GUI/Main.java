@@ -4,16 +4,19 @@
  */
 package GUI;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Morten
  */
-public class GUIDesign {
+public class Main {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        JFrame main = new GUIFireman();
+        main.setVisible(true);
     }
 }

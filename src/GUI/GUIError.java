@@ -8,12 +8,12 @@ package GUI;
  *
  * @author Morten
  */
-public class ErrorDesign extends javax.swing.JFrame {
+public class GUIError extends javax.swing.JFrame {
 
     /**
      * Creates new form fejlDesign
      */
-    public ErrorDesign() {
+    public GUIError() {
         initComponents();
     }
 
@@ -45,12 +45,13 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtCause = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fejl Rapport", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        jPanel1.setLayout(null);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel2.setLayout(null);
@@ -94,11 +95,6 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel2.add(jLabel1);
         jLabel1.setBounds(250, 150, 70, 23);
 
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(20, 30, 440, 190);
-        jPanel1.add(jPanel5);
-        jPanel5.setBounds(140, 540, 10, 10);
-
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fejl/Mangler", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel6.setLayout(null);
 
@@ -109,9 +105,6 @@ public class ErrorDesign extends javax.swing.JFrame {
 
         jPanel6.add(jScrollPane1);
         jScrollPane1.setBounds(10, 20, 420, 190);
-
-        jPanel1.add(jPanel6);
-        jPanel6.setBounds(20, 230, 440, 220);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evt. Årsag", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel7.setLayout(null);
@@ -124,11 +117,43 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel7.add(jScrollPane2);
         jScrollPane2.setBounds(10, 20, 420, 190);
 
-        jPanel1.add(jPanel7);
-        jPanel7.setBounds(20, 450, 440, 220);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 10, 470, 680);
+
+        jButton1.setText("Fortryd");
+        getContentPane().add(jButton1);
+        jButton1.setBounds(290, 690, 80, 40);
+
+        jButton3.setText("OK");
+        getContentPane().add(jButton3);
+        jButton3.setBounds(380, 690, 80, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -150,20 +175,20 @@ public class ErrorDesign extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIError.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIError.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIError.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ErrorDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIError.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ErrorDesign().setVisible(true);
+                new GUIError().setVisible(true);
             }
         });
     }
@@ -171,6 +196,8 @@ public class ErrorDesign extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkOutOfOrder;
     private javax.swing.JCheckBox chkUrgent;
     private javax.swing.JComboBox cmbVehicle;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
