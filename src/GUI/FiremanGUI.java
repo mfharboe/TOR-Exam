@@ -28,33 +28,33 @@ public class FiremanGUI extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        lstManpower = new javax.swing.JList();
         jPanel6 = new javax.swing.JPanel();
-        jComboBox4 = new javax.swing.JComboBox();
-        jTextField2 = new javax.swing.JTextField();
+        cmbVehicle = new javax.swing.JComboBox();
+        txtManHours = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        btnCH = new javax.swing.JButton();
+        btnST = new javax.swing.JButton();
+        btnBM = new javax.swing.JButton();
+        btnHL = new javax.swing.JButton();
+        lblImage = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtIncidentTime = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox3 = new javax.swing.JComboBox();
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtIncidentName = new javax.swing.JTextField();
+        cmbIncidentType = new javax.swing.JComboBox();
+        cmbIncident = new javax.swing.JComboBox();
+        lblLogo = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        btnTeamLeader = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        tblAttendance = new javax.swing.JTable();
+        btnError = new javax.swing.JButton();
+        btnFiresuit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(null);
@@ -63,12 +63,12 @@ public class FiremanGUI extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mandskab", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel3.setLayout(null);
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
+        lstManpower.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Michael", "Andreas", "Morten" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(lstManpower);
 
         jPanel3.add(jScrollPane2);
         jScrollPane2.setBounds(20, 40, 240, 430);
@@ -76,32 +76,32 @@ public class FiremanGUI extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Min Indsats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel6.setLayout(null);
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Køretøj..." }));
-        jPanel6.add(jComboBox4);
-        jComboBox4.setBounds(20, 40, 180, 40);
+        cmbVehicle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Køretøj..." }));
+        jPanel6.add(cmbVehicle);
+        cmbVehicle.setBounds(20, 40, 180, 40);
 
-        jTextField2.setText("Antal Timer...");
-        jPanel6.add(jTextField2);
-        jTextField2.setBounds(20, 100, 180, 40);
+        txtManHours.setText("Antal Timer...");
+        jPanel6.add(txtManHours);
+        txtManHours.setBounds(20, 100, 180, 40);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Funktion"));
         jPanel1.setLayout(null);
 
-        jButton3.setText("CH");
-        jPanel1.add(jButton3);
-        jButton3.setBounds(100, 20, 80, 40);
+        btnCH.setText("CH");
+        jPanel1.add(btnCH);
+        btnCH.setBounds(100, 20, 80, 40);
 
-        jButton4.setText("ST");
-        jPanel1.add(jButton4);
-        jButton4.setBounds(10, 20, 80, 40);
+        btnST.setText("ST");
+        jPanel1.add(btnST);
+        btnST.setBounds(10, 20, 80, 40);
 
-        jButton8.setText("BM");
-        jPanel1.add(jButton8);
-        jButton8.setBounds(10, 70, 80, 40);
+        btnBM.setText("BM");
+        jPanel1.add(btnBM);
+        btnBM.setBounds(10, 70, 80, 40);
 
-        jButton7.setText("HL");
-        jPanel1.add(jButton7);
-        jButton7.setBounds(100, 70, 80, 40);
+        btnHL.setText("HL");
+        jPanel1.add(btnHL);
+        btnHL.setBounds(100, 70, 80, 40);
 
         jPanel6.add(jPanel1);
         jPanel1.setBounds(10, 160, 190, 120);
@@ -109,11 +109,11 @@ public class FiremanGUI extends javax.swing.JFrame {
         jPanel3.add(jPanel6);
         jPanel6.setBounds(270, 180, 210, 290);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Foto");
-        jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel3.add(jLabel2);
-        jLabel2.setBounds(270, 40, 210, 130);
+        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImage.setText("Foto");
+        lblImage.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel3.add(lblImage);
+        lblImage.setBounds(270, 40, 210, 130);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(20, 230, 490, 480);
@@ -126,9 +126,9 @@ public class FiremanGUI extends javax.swing.JFrame {
         jPanel4.add(jLabel5);
         jLabel5.setBounds(330, 100, 30, 22);
 
-        jTextField3.setText("14.42");
-        jPanel4.add(jTextField3);
-        jTextField3.setBounds(360, 90, 110, 40);
+        txtIncidentTime.setText("14.42");
+        jPanel4.add(txtIncidentTime);
+        txtIncidentTime.setBounds(360, 90, 110, 40);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Dato");
@@ -137,40 +137,40 @@ public class FiremanGUI extends javax.swing.JFrame {
         jPanel4.add(jDateChooser1);
         jDateChooser1.setBounds(200, 90, 120, 40);
 
-        jTextField4.setText("Torvegade 45, 6700 Esbjerg");
-        jPanel4.add(jTextField4);
-        jTextField4.setBounds(20, 40, 450, 40);
+        txtIncidentName.setText("Torvegade 45, 6700 Esbjerg");
+        jPanel4.add(txtIncidentName);
+        txtIncidentName.setBounds(20, 40, 450, 40);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Indsats" }));
-        jPanel4.add(jComboBox3);
-        jComboBox3.setBounds(20, 90, 120, 40);
+        cmbIncidentType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Indsats" }));
+        jPanel4.add(cmbIncidentType);
+        cmbIncidentType.setBounds(20, 90, 120, 40);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Anden Indsats..." }));
-        jPanel4.add(jComboBox1);
-        jComboBox1.setBounds(20, 140, 450, 40);
+        cmbIncident.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Anden Indsats..." }));
+        jPanel4.add(cmbIncident);
+        cmbIncident.setBounds(20, 140, 450, 40);
 
         getContentPane().add(jPanel4);
         jPanel4.setBounds(20, 20, 490, 200);
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 72)); // NOI18N
-        jLabel1.setText("LOGO");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(870, 80, 340, 70);
+        lblLogo.setFont(new java.awt.Font("Calibri", 0, 72)); // NOI18N
+        lblLogo.setText("LOGO");
+        getContentPane().add(lblLogo);
+        lblLogo.setBounds(740, 80, 340, 70);
 
-        jButton5.setText("Gem & Afslut Indsats");
-        getContentPane().add(jButton5);
-        jButton5.setBounds(1090, 720, 160, 40);
+        btnSave.setText("Gem & Afslut Indsats");
+        getContentPane().add(btnSave);
+        btnSave.setBounds(1090, 720, 160, 40);
 
-        jButton2.setText("Hold Leder");
-        getContentPane().add(jButton2);
-        jButton2.setBounds(390, 720, 110, 40);
+        btnTeamLeader.setText("Hold Leder");
+        getContentPane().add(btnTeamLeader);
+        btnTeamLeader.setBounds(390, 720, 110, 40);
         getContentPane().add(jPanel2);
         jPanel2.setBounds(520, 250, 10, 10);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fremmødeliste", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel5.setLayout(null);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAttendance.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -181,7 +181,7 @@ public class FiremanGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        jScrollPane3.setViewportView(tblAttendance);
 
         jPanel5.add(jScrollPane3);
         jScrollPane3.setBounds(10, 40, 720, 430);
@@ -189,13 +189,13 @@ public class FiremanGUI extends javax.swing.JFrame {
         getContentPane().add(jPanel5);
         jPanel5.setBounds(520, 230, 740, 480);
 
-        jButton1.setText("Fejl & Mangler");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(240, 720, 130, 40);
+        btnError.setText("Fejl & Mangler");
+        getContentPane().add(btnError);
+        btnError.setBounds(240, 720, 130, 40);
 
-        jButton6.setText("Send Brandragt til Vask");
-        getContentPane().add(jButton6);
-        jButton6.setBounds(40, 720, 180, 40);
+        btnFiresuit.setText("Send Brandragt til Vask");
+        getContentPane().add(btnFiresuit);
+        btnFiresuit.setBounds(40, 720, 180, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -235,23 +235,20 @@ public class FiremanGUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JButton btnBM;
+    private javax.swing.JButton btnCH;
+    private javax.swing.JButton btnError;
+    private javax.swing.JButton btnFiresuit;
+    private javax.swing.JButton btnHL;
+    private javax.swing.JButton btnST;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnTeamLeader;
+    private javax.swing.JComboBox cmbIncident;
+    private javax.swing.JComboBox cmbIncidentType;
+    private javax.swing.JComboBox cmbVehicle;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -260,9 +257,12 @@ public class FiremanGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lblImage;
+    private javax.swing.JLabel lblLogo;
+    private javax.swing.JList lstManpower;
+    private javax.swing.JTable tblAttendance;
+    private javax.swing.JTextField txtIncidentName;
+    private javax.swing.JTextField txtIncidentTime;
+    private javax.swing.JTextField txtManHours;
     // End of variables declaration//GEN-END:variables
 }

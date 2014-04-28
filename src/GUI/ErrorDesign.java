@@ -30,21 +30,21 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtFilledName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jComboBox1 = new javax.swing.JComboBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        cmbVehicle = new javax.swing.JComboBox();
+        chkOutOfOrder = new javax.swing.JCheckBox();
+        chkUrgent = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtErrorDescription = new javax.swing.JTextArea();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        txtCause = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -62,9 +62,9 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Udfyld af"));
         jPanel4.setLayout(null);
 
-        jTextField1.setText("Michael Pedersen");
-        jPanel4.add(jTextField1);
-        jTextField1.setBounds(10, 30, 220, 40);
+        txtFilledName.setText("Michael Pedersen");
+        jPanel4.add(txtFilledName);
+        txtFilledName.setBounds(10, 30, 220, 40);
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("Dato");
@@ -76,13 +76,13 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel2.add(jPanel4);
         jPanel4.setBounds(10, 10, 420, 80);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Køretøj..." }));
-        jPanel2.add(jComboBox1);
-        jComboBox1.setBounds(20, 100, 220, 40);
-        jPanel2.add(jCheckBox3);
-        jCheckBox3.setBounds(400, 110, 30, 25);
-        jPanel2.add(jCheckBox1);
-        jCheckBox1.setBounds(400, 150, 30, 30);
+        cmbVehicle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Køretøj..." }));
+        jPanel2.add(cmbVehicle);
+        cmbVehicle.setBounds(20, 100, 220, 40);
+        jPanel2.add(chkOutOfOrder);
+        chkOutOfOrder.setBounds(400, 110, 30, 25);
+        jPanel2.add(chkUrgent);
+        chkUrgent.setBounds(400, 150, 30, 30);
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel2.setText("Ude Af Drift");
@@ -102,10 +102,10 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fejl/Mangler", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel6.setLayout(null);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("davs med dig\ndavs davs\n");
-        jScrollPane1.setViewportView(jTextArea1);
+        txtErrorDescription.setColumns(20);
+        txtErrorDescription.setRows(5);
+        txtErrorDescription.setText("davs med dig\ndavs davs\n");
+        jScrollPane1.setViewportView(txtErrorDescription);
 
         jPanel6.add(jScrollPane1);
         jScrollPane1.setBounds(10, 20, 420, 190);
@@ -116,10 +116,10 @@ public class ErrorDesign extends javax.swing.JFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evt. Årsag", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel7.setLayout(null);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jTextArea2.setText("davs med dig\ndavs davs\n");
-        jScrollPane2.setViewportView(jTextArea2);
+        txtCause.setColumns(20);
+        txtCause.setRows(5);
+        txtCause.setText("davs med dig\ndavs davs\n");
+        jScrollPane2.setViewportView(txtCause);
 
         jPanel7.add(jScrollPane2);
         jScrollPane2.setBounds(10, 20, 420, 190);
@@ -168,9 +168,9 @@ public class ErrorDesign extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JCheckBox chkOutOfOrder;
+    private javax.swing.JCheckBox chkUrgent;
+    private javax.swing.JComboBox cmbVehicle;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -184,8 +184,8 @@ public class ErrorDesign extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea txtCause;
+    private javax.swing.JTextArea txtErrorDescription;
+    private javax.swing.JTextField txtFilledName;
     // End of variables declaration//GEN-END:variables
 }
