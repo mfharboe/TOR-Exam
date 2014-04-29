@@ -105,4 +105,8 @@ public class BEVehicle {
         this.m_isReady = m_isReady;
     }
     
+    public String toString(){
+        return "" + m_odinNumber;
+    }
+    
 }

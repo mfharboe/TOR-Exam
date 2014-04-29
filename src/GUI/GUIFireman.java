@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import BE.BEFireman;
+import BE.BEIncident;
+import BE.BEIncidentType;
+import BE.BEVehicle;
+import BLL.BLLFireman;
+import javax.swing.DefaultListModel;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
@@ -12,10 +18,40 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  */
 public class GUIFireman extends javax.swing.JFrame {
 
+    DefaultListModel<BEFireman> firemanListModel;
     
     public GUIFireman() {
         initComponents();
+        initializeSettings();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+    
+    private void initializeSettings(){
+        firemanListModel = new DefaultListModel<>();
+        lstManpower.setModel(firemanListModel);
+        fillFiremanList();
+        fillVehicleCombo();
+        fillIncidentTypeCombo();
+        fillIncidentCombo();
+    }
+    
+    private void fillFiremanList(){
+        for(BEFireman befireman : BLLFireman.getInstance().readAllFiremen())
+            firemanListModel.addElement(befireman);      
+    }
+    private void fillVehicleCombo(){
+        for(BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles())
+            cmbVehicle.addItem(bevehicle);
+    }
+    
+    private void fillIncidentTypeCombo(){
+        for(BEIncidentType beincidenttype : BLLFireman.getInstance().readAllIncidentTypes())
+            cmbIncidentType.addItem(beincidenttype);
+    }
+    
+    private void fillIncidentCombo(){
+        for(BEIncident beincident : BLLFireman.getInstance().readAllIncidents())
+            cmbIncident.addItem(beincident);
     }
 
     
@@ -133,7 +169,7 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel4.add(txtIncidentName);
         txtIncidentName.setBounds(20, 40, 450, 40);
 
-        cmbIncidentType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Indsats" }));
+        cmbIncidentType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Type..." }));
         jPanel4.add(cmbIncidentType);
         cmbIncidentType.setBounds(20, 90, 120, 40);
 

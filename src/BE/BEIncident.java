@@ -135,4 +135,8 @@ public class BEIncident {
     public void setM_isDone(boolean m_isDone) {
         this.m_isDone = m_isDone;
     }
+    
+    public String toString(){
+        return m_incidentName;
+    }
 }

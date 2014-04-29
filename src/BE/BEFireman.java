@@ -183,5 +183,10 @@ public class BEFireman {
     public void setM_cpr(String m_cpr) {
         this.m_cpr = m_cpr;
     }
+    
+    @Override
+    public String toString(){
+        return m_lastName +", "+ m_firstName; 
+    }
               
 }

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class DALRead {
 
@@ -69,7 +70,7 @@ public class DALRead {
             int id = result.getInt("id");
             String incidentName = result.getString("incidentName");
             Date date = result.getDate("date");
-            Time time = result.getTime("time");
+            Time time = result.getTime("startTime");
             int incidentTypeId = result.getInt("incidentTypeId");
             BEIncidentType refIncidentType = null;
             for (BEIncidentType beincidenttype : incidentType) {
@@ -109,11 +110,11 @@ public class DALRead {
         return res;
     }
 
-    public ArrayList<BEFireman> readFiremen() throws SQLException {
+    public ArrayList readFiremen() throws SQLException {
         ArrayList<BEFireman> res = new ArrayList<>();
         ArrayList<BEZipcode> zipcode = readZipcodes();
         Statement stm = m_connection.createStatement();
-        stm.execute("select * from Fireman");
+        stm.execute("select * from Fireman order by lastName, firstname");
         ResultSet result = stm.getResultSet();
         while (result.next()) {
             int id = result.getInt("id");
