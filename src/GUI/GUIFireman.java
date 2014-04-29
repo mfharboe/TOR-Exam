@@ -9,6 +9,9 @@ import BE.BEIncident;
 import BE.BEIncidentType;
 import BE.BEVehicle;
 import BLL.BLLFireman;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
@@ -21,11 +24,14 @@ public class GUIFireman extends javax.swing.JFrame {
     DefaultListModel<BEFireman> firemanListModel;
     
     public GUIFireman() {
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
         initializeSettings();
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
+    /**
+     * THe initial settings for this class
+     */
     private void initializeSettings(){
         firemanListModel = new DefaultListModel<>();
         lstManpower.setModel(firemanListModel);
@@ -33,28 +39,68 @@ public class GUIFireman extends javax.swing.JFrame {
         fillVehicleCombo();
         fillIncidentTypeCombo();
         fillIncidentCombo();
+        addListeners();
     }
     
+    /**
+     * Adds Listeners to all buttons, comboboxes, etc.
+     */
+    private void addListeners(){
+        cmbAction cmb = new cmbAction();
+        cmbIncident.addItemListener(cmb);
+    }
+    /**
+     * Fills Up Fireman ComboBox
+     */
     private void fillFiremanList(){
         for(BEFireman befireman : BLLFireman.getInstance().readAllFiremen())
             firemanListModel.addElement(befireman);      
     }
+    /**
+     * Fills Up the Vehicle ComboBox
+     */
     private void fillVehicleCombo(){
         for(BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles())
             cmbVehicle.addItem(bevehicle);
     }
-    
+    /**
+     * Fills Up the IncidentType ComboBox
+     */
     private void fillIncidentTypeCombo(){
         for(BEIncidentType beincidenttype : BLLFireman.getInstance().readAllIncidentTypes())
             cmbIncidentType.addItem(beincidenttype);
     }
-    
+    /**
+     * Fills up the Incident ComboBox
+     */
     private void fillIncidentCombo(){
         for(BEIncident beincident : BLLFireman.getInstance().readAllIncidents())
             cmbIncident.addItem(beincident);
     }
-
     
+    /**
+     * Invokes this method when the Incident ComboBox changes values
+     */
+    private void onComboChange(){
+        if(cmbIncident.getSelectedIndex() != 0){
+            BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
+            txtIncidentName.setText(selected.getM_incidentName());
+            dateChooser.setDate(selected.getM_date());
+            txtIncidentTime.setText("" + selected.getM_time());
+            cmbIncidentType.setSelectedItem(selected.getM_incidentType());
+        }
+    }
+
+    /**
+     * Listener for the Incident ComboBox
+     */
+    private class cmbAction implements ItemListener{
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            onComboChange();
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -75,7 +121,7 @@ public class GUIFireman extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtIncidentTime = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dateChooser = new com.toedter.calendar.JDateChooser();
         txtIncidentName = new javax.swing.JTextField();
         cmbIncidentType = new javax.swing.JComboBox();
         cmbIncident = new javax.swing.JComboBox();
@@ -162,8 +208,10 @@ public class GUIFireman extends javax.swing.JFrame {
         jLabel7.setText("Dato");
         jPanel4.add(jLabel7);
         jLabel7.setBounds(150, 100, 50, 22);
-        jPanel4.add(jDateChooser1);
-        jDateChooser1.setBounds(200, 90, 120, 40);
+
+        dateChooser.setDateFormatString("yyyy-MM-dd");
+        jPanel4.add(dateChooser);
+        dateChooser.setBounds(200, 90, 120, 40);
 
         txtIncidentName.setText("Torvegade 45, 6700 Esbjerg");
         jPanel4.add(txtIncidentName);
@@ -271,7 +319,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbIncident;
     private javax.swing.JComboBox cmbIncidentType;
     private javax.swing.JComboBox cmbVehicle;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
