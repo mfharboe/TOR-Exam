@@ -9,23 +9,20 @@ package BE;
  * @author Morten
  */
 public class BERoleTime {
-    
+
     private BEFireman m_fireman;
     private BEIncident m_incident;
     private BERole m_role;
     private BEVehicle m_vehicle;
     private int m_hours;
-    private boolean m_isDone;
-    
-    
-    public BERoleTime(BEFireman fireman, BEIncident incident, BERole role, BEVehicle vehicle, int hours, boolean isdone){
+
+    public BERoleTime(BEFireman fireman, BEIncident incident, BERole role, BEVehicle vehicle, int hours) {
         m_fireman = fireman;
         m_incident = incident;
         m_role = role;
         m_vehicle = vehicle;
         m_hours = hours;
-        m_isDone = isdone;
-        
+
     }
 
     /**
@@ -97,19 +94,4 @@ public class BERoleTime {
     public void setM_hours(int m_hours) {
         this.m_hours = m_hours;
     }
-
-    /**
-     * @return the m_isDone
-     */
-    public boolean isM_isDone() {
-        return m_isDone;
-    }
-
-    /**
-     * @param m_isDone the m_isDone to set
-     */
-    public void setM_isDone(boolean m_isDone) {
-        this.m_isDone = m_isDone;
-    }
-    
 }

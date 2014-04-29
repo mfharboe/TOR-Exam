@@ -1,25 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package BE;
 
-/**
- *
- * @author Morten
- */
 public class BEFireman {
     
     private int m_id;
     private String m_firstName;
     private String m_lastName;
     private String m_address;
-    private int m_zipCode;
+    private BEZipcode m_zipCode;
     private int m_phone;
     private int m_paymentNumber;
     private boolean m_isTeamLeader;
     private String m_photoPath;
-    private int m_cpr;
+    private String m_cpr;
     
     
     /**
@@ -35,8 +28,8 @@ public class BEFireman {
      * @param photopath
      * @param cpr 
      */
-    public BEFireman(int id, String firstname, String lastname, String address, int zipcode,
-            int phone, int paymentnumber, boolean isteamleader, String photopath, int cpr){
+    public BEFireman(int id, String firstname, String lastname, String address, BEZipcode zipcode,
+            int phone, int paymentnumber, boolean isteamleader, String photopath, String cpr){
         
         m_id = id;
         m_firstName = firstname;
@@ -108,20 +101,6 @@ public class BEFireman {
     }
 
     /**
-     * @return the m_zipCode
-     */
-    public int getM_zipCode() {
-        return m_zipCode;
-    }
-
-    /**
-     * @param m_zipCode the m_zipCode to set
-     */
-    public void setM_zipCode(int m_zipCode) {
-        this.m_zipCode = m_zipCode;
-    }
-
-    /**
      * @return the m_phone
      */
     public int getM_phone() {
@@ -178,18 +157,31 @@ public class BEFireman {
     }
 
     /**
+     * @return the m_zipCode
+     */
+    public BEZipcode getM_zipCode() {
+        return m_zipCode;
+    }
+
+    /**
+     * @param m_zipCode the m_zipCode to set
+     */
+    public void setM_zipCode(BEZipcode m_zipCode) {
+        this.m_zipCode = m_zipCode;
+    }
+
+    /**
      * @return the m_cpr
      */
-    public int getM_cpr() {
+    public String getM_cpr() {
         return m_cpr;
     }
 
     /**
      * @param m_cpr the m_cpr to set
      */
-    public void setM_cpr(int m_cpr) {
+    public void setM_cpr(String m_cpr) {
         this.m_cpr = m_cpr;
     }
-            
-    
+              
 }

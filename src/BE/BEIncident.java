@@ -16,6 +16,7 @@ public class BEIncident {
     private Time m_time;
     private BEIncidentType m_incidentType;
     private BEAlarm m_alarm;
+    private boolean m_isDone;
     
     /**
      * Read Incident
@@ -25,14 +26,16 @@ public class BEIncident {
      * @param time
      * @param incidentType
      * @param alarm 
+     * @param isDone 
      */
-    public BEIncident(int id, String incidentName, Date date, Time time, BEIncidentType incidentType, BEAlarm alarm){
+    public BEIncident(int id, String incidentName, Date date, Time time, BEIncidentType incidentType, BEAlarm alarm, boolean isDone){
         m_id = id;
         m_incidentName = incidentName;
         m_date = date;
         m_time = time;
         m_incidentType = incidentType;
         m_alarm = alarm;
+        m_isDone = isDone;
     }
 
     /**
@@ -117,5 +120,19 @@ public class BEIncident {
      */
     public void setM_alarm(BEAlarm m_alarm) {
         this.m_alarm = m_alarm;
+    }
+
+    /**
+     * @return the m_isDone
+     */
+    public boolean isM_isDone() {
+        return m_isDone;
+    }
+
+    /**
+     * @param m_isDone the m_isDone to set
+     */
+    public void setM_isDone(boolean m_isDone) {
+        this.m_isDone = m_isDone;
     }
 }
