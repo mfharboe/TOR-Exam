@@ -8,8 +8,12 @@ import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentType;
 import BE.BEVehicle;
+import DAL.DALCreate;
 import DAL.DALRead;
+import DAL.DALUpdate;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -107,6 +111,23 @@ public class BLLFireman {
             }
         }
         return incompleteIncidents;
+    }
+    
+    public void createIncident(BEIncident be){
+        try {
+            DALCreate.getInstance().createIncident(be);
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateFireman(BEIncident be){
+        try {
+            DALUpdate.getInstance().updateIncident(be);
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
 }

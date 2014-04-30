@@ -13,7 +13,9 @@ public class BEIncident {
     private int m_id;
     private String m_incidentName;
     private Date m_date;
+    private String m_stringDate;
     private Time m_time;
+    private String m_stringTime;
     private BEIncidentType m_incidentType;
     private boolean m_isDone;
 
@@ -35,6 +37,22 @@ public class BEIncident {
         m_incidentType = incidentType;
         m_isDone = isDone;
     }
+    /**
+     * Create incident
+     * @param incidentName
+     * @param date
+     * @param time
+     * @param incidentType
+     * @param isDone 
+     */
+    public BEIncident(String incidentName, Date date, Time time, BEIncidentType incidentType, boolean isDone) {
+        m_incidentName = incidentName;
+        m_date = date;
+        m_time = time;
+        m_incidentType = incidentType;
+        m_isDone = isDone;
+    }
+    
 
     /**
      * @return the m_id
@@ -122,5 +140,33 @@ public class BEIncident {
 
     public String toString() {
         return m_incidentName;
+    }
+
+    /**
+     * @return the m_stringDate
+     */
+    public String getM_stringDate() {
+        return m_stringDate;
+    }
+
+    /**
+     * @param m_stringDate the m_stringDate to set
+     */
+    public void setM_stringDate(String m_stringDate) {
+        this.m_stringDate = m_stringDate;
+    }
+
+    /**
+     * @return the m_stringTime
+     */
+    public String getM_stringTime() {
+        return m_stringTime;
+    }
+
+    /**
+     * @param m_stringTime the m_stringTime to set
+     */
+    public void setM_stringTime(String m_stringTime) {
+        this.m_stringTime = m_stringTime;
     }
 }

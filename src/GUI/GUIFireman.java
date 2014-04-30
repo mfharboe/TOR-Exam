@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.Date;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
@@ -85,8 +89,8 @@ public class GUIFireman extends javax.swing.JFrame {
             cmbIncident.addItem(beincident);
         }
     }
-    
-    private void setManpowerEnabled(boolean enable){
+
+    private void setManpowerEnabled(boolean enable) {
         lstManpower.setEnabled(enable);
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
@@ -97,17 +101,27 @@ public class GUIFireman extends javax.swing.JFrame {
         btnNext.setEnabled(enable);
     }
 
+    private void clearInfoBox() {
+        txtIncidentName.setText("");
+        txtIncidentTime.setText("");
+        ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText("");
+        cmbIncidentType.setSelectedIndex(0);
+    }
+
     /**
      * Invokes this method when the Incident ComboBox changes values
      */
     private void onComboChange() {
-            setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
+        setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
             txtIncidentName.setText(selected.getM_incidentName());
             dateChooser.setDate(selected.getM_date());
             txtIncidentTime.setText("" + selected.getM_time());
+            txtIncidentTime.setText(txtIncidentTime.getText().substring(0, 5));
             cmbIncidentType.setSelectedItem(selected.getM_incidentType());
+        } else {
+            clearInfoBox();
         }
     }
 
@@ -117,7 +131,34 @@ public class GUIFireman extends javax.swing.JFrame {
                 || ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText().isEmpty()
                 || txtIncidentTime.getText().isEmpty()) {
             MessageDialog.getInstance().saveDialog();
+        } else {
+            String incidentname = txtIncidentName.getText();
+            java.util.Date utilDate = dateChooser.getDate();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            Time time = java.sql.Time.valueOf(txtIncidentTime.getText() + ":00");
+            BEIncidentType incidenttype = (BEIncidentType) cmbIncidentType.getSelectedItem();
+            Boolean isdone = false;
+            BEIncident selected;
+            if (cmbIncident.getSelectedIndex() != 0) {
+                selected = (BEIncident) cmbIncident.getSelectedItem();
+                selected.setM_incidentName(incidentname);
+                selected.setM_date(sqlDate);
+                selected.setM_time(time);
+                selected.setM_incidentType(incidenttype);
+                selected.isM_isDone();
+                BLLFireman.getInstance().updateFireman(selected);
+
+            } else {
+
+                selected = new BEIncident(incidentname, sqlDate, time, incidenttype, isdone);
+                BLLFireman.getInstance().createIncident(selected);
+                cmbIncident.addItem(selected);
+            }
+            cmbIncident.repaint();
+            cmbIncident.setSelectedItem(selected);
+            setManpowerEnabled(true);
         }
+
 
     }
 
@@ -138,7 +179,6 @@ public class GUIFireman extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             onClickSave();
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -346,8 +386,6 @@ public class GUIFireman extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBM;
     private javax.swing.JButton btnCH;
