@@ -11,7 +11,6 @@ import BE.BEVehicle;
 import BLL.BLLFireman;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
@@ -60,6 +59,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Fills Up the Vehicle ComboBox
      */
     private void fillVehicleCombo(){
+        cmbVehicle.addItem("Vælg Køretøj..");
         for(BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles())
             cmbVehicle.addItem(bevehicle);
     }
@@ -67,6 +67,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Fills Up the IncidentType ComboBox
      */
     private void fillIncidentTypeCombo(){
+        cmbIncidentType.addItem("Vælg Type..");
         for(BEIncidentType beincidenttype : BLLFireman.getInstance().readAllIncidentTypes())
             cmbIncidentType.addItem(beincidenttype);
     }
@@ -74,8 +75,10 @@ public class GUIFireman extends javax.swing.JFrame {
      * Fills up the Incident ComboBox
      */
     private void fillIncidentCombo(){
-        for(BEIncident beincident : BLLFireman.getInstance().readAllIncidents())
+        cmbIncident.addItem("Vælg Anden Indsats..");
+        for(BEIncident beincident : BLLFireman.getInstance().readIncompleteIncidents())
             cmbIncident.addItem(beincident);
+        cmbIncident.addItem("Lav ny indsats..");
     }
     
     /**
@@ -153,7 +156,6 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Min Indsats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel6.setLayout(null);
 
-        cmbVehicle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Køretøj..." }));
         jPanel6.add(cmbVehicle);
         cmbVehicle.setBounds(20, 40, 180, 40);
 
@@ -199,8 +201,6 @@ public class GUIFireman extends javax.swing.JFrame {
         jLabel5.setText("kl.");
         jPanel4.add(jLabel5);
         jLabel5.setBounds(330, 100, 30, 22);
-
-        txtIncidentTime.setText("14.42");
         jPanel4.add(txtIncidentTime);
         txtIncidentTime.setBounds(360, 90, 110, 40);
 
@@ -212,16 +212,12 @@ public class GUIFireman extends javax.swing.JFrame {
         dateChooser.setDateFormatString("yyyy-MM-dd");
         jPanel4.add(dateChooser);
         dateChooser.setBounds(200, 90, 120, 40);
-
-        txtIncidentName.setText("Torvegade 45, 6700 Esbjerg");
         jPanel4.add(txtIncidentName);
         txtIncidentName.setBounds(20, 40, 450, 40);
 
-        cmbIncidentType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Type..." }));
         jPanel4.add(cmbIncidentType);
         cmbIncidentType.setBounds(20, 90, 120, 40);
 
-        cmbIncident.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Anden Indsats..." }));
         jPanel4.add(cmbIncident);
         cmbIncident.setBounds(20, 140, 450, 40);
 

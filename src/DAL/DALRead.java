@@ -45,7 +45,7 @@ public class DALRead {
      * @return ArrayList of Incident Types
      * @throws SQLException 
      */
-    private ArrayList<BEIncidentType> readIncidentTypes() throws SQLException {
+    public ArrayList<BEIncidentType> readIncidentTypes() throws SQLException {
         ArrayList<BEIncidentType> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from IncidentType");
@@ -60,22 +60,11 @@ public class DALRead {
     }
 
     /**
-     * @return ArrayList of Incident Types
-     * @throws SQLException 
-     */
-    public ArrayList<BEIncidentType> getIncidentTypes() throws SQLException {
-        if (resIncidentType == null) {
-            resIncidentType = readIncidentTypes();
-        }
-        return resIncidentType;
-    }
-
-    /**
      * Creates an ArrayList of Alarms
      * @return ArrayList of Alarms
      * @throws SQLException 
      */
-    private ArrayList<BEAlarm> readAlarms() throws SQLException {
+    public ArrayList<BEAlarm> readAlarms() throws SQLException {
         ArrayList<BEAlarm> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from Alarm");
@@ -88,24 +77,13 @@ public class DALRead {
         }
         return res;
     }
-
-    /**
-     * @return ArrayList of Alarms
-     * @throws SQLException 
-     */
-    public ArrayList<BEAlarm> getAlarms() throws SQLException {
-        if (resAlarm == null) {
-            resAlarm = readAlarms();
-        }
-        return resAlarm;
-    }
-
+    
     /**
      * Creates an ArrayList of Incidents
      * @return ArrayList of Incidents
      * @throws SQLException 
      */
-    private ArrayList<BEIncident> readIncidents() throws SQLException {
+    public ArrayList<BEIncident> readIncidents() throws SQLException {
         ArrayList<BEIncident> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from Incident");
@@ -117,14 +95,14 @@ public class DALRead {
             Time time = result.getTime("startTime");
             int incidentTypeId = result.getInt("incidentTypeId");
             BEIncidentType refIncidentType = null;
-            for (BEIncidentType beincidenttype : getIncidentTypes()) {
+            for (BEIncidentType beincidenttype : readIncidentTypes()) {
                 if (beincidenttype.getM_id() == incidentTypeId) {
                     refIncidentType = beincidenttype;
                 }
             }
             int alarmId = result.getInt("alarmId");
             BEAlarm refAlarm = null;
-            for (BEAlarm bealarm : getAlarms()) {
+            for (BEAlarm bealarm : readAlarms()) {
                 if (bealarm.getM_id() == alarmId) {
                     refAlarm = bealarm;
                 }
@@ -137,22 +115,11 @@ public class DALRead {
     }
 
     /**
-     * @return ArrayList of Incidents
-     * @throws SQLException 
-     */
-    public ArrayList<BEIncident> getIncidents() throws SQLException {
-        if (resIncident == null) {
-            resIncident = readIncidents();
-        }
-        return resIncident;
-    }
-
-    /**
      * Creates an ArrayList of Vehicles
      * @return an ArrayList of Vehicles
      * @throws SQLException 
      */
-    private ArrayList<BEVehicle> readVehicles() throws SQLException {
+    public ArrayList<BEVehicle> readVehicles() throws SQLException {
         ArrayList<BEVehicle> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from Vehicle");
@@ -171,22 +138,11 @@ public class DALRead {
     }
 
     /**
-     * @return ArrayList of Vehicles
-     * @throws SQLException 
-     */
-    public ArrayList<BEVehicle> getVehicles() throws SQLException {
-        if (resVehicle == null) {
-            resVehicle = readVehicles();
-        }
-        return resVehicle;
-    }
-
-    /**
      * Creates an ArrayList of Firemen
      * @return ArrayList of Firemen
      * @throws SQLException 
      */
-    private ArrayList readFiremen() throws SQLException {
+    public ArrayList readFiremen() throws SQLException {
         ArrayList<BEFireman> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from Fireman order by lastName, firstname");
@@ -198,7 +154,7 @@ public class DALRead {
             String address = result.getString("address");
             int zip = result.getInt("zipCode");
             BEZipcode refZipCode = null;
-            for (BEZipcode bezipcode : getZipcodes()) {
+            for (BEZipcode bezipcode : readZipcodes()) {
                 if (bezipcode.getM_zipCode() == zip) {
                     refZipCode = bezipcode;
                 }
@@ -215,22 +171,11 @@ public class DALRead {
     }
 
     /**
-     * @return ArrayList of Firemen
-     * @throws SQLException 
-     */
-    public ArrayList<BEFireman> getFiremen() throws SQLException {
-        if (resFiremen == null) {
-            resFiremen = readFiremen();
-        }
-        return resFiremen;
-    }
-
-    /**
      * Creates an ArrayList of Zipcodes 
      * @return ArrayList of Zipcodes
      * @throws SQLException 
      */
-    private ArrayList<BEZipcode> readZipcodes() throws SQLException {
+    public ArrayList<BEZipcode> readZipcodes() throws SQLException {
         ArrayList<BEZipcode> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from [zip/city]");
@@ -242,16 +187,5 @@ public class DALRead {
             res.add(be);
         }
         return res;
-    }
-
-    /**
-     * @return ArrayList of Zipcodes
-     * @throws SQLException
-     */
-    public ArrayList<BEZipcode> getZipcodes() throws SQLException {
-        if (resZipcode == null) {
-            resZipcode = readZipcodes();
-        }
-        return resZipcode;
     }
 }

@@ -151,9 +151,7 @@
             <Component class="javax.swing.JComboBox" name="cmbVehicle">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value="V&#xe6;lg K&#xf8;ret&#xf8;j..."/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -281,9 +279,6 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txtIncidentTime">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="14.42"/>
-          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="360" y="90" width="110" height="40"/>
@@ -314,9 +309,6 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txtIncidentName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Torvegade 45, 6700 Esbjerg"/>
-          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="20" y="40" width="450" height="40"/>
@@ -326,9 +318,7 @@
         <Component class="javax.swing.JComboBox" name="cmbIncidentType">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="1">
-                <StringItem index="0" value="V&#xe6;lg Type..."/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -340,9 +330,7 @@
         <Component class="javax.swing.JComboBox" name="cmbIncident">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="1">
-                <StringItem index="0" value="V&#xe6;lg Anden Indsats..."/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <Constraints>

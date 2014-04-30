@@ -17,6 +17,11 @@ import java.util.logging.Logger;
 public class BLLFireman {
     
     private static BLLFireman m_instance;
+    ArrayList<BEIncidentType> incidentTypes;
+    ArrayList<BEIncident> incidents;
+    ArrayList<BEIncident> incompleteIncidents;
+    ArrayList<BEFireman> firemen;
+    ArrayList<BEVehicle> vehicles;
     
     /**
      * @return current instance of BLLFireman 
@@ -32,13 +37,14 @@ public class BLLFireman {
      * @return ArrayList of Firemen 
      */
     public ArrayList<BEFireman> readAllFiremen(){
-        ArrayList<BEFireman> befireman = null;
-        try {
-            befireman = DALRead.getInstance().getFiremen();
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+        if(firemen == null){
+            try {
+                firemen = DALRead.getInstance().readFiremen();
+            } catch (SQLException ex) {
+                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return befireman;
+        return firemen;
         
     }
     
@@ -46,45 +52,51 @@ public class BLLFireman {
      * @return ArrayList of Vehicles 
      */
     public ArrayList<BEVehicle> readAllVehicles(){
-            ArrayList<BEVehicle> bevehicle = null;
-        try {
-            bevehicle = DALRead.getInstance().getVehicles();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return bevehicle;
+        if(vehicles == null)
+            try {
+                vehicles = DALRead.getInstance().readVehicles();
+            } catch (SQLException ex) {
+                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return vehicles;
     }
     
     /**
      * @return ArrayList of IncidentTypes 
      */
     public ArrayList<BEIncidentType> readAllIncidentTypes(){
-            ArrayList<BEIncidentType> beincidenttype = null;
-        try {
-            beincidenttype = DALRead.getInstance().getIncidentTypes();
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return beincidenttype;
+        if(incidentTypes == null)
+            try {
+                incidentTypes = DALRead.getInstance().readIncidentTypes();
+            } catch (SQLException ex) {
+                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return incidentTypes;
     }
     
     /**
-     * @return all incidents that are not done (not completed by a teamLeader) 
+     * @return ArrayList of Incidents 
      */
     public ArrayList<BEIncident> readAllIncidents(){
-        ArrayList<BEIncident> beincidentTemp = null;
-        ArrayList<BEIncident>beincident = new ArrayList<>();
-        try {
-            beincidentTemp = DALRead.getInstance().getIncidents();
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+        if(incidents == null)
+            try {
+                incidents = DALRead.getInstance().readIncidents();
+            } catch (SQLException ex) {
+                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return incidents;
+    }
+    
+    /**
+     * @return ArrayList of incomplete Incidents 
+     */
+    public ArrayList<BEIncident> readIncompleteIncidents(){
+        if(incompleteIncidents == null){
+            for(BEIncident c : readAllIncidents())
+                if(!c.isM_isDone())
+                    incompleteIncidents.add(c);
         }
-        for(BEIncident c : beincidentTemp)
-            if(!c.isM_isDone())
-                beincident.add(c);
-        return beincident;
-        
+        return incompleteIncidents;
     }
    
     
