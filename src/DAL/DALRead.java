@@ -20,11 +20,7 @@ public class DALRead {
     private static DALRead m_instance;
     
     ArrayList<BEIncidentType> resIncidentType;
-    ArrayList<BEIncident> resIncident;
-    ArrayList<BEFireman> resFiremen;
-    ArrayList<BEAlarm> resAlarm;
-    ArrayList<BEVehicle> resVehicle;
-    ArrayList<BEZipcode> resZipcode;
+  
 
     private DALRead() {
         m_connection = DB_Connection.getInstance().getConnection();
@@ -46,7 +42,8 @@ public class DALRead {
      * @throws SQLException 
      */
     public ArrayList<BEIncidentType> readIncidentTypes() throws SQLException {
-        ArrayList<BEIncidentType> res = new ArrayList<>();
+        if(resIncidentType == null){
+        resIncidentType = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from IncidentType");
         ResultSet result = stm.getResultSet();
@@ -54,9 +51,10 @@ public class DALRead {
             int id = result.getInt("id");
             String description = result.getString("description");
             BEIncidentType be = new BEIncidentType(id, description);
-            res.add(be);
+            resIncidentType.add(be);
+            }
         }
-        return res;
+        return resIncidentType;
     }
 
     /**

@@ -65,12 +65,13 @@ public class BLLFireman {
      * @return ArrayList of IncidentTypes 
      */
     public ArrayList<BEIncidentType> readAllIncidentTypes(){
-        if(incidentTypes == null)
+        if(incidentTypes == null){
             try {
                 incidentTypes = DALRead.getInstance().readIncidentTypes();
             } catch (SQLException ex) {
                 Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
         return incidentTypes;
     }
     
@@ -92,6 +93,7 @@ public class BLLFireman {
      */
     public ArrayList<BEIncident> readIncompleteIncidents(){
         if(incompleteIncidents == null){
+        incompleteIncidents = new ArrayList<>();
             for(BEIncident c : readAllIncidents())
                 if(!c.isM_isDone())
                     incompleteIncidents.add(c);
