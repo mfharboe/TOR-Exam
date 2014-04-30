@@ -3,38 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package BE;
 
 import java.sql.Date;
 import java.sql.Time;
 
 public class BEIncident {
+
     private int m_id;
     private String m_incidentName;
     private Date m_date;
     private Time m_time;
     private BEIncidentType m_incidentType;
-    private BEAlarm m_alarm;
     private boolean m_isDone;
-    
+
     /**
      * Read Incident
+     *
      * @param id
      * @param incidentName
      * @param date
      * @param time
      * @param incidentType
-     * @param alarm 
-     * @param isDone 
+     * @param isDone
      */
-    public BEIncident(int id, String incidentName, Date date, Time time, BEIncidentType incidentType, BEAlarm alarm, boolean isDone){
+    public BEIncident(int id, String incidentName, Date date, Time time, BEIncidentType incidentType, boolean isDone) {
         m_id = id;
         m_incidentName = incidentName;
         m_date = date;
         m_time = time;
         m_incidentType = incidentType;
-        m_alarm = alarm;
         m_isDone = isDone;
     }
 
@@ -109,20 +107,6 @@ public class BEIncident {
     }
 
     /**
-     * @return the m_alarm
-     */
-    public BEAlarm getM_alarm() {
-        return m_alarm;
-    }
-
-    /**
-     * @param m_alarm the m_alarm to set
-     */
-    public void setM_alarm(BEAlarm m_alarm) {
-        this.m_alarm = m_alarm;
-    }
-
-    /**
      * @return the m_isDone
      */
     public boolean isM_isDone() {
@@ -135,8 +119,8 @@ public class BEIncident {
     public void setM_isDone(boolean m_isDone) {
         this.m_isDone = m_isDone;
     }
-    
-    public String toString(){
+
+    public String toString() {
         return m_incidentName;
     }
 }

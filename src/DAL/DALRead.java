@@ -98,15 +98,8 @@ public class DALRead {
                     refIncidentType = beincidenttype;
                 }
             }
-            int alarmId = result.getInt("alarmId");
-            BEAlarm refAlarm = null;
-            for (BEAlarm bealarm : readAlarms()) {
-                if (bealarm.getM_id() == alarmId) {
-                    refAlarm = bealarm;
-                }
-            }
             boolean isDone = result.getBoolean("isDone");
-            BEIncident be = new BEIncident(id, incidentName, date, time, refIncidentType, refAlarm, isDone);
+            BEIncident be = new BEIncident(id, incidentName, date, time, refIncidentType, isDone);
             res.add(be);
         }
         return res;
