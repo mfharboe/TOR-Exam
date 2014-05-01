@@ -27,9 +27,9 @@ public class BLLFireman {
     ArrayList<BEFireman> firemen;
     ArrayList<BEVehicle> vehicles;
     ArrayList<BERole> roles;
+    ArrayList<BERoleTime> roletimes;
 
     private BLLFireman() {
-
     }
 
     /**
@@ -125,6 +125,17 @@ public class BLLFireman {
         return roles;
     }
 
+    public ArrayList<BERoleTime> readRoleTimes() {
+        if (roletimes == null) {
+            try {
+                roletimes = DALRead.getInstance().readRoleTime();
+            } catch (SQLException ex) {
+                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return roletimes;
+    }
+
     public void createIncident(BEIncident be) {
         try {
             DALCreate.getInstance().createIncident(be);
@@ -138,6 +149,52 @@ public class BLLFireman {
             if (role.isM_isFireman()) {
                 try {
                     be.setM_role(role);
+                    roletimes.add(be);
+                    DALCreate.getInstance().createRoleTime(be);
+                    break;
+                } catch (SQLException ex) {
+                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void createCHOnIncident(BERoleTime be) {
+        for (BERole role : readRoles()) {
+            if (role.isM_isDriver()) {
+                try {
+                    be.setM_role(role);
+                    roletimes.add(be);
+                    DALCreate.getInstance().createRoleTime(be);
+                    break;
+                } catch (SQLException ex) {
+                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void createSTOnIncident(BERoleTime be) {
+        for (BERole role : readRoles()) {
+            if (role.isM_isStation()) {
+                try {
+                    be.setM_role(role);
+                    roletimes.add(be);
+                    DALCreate.getInstance().createRoleTime(be);
+                    break;
+                } catch (SQLException ex) {
+                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void createHLOnIncident(BERoleTime be) {
+        for (BERole role : readRoles()) {
+            if (role.isM_isLeader()) {
+                try {
+                    be.setM_role(role);
+                    roletimes.add(be);
                     DALCreate.getInstance().createRoleTime(be);
                     break;
                 } catch (SQLException ex) {
@@ -156,4 +213,15 @@ public class BLLFireman {
 
     }
 
+    public ArrayList<BERoleTime> incidentToRoleTime(BEIncident beincident) {
+        ArrayList<BERoleTime> beroletime = new ArrayList<>();
+
+        for (BERoleTime be : readRoleTimes()) {
+            if (be.getM_incident().getM_id() == beincident.getM_id()) {
+                beroletime.add(be);
+            }
+        }
+        
+        return beroletime;
+    }
 }

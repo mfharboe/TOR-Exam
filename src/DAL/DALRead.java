@@ -5,6 +5,7 @@ import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentType;
 import BE.BERole;
+import BE.BERoleTime;
 import BE.BEVehicle;
 import BE.BEZipcode;
 import java.sql.Connection;
@@ -138,7 +139,7 @@ public class DALRead {
      * @return ArrayList of Firemen
      * @throws SQLException
      */
-    public ArrayList readFiremen() throws SQLException {
+    public ArrayList<BEFireman> readFiremen() throws SQLException {
         ArrayList<BEFireman> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
         stm.execute("select * from Fireman order by lastName, firstname");
@@ -199,6 +200,40 @@ public class DALRead {
             boolean isLeader = result.getBoolean("isLeader");
             boolean isStation = result.getBoolean("isStation");
             BERole be = new BERole(id, description, isFireman, isDriver, isLeader, isStation);
+            res.add(be);
+        }
+        return res;
+    }
+    public ArrayList<BERoleTime> readRoleTime() throws SQLException {
+        ArrayList<BERoleTime> res = new ArrayList<>();
+        Statement stm = m_connection.createStatement();
+        stm.execute("select * from [Role/Time]");
+        ResultSet result = stm.getResultSet();
+        while (result.next()) {
+            int incidentid = result.getInt("incidentId");
+            BEIncident refIncident = null;
+            for(BEIncident be : readIncidents())
+                if(be.getM_id() == incidentid)
+                    refIncident = be;
+            int firemanid = result.getInt("firemanId");
+            BEFireman refFireman = null;
+            for(BEFireman be : readFiremen())
+                if(be.getM_id() == firemanid)
+                    refFireman = be;
+            int roleid = result.getInt("roleId");
+            BERole refRole = null;
+            for(BERole be : readRoles())
+                if(be.getM_id() == roleid)
+                    refRole = be;
+            int vehicleodinnumber = result.getInt("vehicleOdinNumber");
+            BEVehicle refVehicle = null;
+            for(BEVehicle be : readVehicles())
+                if(be.getM_odinNumber() == vehicleodinnumber)
+                    refVehicle = be;
+            int hours = result.getInt("hours");
+            BERoleTime be = new BERoleTime(refFireman, refIncident, refRole, refVehicle, hours);
+            
+            
             res.add(be);
         }
         return res;

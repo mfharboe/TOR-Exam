@@ -6,6 +6,7 @@ import BE.BEIncidentType;
 import BE.BERoleTime;
 import BE.BEVehicle;
 import BLL.BLLFireman;
+import GUI.TableModel.TableModelRoleTime;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -13,20 +14,27 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Time;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableRowSorter;
 
 public class GUIFireman extends javax.swing.JFrame {
 
     DefaultListModel<BEFireman> firemanListModel;
+    TableRowSorter<TableModelRoleTime> sorter;
+    private TableModelRoleTime roleTimeModel;
+    private static final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
+    private ArrayList<BERoleTime> roleTimes;
 
     public GUIFireman() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
         initializeSettings();
+        
     }
 
     /**
@@ -44,6 +52,10 @@ public class GUIFireman extends javax.swing.JFrame {
         setMyContributionEnabled(false);
         setMyFunctionEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().manHoursText());
+        roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
+        tblAttendance.setModel(roleTimeModel);
+        sorter = new TableRowSorter<>(roleTimeModel);
+        
     }
 
     /**
@@ -127,6 +139,7 @@ public class GUIFireman extends javax.swing.JFrame {
         txtIncidentTime.setText("");
         ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText("");
         cmbIncidentType.setSelectedIndex(0);
+        roleTimeModel.setRoleTimeList(EMPTY_ARRAY_LIST);
     }
 
     /**
@@ -142,6 +155,8 @@ public class GUIFireman extends javax.swing.JFrame {
             txtIncidentTime.setText("" + selected.getM_time());
             txtIncidentTime.setText(txtIncidentTime.getText().substring(0, 5));
             cmbIncidentType.setSelectedItem(selected.getM_incidentType());
+            roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime(selected));
+            
         } else {
             clearInfoBox();
         }
@@ -190,23 +205,29 @@ public class GUIFireman extends javax.swing.JFrame {
         BEVehicle vehicle = (BEVehicle) cmbVehicle.getSelectedItem();
         int time = Integer.parseInt(txtManHours.getText());
         BERoleTime roletime = new BERoleTime(fireman, incident, null, vehicle, time);
+        
+        
         return roletime;
     }
 
     private void onClickST() {
-        //BLLFireman.getInstance().createSTOnIncident(getMyContribution());
+        BLLFireman.getInstance().createSTOnIncident(getMyContribution());
+        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     private void onClickBM() {
         BLLFireman.getInstance().createBMOnIncident(getMyContribution());
+        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     private void onClickCH() {
-        //BLLFireman.getInstance().createCHOnIncident(getMyContribution());
+        BLLFireman.getInstance().createCHOnIncident(getMyContribution());
+        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     private void onClickHL() {
-        //BLLFireman.getInstance().createHLOnIncident(getMyContribution());
+        BLLFireman.getInstance().createHLOnIncident(getMyContribution());
+        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     private void onListChange() {
