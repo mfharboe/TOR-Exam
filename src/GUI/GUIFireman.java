@@ -29,6 +29,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private TableModelRoleTime roleTimeModel;
     private static final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
     private ArrayList<BERoleTime> roleTimes;
+    private BEVehicle noVehicle;
 
     public GUIFireman() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -92,7 +93,10 @@ public class GUIFireman extends javax.swing.JFrame {
     private void fillVehicleCombo() {
         cmbVehicle.addItem("Vælg Køretøj..");
         for (BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles()) {
-            cmbVehicle.addItem(bevehicle);
+            if(bevehicle.getM_odinNumber() != 0)
+                cmbVehicle.addItem(bevehicle);
+            else
+                noVehicle = bevehicle;
         }
     }
 
@@ -201,8 +205,13 @@ public class GUIFireman extends javax.swing.JFrame {
 
     private BERoleTime getMyContribution() {
         BEIncident incident = (BEIncident) cmbIncident.getSelectedItem();
+        
         BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
-        BEVehicle vehicle = (BEVehicle) cmbVehicle.getSelectedItem();
+        BEVehicle vehicle;
+        if(cmbVehicle.getSelectedIndex() == 0){
+            vehicle = noVehicle;
+        } else
+            vehicle = (BEVehicle) cmbVehicle.getSelectedItem();
         int time = Integer.parseInt(txtManHours.getText());
         BERoleTime roletime = new BERoleTime(fireman, incident, null, vehicle, time);
         
@@ -211,6 +220,8 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     private void onClickST() {
+        BERoleTime tmp = getMyContribution();
+        tmp.setM_vehicle(noVehicle);
         BLLFireman.getInstance().createSTOnIncident(getMyContribution());
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
