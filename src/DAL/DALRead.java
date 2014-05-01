@@ -187,6 +187,12 @@ public class DALRead {
         return res;
     }
 
+    /**
+     * Creates an ArrayList of Roles
+     * 
+     * @return ArrayList of Roles
+     * @throws SQLException 
+     */
     public ArrayList<BERole> readRoles() throws SQLException {
         ArrayList<BERole> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -204,6 +210,13 @@ public class DALRead {
         }
         return res;
     }
+    
+    /**
+     * Creates an ArrayList of RoleTimes
+     * 
+     * @return ArrayList of RoleTimes
+     * @throws SQLException 
+     */
     public ArrayList<BERoleTime> readRoleTime() throws SQLException {
         ArrayList<BERoleTime> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();

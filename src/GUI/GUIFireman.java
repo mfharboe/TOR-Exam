@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -120,10 +121,18 @@ public class GUIFireman extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Set the manPower List to be enabled or disabled
+     * @param enable 
+     */
     private void setManpowerEnabled(boolean enable) {
         lstManpower.setEnabled(enable);
     }
 
+    /**
+     * Sets the contribution components to be enabled or disabled
+     * @param enable 
+     */
     private void setMyContributionEnabled(boolean enable) {
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
@@ -131,6 +140,10 @@ public class GUIFireman extends javax.swing.JFrame {
         tblAttendance.setEnabled(enable);
     }
 
+    /**
+     * Set the 4 role buttons to be enabled or disabled
+     * @param enable 
+     */
     private void setMyFunctionEnabled(boolean enable) {
         btnBM.setEnabled(enable);
         btnCH.setEnabled(enable);
@@ -138,6 +151,9 @@ public class GUIFireman extends javax.swing.JFrame {
         btnHL.setEnabled(enable);
     }
 
+    /**
+     * Clears the infoBox
+     */
     private void clearInfoBox() {
         txtIncidentName.setText("");
         txtIncidentTime.setText("");
@@ -167,6 +183,9 @@ public class GUIFireman extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Invokes this method when the Save button is pressed
+     */
     private void onClickSave() {
         if (txtIncidentName.getText().isEmpty()
                 || cmbIncidentType.getSelectedIndex() == 0
@@ -183,15 +202,8 @@ public class GUIFireman extends javax.swing.JFrame {
             BEIncident selected;
             if (cmbIncident.getSelectedIndex() != 0) {
                 selected = (BEIncident) cmbIncident.getSelectedItem();
-                selected.setM_incidentName(incidentname);
-                selected.setM_date(sqlDate);
-                selected.setM_time(time);
-                selected.setM_incidentType(incidenttype);
-                selected.isM_isDone();
-                BLLFireman.getInstance().updateFireman(selected);
-
+                updateIncident(selected, incidentname, sqlDate, time, incidenttype);
             } else {
-
                 selected = new BEIncident(incidentname, sqlDate, time, incidenttype, isdone);
                 BLLFireman.getInstance().createIncident(selected);
                 cmbIncident.addItem(selected);
@@ -202,10 +214,29 @@ public class GUIFireman extends javax.swing.JFrame {
         }
 
     }
+    
+    /**
+     * Updates the current selected Incident
+     * @param selected
+     * @param incidentname
+     * @param sqlDate
+     * @param time
+     * @param incidenttype 
+     */
+    private void updateIncident(BEIncident selected, String incidentname, Date sqlDate, Time time, BEIncidentType incidenttype){
+            selected.setM_incidentName(incidentname);
+            selected.setM_date(sqlDate);
+            selected.setM_time(time);
+            selected.setM_incidentType(incidenttype);
+            selected.isM_isDone();
+            BLLFireman.getInstance().updateFireman(selected);
+    }
 
+    /**
+     * @return BERoleTime with links to all the relevant BE classes 
+     */
     private BERoleTime getMyContribution() {
         BEIncident incident = (BEIncident) cmbIncident.getSelectedItem();
-        
         BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
         BEVehicle vehicle;
         if(cmbVehicle.getSelectedIndex() == 0){
@@ -219,6 +250,9 @@ public class GUIFireman extends javax.swing.JFrame {
         return roletime;
     }
 
+    /**
+     * Invokes this method when the ST button is pressed
+     */
     private void onClickST() {
         BERoleTime tmp = getMyContribution();
         tmp.setM_vehicle(noVehicle);
@@ -226,26 +260,41 @@ public class GUIFireman extends javax.swing.JFrame {
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
+    /**
+     * Invokes this method when the BM button is pressed
+     */
     private void onClickBM() {
         BLLFireman.getInstance().createBMOnIncident(getMyContribution());
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
+    /**
+     * Invokes this method when the CH button is pressed
+     */
     private void onClickCH() {
         BLLFireman.getInstance().createCHOnIncident(getMyContribution());
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
+    /**
+     * Invokes this method when the HL button is pressed
+     */
     private void onClickHL() {
         BLLFireman.getInstance().createHLOnIncident(getMyContribution());
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
+    /**
+     * Invokes this method when the list of firemen changes the selected value
+     */
     private void onListChange() {
         setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
 
     }
 
+    /**
+     * Invokes this method when the text field for hours is being used
+     */
     private void onTxtChange() {
         boolean enable = txtManHours.getText().isEmpty()
                 || txtManHours.getText().equals(MessageDialog.getInstance().manHoursText());
@@ -253,6 +302,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnCH.setEnabled(!enable);
         btnHL.setEnabled(!enable);
         btnST.setEnabled(!enable);
+        
     }
 
     /**
@@ -266,6 +316,9 @@ public class GUIFireman extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Listener for all the buttons
+     */
     private class btnAction implements ActionListener {
 
         @Override
@@ -284,6 +337,9 @@ public class GUIFireman extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Listener for the ManPower list
+     */
     private class lstAction implements ListSelectionListener {
 
         @Override
@@ -293,6 +349,9 @@ public class GUIFireman extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Listener for the hours text field
+     */
     private class txtAction extends KeyAdapter {
 
         @Override
