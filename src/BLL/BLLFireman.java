@@ -7,13 +7,13 @@ package BLL;
 import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentType;
+import BE.BERole;
+import BE.BERoleTime;
 import BE.BEVehicle;
 import DAL.DALCreate;
 import DAL.DALRead;
 import DAL.DALUpdate;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +26,7 @@ public class BLLFireman {
     ArrayList<BEIncident> incompleteIncidents;
     ArrayList<BEFireman> firemen;
     ArrayList<BEVehicle> vehicles;
+    ArrayList<BERole> roles;
 
     private BLLFireman() {
 
@@ -112,22 +113,47 @@ public class BLLFireman {
         }
         return incompleteIncidents;
     }
-    
-    public void createIncident(BEIncident be){
+
+    public ArrayList<BERole> readRoles() {
+        if (roles == null) {
+            try {
+                roles = DALRead.getInstance().readRoles();
+            } catch (SQLException ex) {
+                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return roles;
+    }
+
+    public void createIncident(BEIncident be) {
         try {
             DALCreate.getInstance().createIncident(be);
         } catch (SQLException ex) {
             Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void updateFireman(BEIncident be){
+
+    public void createBMOnIncident(BERoleTime be) {
+        for (BERole role : readRoles()) {
+            if (role.isM_isFireman()) {
+                try {
+                    be.setM_role(role);
+                    DALCreate.getInstance().createRoleTime(be);
+                    break;
+                } catch (SQLException ex) {
+                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void updateFireman(BEIncident be) {
         try {
             DALUpdate.getInstance().updateIncident(be);
         } catch (SQLException ex) {
             Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
 }

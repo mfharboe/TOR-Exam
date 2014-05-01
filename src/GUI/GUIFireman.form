@@ -164,9 +164,6 @@
               </Constraints>
             </Component>
             <Component class="javax.swing.JTextField" name="txtManHours">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Antal Timer..."/>
-              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="20" y="100" width="180" height="40"/>

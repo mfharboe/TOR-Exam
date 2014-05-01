@@ -21,4 +21,8 @@ public class MessageDialog {
     public void saveDialog(){
         JOptionPane.showMessageDialog(null, "Udfyld venligst alle informationer..");
     }
+    
+    public String manHoursText(){
+        return "Antal timer..";
+    }
 }

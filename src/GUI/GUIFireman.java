@@ -3,19 +3,21 @@ package GUI;
 import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentType;
+import BE.BERoleTime;
 import BE.BEVehicle;
 import BLL.BLLFireman;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.Date;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class GUIFireman extends javax.swing.JFrame {
 
@@ -39,6 +41,9 @@ public class GUIFireman extends javax.swing.JFrame {
         fillIncidentCombo();
         addListeners();
         setManpowerEnabled(false);
+        setMyContributionEnabled(false);
+        setMyFunctionEnabled(false);
+        txtManHours.setText(MessageDialog.getInstance().manHoursText());
     }
 
     /**
@@ -47,8 +52,17 @@ public class GUIFireman extends javax.swing.JFrame {
     private void addListeners() {
         cmbAction cmb = new cmbAction();
         btnAction btn = new btnAction();
+        lstAction lst = new lstAction();
+        txtAction txt = new txtAction();
+        txtManHours.addKeyListener(txt);
+        lstManpower.addListSelectionListener(lst);
         btnSave.addActionListener(btn);
+        btnBM.addActionListener(btn);
+        btnCH.addActionListener(btn);
+        btnHL.addActionListener(btn);
+        btnST.addActionListener(btn);
         cmbIncident.addItemListener(cmb);
+
     }
 
     /**
@@ -92,13 +106,20 @@ public class GUIFireman extends javax.swing.JFrame {
 
     private void setManpowerEnabled(boolean enable) {
         lstManpower.setEnabled(enable);
+    }
+
+    private void setMyContributionEnabled(boolean enable) {
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
+        btnNext.setEnabled(enable);
+        tblAttendance.setEnabled(enable);
+    }
+
+    private void setMyFunctionEnabled(boolean enable) {
         btnBM.setEnabled(enable);
         btnCH.setEnabled(enable);
         btnST.setEnabled(enable);
         btnHL.setEnabled(enable);
-        btnNext.setEnabled(enable);
     }
 
     private void clearInfoBox() {
@@ -113,6 +134,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onComboChange() {
         setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
+        lstManpower.clearSelection();
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
             txtIncidentName.setText(selected.getM_incidentName());
@@ -123,6 +145,7 @@ public class GUIFireman extends javax.swing.JFrame {
         } else {
             clearInfoBox();
         }
+
     }
 
     private void onClickSave() {
@@ -159,7 +182,45 @@ public class GUIFireman extends javax.swing.JFrame {
             setManpowerEnabled(true);
         }
 
+    }
 
+    private BERoleTime getMyContribution() {
+        BEIncident incident = (BEIncident) cmbIncident.getSelectedItem();
+        BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
+        BEVehicle vehicle = (BEVehicle) cmbVehicle.getSelectedItem();
+        int time = Integer.parseInt(txtManHours.getText());
+        BERoleTime roletime = new BERoleTime(fireman, incident, null, vehicle, time);
+        return roletime;
+    }
+
+    private void onClickST() {
+        //BLLFireman.getInstance().createSTOnIncident(getMyContribution());
+    }
+
+    private void onClickBM() {
+        BLLFireman.getInstance().createBMOnIncident(getMyContribution());
+    }
+
+    private void onClickCH() {
+        //BLLFireman.getInstance().createCHOnIncident(getMyContribution());
+    }
+
+    private void onClickHL() {
+        //BLLFireman.getInstance().createHLOnIncident(getMyContribution());
+    }
+
+    private void onListChange() {
+        setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
+
+    }
+
+    private void onTxtChange() {
+        boolean enable = txtManHours.getText().isEmpty()
+                || txtManHours.getText().equals(MessageDialog.getInstance().manHoursText());
+        btnBM.setEnabled(!enable);
+        btnCH.setEnabled(!enable);
+        btnHL.setEnabled(!enable);
+        btnST.setEnabled(!enable);
     }
 
     /**
@@ -177,7 +238,34 @@ public class GUIFireman extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            onClickSave();
+            if (e.getSource().equals(btnSave)) {
+                onClickSave();
+            } else if (e.getSource().equals(btnST)) {
+                onClickST();
+            } else if (e.getSource().equals(btnBM)) {
+                onClickBM();
+            } else if (e.getSource().equals(btnCH)) {
+                onClickCH();
+            } else if (e.getSource().equals(btnHL)) {
+                onClickHL();
+            }
+        }
+    }
+
+    private class lstAction implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            onListChange();
+        }
+
+    }
+
+    private class txtAction extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            onTxtChange();
         }
     }
 
@@ -236,8 +324,6 @@ public class GUIFireman extends javax.swing.JFrame {
 
         jPanel6.add(cmbVehicle);
         cmbVehicle.setBounds(20, 40, 180, 40);
-
-        txtManHours.setText("Antal Timer...");
         jPanel6.add(txtManHours);
         txtManHours.setBounds(20, 100, 180, 40);
 

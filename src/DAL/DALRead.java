@@ -4,6 +4,7 @@ import BE.BEAlarm;
 import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentType;
+import BE.BERole;
 import BE.BEVehicle;
 import BE.BEZipcode;
 import java.sql.Connection;
@@ -18,9 +19,8 @@ public class DALRead {
 
     Connection m_connection;
     private static DALRead m_instance;
-    
+
     ArrayList<BEIncidentType> resIncidentType;
-  
 
     private DALRead() {
         m_connection = DB_Connection.getInstance().getConnection();
@@ -38,20 +38,21 @@ public class DALRead {
 
     /**
      * Creates an ArrayList of Incident types
+     *
      * @return ArrayList of Incident Types
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<BEIncidentType> readIncidentTypes() throws SQLException {
-        if(resIncidentType == null){
-        resIncidentType = new ArrayList<>();
-        Statement stm = m_connection.createStatement();
-        stm.execute("select * from IncidentType");
-        ResultSet result = stm.getResultSet();
-        while (result.next()) {
-            int id = result.getInt("id");
-            String description = result.getString("description");
-            BEIncidentType be = new BEIncidentType(id, description);
-            resIncidentType.add(be);
+        if (resIncidentType == null) {
+            resIncidentType = new ArrayList<>();
+            Statement stm = m_connection.createStatement();
+            stm.execute("select * from IncidentType");
+            ResultSet result = stm.getResultSet();
+            while (result.next()) {
+                int id = result.getInt("id");
+                String description = result.getString("description");
+                BEIncidentType be = new BEIncidentType(id, description);
+                resIncidentType.add(be);
             }
         }
         return resIncidentType;
@@ -59,8 +60,9 @@ public class DALRead {
 
     /**
      * Creates an ArrayList of Alarms
+     *
      * @return ArrayList of Alarms
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<BEAlarm> readAlarms() throws SQLException {
         ArrayList<BEAlarm> res = new ArrayList<>();
@@ -75,11 +77,12 @@ public class DALRead {
         }
         return res;
     }
-    
+
     /**
      * Creates an ArrayList of Incidents
+     *
      * @return ArrayList of Incidents
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<BEIncident> readIncidents() throws SQLException {
         ArrayList<BEIncident> res = new ArrayList<>();
@@ -107,8 +110,9 @@ public class DALRead {
 
     /**
      * Creates an ArrayList of Vehicles
+     *
      * @return an ArrayList of Vehicles
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<BEVehicle> readVehicles() throws SQLException {
         ArrayList<BEVehicle> res = new ArrayList<>();
@@ -130,8 +134,9 @@ public class DALRead {
 
     /**
      * Creates an ArrayList of Firemen
+     *
      * @return ArrayList of Firemen
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList readFiremen() throws SQLException {
         ArrayList<BEFireman> res = new ArrayList<>();
@@ -162,9 +167,10 @@ public class DALRead {
     }
 
     /**
-     * Creates an ArrayList of Zipcodes 
+     * Creates an ArrayList of Zipcodes
+     *
      * @return ArrayList of Zipcodes
-     * @throws SQLException 
+     * @throws SQLException
      */
     public ArrayList<BEZipcode> readZipcodes() throws SQLException {
         ArrayList<BEZipcode> res = new ArrayList<>();
@@ -175,6 +181,24 @@ public class DALRead {
             int zipcode = result.getInt("zipcode");
             String city = result.getString("city");
             BEZipcode be = new BEZipcode(zipcode, city);
+            res.add(be);
+        }
+        return res;
+    }
+
+    public ArrayList<BERole> readRoles() throws SQLException {
+        ArrayList<BERole> res = new ArrayList<>();
+        Statement stm = m_connection.createStatement();
+        stm.execute("select * from Role");
+        ResultSet result = stm.getResultSet();
+        while (result.next()) {
+            int id = result.getInt("id");
+            String description = result.getString("description");
+            boolean isFireman = result.getBoolean("isFireman");
+            boolean isDriver = result.getBoolean("isDriver");
+            boolean isLeader = result.getBoolean("isLeader");
+            boolean isStation = result.getBoolean("isStation");
+            BERole be = new BERole(id, description, isFireman, isDriver, isLeader, isStation);
             res.add(be);
         }
         return res;
