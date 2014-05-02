@@ -1,24 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package BE;
 
-/**
- *
- * @author Morten
- */
 public class BERoleTime {
 
-    private BEFireman m_fireman;
     private BEIncident m_incident;
+    private BEFireman m_fireman;
+    private boolean m_isOnStation;
     private BERole m_role;
     private BEVehicle m_vehicle;
     private int m_hours;
 
-    public BERoleTime(BEFireman fireman, BEIncident incident, BERole role, BEVehicle vehicle, int hours) {
+    public BERoleTime(BEIncident incident, BEFireman fireman, boolean isOnStation, BERole role, BEVehicle vehicle, int hours) {
         m_fireman = fireman;
         m_incident = incident;
+        m_isOnStation = isOnStation;
         m_role = role;
         m_vehicle = vehicle;
         m_hours = hours;
@@ -93,5 +88,19 @@ public class BERoleTime {
      */
     public void setM_hours(int m_hours) {
         this.m_hours = m_hours;
+    }
+
+    /**
+     * @return the m_isOnStation
+     */
+    public boolean isM_isOnStation() {
+        return m_isOnStation;
+    }
+
+    /**
+     * @param m_isOnStation the m_isOnStation to set
+     */
+    public void setM_isOnStation(boolean m_isOnStation) {
+        this.m_isOnStation = m_isOnStation;
     }
 }

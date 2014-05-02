@@ -186,7 +186,13 @@ public class BEFireman {
     
     @Override
     public String toString(){
-        return m_lastName +", "+ m_firstName; 
+        String tmp = m_lastName +", "+ m_firstName; 
+        if(m_isTeamLeader){
+            tmp = "(HL) " + tmp;
+        }
+        else
+            tmp = "(BM) " + tmp;
+        return tmp; 
     }
               
 }

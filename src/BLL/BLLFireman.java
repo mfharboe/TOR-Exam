@@ -13,6 +13,7 @@ import BE.BEVehicle;
 import DAL.DALCreate;
 import DAL.DALRead;
 import DAL.DALUpdate;
+import GUI.MessageDialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -145,16 +146,17 @@ public class BLLFireman {
     }
 
     public void createBMOnIncident(BERoleTime be) {
+
         for (BERole role : readRoles()) {
             if (role.isM_isFireman()) {
                 try {
                     be.setM_role(role);
-                    roletimes.add(be);
                     DALCreate.getInstance().createRoleTime(be);
-                    break;
                 } catch (SQLException ex) {
-                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                    MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
+                    break;
                 }
+                roletimes.add(be);
             }
         }
     }
@@ -164,12 +166,11 @@ public class BLLFireman {
             if (role.isM_isDriver()) {
                 try {
                     be.setM_role(role);
-                    roletimes.add(be);
                     DALCreate.getInstance().createRoleTime(be);
-                    break;
                 } catch (SQLException ex) {
-                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                    break;
                 }
+                roletimes.add(be);
             }
         }
     }
@@ -179,12 +180,12 @@ public class BLLFireman {
             if (role.isM_isStation()) {
                 try {
                     be.setM_role(role);
-                    roletimes.add(be);
                     DALCreate.getInstance().createRoleTime(be);
-                    break;
                 } catch (SQLException ex) {
-                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                    MessageDialog.getInstance().stationDialog(); //MÅ IKKE VÆRE HER
+                    break;
                 }
+                roletimes.add(be);
             }
         }
     }
@@ -194,12 +195,11 @@ public class BLLFireman {
             if (role.isM_isLeader()) {
                 try {
                     be.setM_role(role);
-                    roletimes.add(be);
                     DALCreate.getInstance().createRoleTime(be);
-                    break;
                 } catch (SQLException ex) {
-                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                    break;
                 }
+                roletimes.add(be);
             }
         }
     }
@@ -221,7 +221,7 @@ public class BLLFireman {
                 beroletime.add(be);
             }
         }
-        
+
         return beroletime;
     }
 }

@@ -9,6 +9,8 @@ import BLL.BLLFireman;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -18,7 +20,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
@@ -29,14 +30,12 @@ public class GUIFireman extends javax.swing.JFrame {
     TableRowSorter<TableModelRoleTime> sorter;
     private TableModelRoleTime roleTimeModel;
     private static final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
-    private ArrayList<BERoleTime> roleTimes;
-    private BEVehicle noVehicle;
 
     public GUIFireman() {
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setTitle(MessageDialog.getInstance().firemanTitle());
         initComponents();
         initializeSettings();
-        
+
     }
 
     /**
@@ -45,19 +44,16 @@ public class GUIFireman extends javax.swing.JFrame {
     private void initializeSettings() {
         firemanListModel = new DefaultListModel<>();
         lstManpower.setModel(firemanListModel);
-        fillFiremanList();
-        fillVehicleCombo();
-        fillIncidentTypeCombo();
-        fillIncidentCombo();
+        fillBoxes();
         addListeners();
         setManpowerEnabled(false);
         setMyContributionEnabled(false);
-        setMyFunctionEnabled(false);
-        txtManHours.setText(MessageDialog.getInstance().manHoursText());
+        setAllFunctionsEnabled(false);
+        txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
         tblAttendance.setModel(roleTimeModel);
         sorter = new TableRowSorter<>(roleTimeModel);
-        
+
     }
 
     /**
@@ -68,7 +64,9 @@ public class GUIFireman extends javax.swing.JFrame {
         btnAction btn = new btnAction();
         lstAction lst = new lstAction();
         txtAction txt = new txtAction();
+        txtFocus txtFc = new txtFocus();
         txtManHours.addKeyListener(txt);
+        txtManHours.addFocusListener(txtFc);
         lstManpower.addListSelectionListener(lst);
         btnSave.addActionListener(btn);
         btnBM.addActionListener(btn);
@@ -76,54 +74,68 @@ public class GUIFireman extends javax.swing.JFrame {
         btnHL.addActionListener(btn);
         btnST.addActionListener(btn);
         cmbIncident.addItemListener(cmb);
+        cmbVehicle.addItemListener(cmb);
 
     }
 
     /**
-     * Fills Up Fireman ComboBox
+     * Fills the Fireman List ordered by HL-BM and then lastname
      */
     private void fillFiremanList() {
         for (BEFireman befireman : BLLFireman.getInstance().readAllFiremen()) {
-            firemanListModel.addElement(befireman);
+            if(befireman.isM_isTeamLeader())
+                firemanListModel.addElement(befireman);
+        }
+        for (BEFireman befireman : BLLFireman.getInstance().readAllFiremen()) {
+            if(!befireman.isM_isTeamLeader())
+                firemanListModel.addElement(befireman);
         }
     }
 
     /**
-     * Fills Up the Vehicle ComboBox
+     * Fills the Vehicle ComboBox
      */
     private void fillVehicleCombo() {
-        cmbVehicle.addItem("Vælg Køretøj..");
+        cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
         for (BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles()) {
-            if(bevehicle.getM_odinNumber() != 0)
-                cmbVehicle.addItem(bevehicle);
-            else
-                noVehicle = bevehicle;
+            cmbVehicle.addItem(bevehicle);
         }
     }
 
     /**
-     * Fills Up the IncidentType ComboBox
+     * Fills the IncidentType ComboBox
      */
     private void fillIncidentTypeCombo() {
-        cmbIncidentType.addItem("Vælg Type..");
+        cmbIncidentType.addItem(MessageDialog.getInstance().firemanComboIncidentType());
         for (BEIncidentType beincidenttype : BLLFireman.getInstance().readAllIncidentTypes()) {
             cmbIncidentType.addItem(beincidenttype);
         }
     }
 
     /**
-     * Fills up the Incident ComboBox
+     * Fills the Incident ComboBox
      */
     private void fillIncidentCombo() {
-        cmbIncident.addItem("Lav en ny / Vælg eksisterende..");
+        cmbIncident.addItem(MessageDialog.getInstance().firemanComboIncident());
         for (BEIncident beincident : BLLFireman.getInstance().readIncompleteIncidents()) {
             cmbIncident.addItem(beincident);
         }
     }
+    
+    /**
+     * Fills all ComboBoxes
+     */
+    private void fillBoxes(){
+        fillFiremanList();
+        fillVehicleCombo();
+        fillIncidentTypeCombo();
+        fillIncidentCombo();
+    }
 
     /**
      * Set the manPower List to be enabled or disabled
-     * @param enable 
+     *
+     * @param enable
      */
     private void setManpowerEnabled(boolean enable) {
         lstManpower.setEnabled(enable);
@@ -131,7 +143,8 @@ public class GUIFireman extends javax.swing.JFrame {
 
     /**
      * Sets the contribution components to be enabled or disabled
-     * @param enable 
+     *
+     * @param enable
      */
     private void setMyContributionEnabled(boolean enable) {
         cmbVehicle.setEnabled(enable);
@@ -141,18 +154,46 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Set the 4 role buttons to be enabled or disabled
-     * @param enable 
+     * Enables or disables the BM and CH button
+     *
+     * @param enable
      */
-    private void setMyFunctionEnabled(boolean enable) {
+    private void setBM_CHFunctionEnabled(boolean enable) {
         btnBM.setEnabled(enable);
         btnCH.setEnabled(enable);
-        btnST.setEnabled(enable);
-        btnHL.setEnabled(enable);
     }
 
     /**
-     * Clears the infoBox
+     * Enables or disables the ST-button
+     * 
+     * @param enable 
+     */
+    private void setSTFunctionEnabled(boolean enable) {
+        btnST.setEnabled(enable);
+    }
+    
+    /**
+     * Enables or disables the HL-button
+     * 
+     * @param enable 
+     */
+    private void setHLFunctionEnabled(boolean enable){
+        btnHL.setEnabled(enable);
+    }
+    
+    /**
+     * Enables or disables all functions (CH, BM, HL, ST)
+     * 
+     * @param enable 
+     */
+    private void setAllFunctionsEnabled(boolean enable){
+        setBM_CHFunctionEnabled(enable);
+        setSTFunctionEnabled(enable);
+        setHLFunctionEnabled(enable);
+    }
+
+    /**
+     * Clears the Info panel
      */
     private void clearInfoBox() {
         txtIncidentName.setText("");
@@ -160,12 +201,26 @@ public class GUIFireman extends javax.swing.JFrame {
         ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText("");
         cmbIncidentType.setSelectedIndex(0);
         roleTimeModel.setRoleTimeList(EMPTY_ARRAY_LIST);
+        clearMyContribution();
     }
 
     /**
+     * Clears and disables the My Contribution panel
+     */
+    private void clearMyContribution(){
+        lstManpower.clearSelection();
+        cmbVehicle.setSelectedIndex(0);
+        cmbVehicle.setEnabled(false);
+        txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
+        txtManHours.setEnabled(false);
+        setSTFunctionEnabled(false);
+        setBM_CHFunctionEnabled(false);
+        setHLFunctionEnabled(false);
+    }
+    /**
      * Invokes this method when the Incident ComboBox changes values
      */
-    private void onComboChange() {
+    private void onComboIncidentChange() {
         setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
         lstManpower.clearSelection();
         if (cmbIncident.getSelectedIndex() != 0) {
@@ -176,7 +231,7 @@ public class GUIFireman extends javax.swing.JFrame {
             txtIncidentTime.setText(txtIncidentTime.getText().substring(0, 5));
             cmbIncidentType.setSelectedItem(selected.getM_incidentType());
             roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime(selected));
-            
+            clearMyContribution();
         } else {
             clearInfoBox();
         }
@@ -214,39 +269,38 @@ public class GUIFireman extends javax.swing.JFrame {
         }
 
     }
-    
+
     /**
      * Updates the current selected Incident
+     *
      * @param selected
      * @param incidentname
      * @param sqlDate
      * @param time
-     * @param incidenttype 
+     * @param incidenttype
      */
-    private void updateIncident(BEIncident selected, String incidentname, Date sqlDate, Time time, BEIncidentType incidenttype){
-            selected.setM_incidentName(incidentname);
-            selected.setM_date(sqlDate);
-            selected.setM_time(time);
-            selected.setM_incidentType(incidenttype);
-            selected.isM_isDone();
-            BLLFireman.getInstance().updateFireman(selected);
+    private void updateIncident(BEIncident selected, String incidentname, Date sqlDate, Time time, BEIncidentType incidenttype) {
+        selected.setM_incidentName(incidentname);
+        selected.setM_date(sqlDate);
+        selected.setM_time(time);
+        selected.setM_incidentType(incidenttype);
+        selected.isM_isDone();
+        BLLFireman.getInstance().updateFireman(selected);
     }
 
     /**
-     * @return BERoleTime with links to all the relevant BE classes 
+     * @return BERoleTime with links to all the relevant BE classes
      */
-    private BERoleTime getMyContribution() {
+    private BERoleTime myContribution(boolean station) {
         BEIncident incident = (BEIncident) cmbIncident.getSelectedItem();
         BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
-        BEVehicle vehicle;
-        if(cmbVehicle.getSelectedIndex() == 0){
-            vehicle = noVehicle;
-        } else
+        boolean isOnStaion = station;
+        BEVehicle vehicle = null;
+        if (cmbVehicle.getSelectedIndex() != 0) {
             vehicle = (BEVehicle) cmbVehicle.getSelectedItem();
+        }
         int time = Integer.parseInt(txtManHours.getText());
-        BERoleTime roletime = new BERoleTime(fireman, incident, null, vehicle, time);
-        
-        
+        BERoleTime roletime = new BERoleTime(incident, fireman, isOnStaion, null, vehicle, time);
         return roletime;
     }
 
@@ -254,9 +308,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the ST button is pressed
      */
     private void onClickST() {
-        BERoleTime tmp = getMyContribution();
-        tmp.setM_vehicle(noVehicle);
-        BLLFireman.getInstance().createSTOnIncident(getMyContribution());
+        BLLFireman.getInstance().createSTOnIncident(myContribution(true));
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -264,7 +316,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the BM button is pressed
      */
     private void onClickBM() {
-        BLLFireman.getInstance().createBMOnIncident(getMyContribution());
+        BLLFireman.getInstance().createBMOnIncident(myContribution(false));
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -272,7 +324,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the CH button is pressed
      */
     private void onClickCH() {
-        BLLFireman.getInstance().createCHOnIncident(getMyContribution());
+        BLLFireman.getInstance().createCHOnIncident(myContribution(false));
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -280,7 +332,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the HL button is pressed
      */
     private void onClickHL() {
-        BLLFireman.getInstance().createHLOnIncident(getMyContribution());
+        BLLFireman.getInstance().createHLOnIncident(myContribution(false));
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -289,22 +341,39 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onListChange() {
         setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
-
+        CheckHoursAndVehicles();
     }
 
     /**
-     * Invokes this method when the text field for hours is being used
+     * Enables and disables the buttons depending on conditions
      */
-    private void onTxtChange() {
-        boolean enable = txtManHours.getText().isEmpty()
-                || txtManHours.getText().equals(MessageDialog.getInstance().manHoursText());
-        btnBM.setEnabled(!enable);
-        btnCH.setEnabled(!enable);
-        btnHL.setEnabled(!enable);
-        btnST.setEnabled(!enable);
+    private void CheckHoursAndVehicles() {
+        if(lstManpower.isSelectionEmpty()){
+            setAllFunctionsEnabled(!lstManpower.isSelectionEmpty());
+            return;
+        }
+        setSTFunctionEnabled(isTextIntegers());
+        if(isTextIntegers()){
+            setBM_CHFunctionEnabled(cmbVehicle.getSelectedIndex() != 0);
+            if(cmbVehicle.getSelectedIndex() != 0){
+                setHLFunctionEnabled(((BEFireman) lstManpower.getSelectedValue()).isM_isTeamLeader());
+            }
+        } else {
+            setBM_CHFunctionEnabled(false);
+            setHLFunctionEnabled(false);
+        }
+       
         
     }
 
+    /**
+     * Checks if the ManHours text field is empty or contains the premade text
+     * 
+     * @return boolean
+     */
+    private boolean isTextIntegers(){
+        return !(txtManHours.getText().isEmpty() || txtManHours.getText().equals(MessageDialog.getInstance().firemanTextHours()));
+    }
     /**
      * Listener for the Incident ComboBox
      */
@@ -312,7 +381,11 @@ public class GUIFireman extends javax.swing.JFrame {
 
         @Override
         public void itemStateChanged(ItemEvent e) {
-            onComboChange();
+            if (e.getSource().equals(cmbIncident)) {
+                onComboIncidentChange();
+            } else {
+                CheckHoursAndVehicles();
+            }
         }
     }
 
@@ -346,7 +419,6 @@ public class GUIFireman extends javax.swing.JFrame {
         public void valueChanged(ListSelectionEvent e) {
             onListChange();
         }
-
     }
 
     /**
@@ -356,9 +428,21 @@ public class GUIFireman extends javax.swing.JFrame {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            onTxtChange();
+            CheckHoursAndVehicles();
         }
     }
+    
+    /**
+     * focusListener for the text field
+     */
+    private class txtFocus extends FocusAdapter{
+
+        @Override
+        public void focusGained(FocusEvent e) {
+            txtManHours.setText("");
+            CheckHoursAndVehicles();
+        }
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

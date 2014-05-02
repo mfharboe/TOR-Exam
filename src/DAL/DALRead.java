@@ -228,25 +228,28 @@ public class DALRead {
             for(BEIncident be : readIncidents())
                 if(be.getM_id() == incidentid)
                     refIncident = be;
+            
             int firemanid = result.getInt("firemanId");
             BEFireman refFireman = null;
             for(BEFireman be : readFiremen())
                 if(be.getM_id() == firemanid)
                     refFireman = be;
+            
+            boolean isOnStation = result.getBoolean("isOnStation");
             int roleid = result.getInt("roleId");
             BERole refRole = null;
             for(BERole be : readRoles())
                 if(be.getM_id() == roleid)
                     refRole = be;
+            
             int vehicleodinnumber = result.getInt("vehicleOdinNumber");
             BEVehicle refVehicle = null;
             for(BEVehicle be : readVehicles())
                 if(be.getM_odinNumber() == vehicleodinnumber)
                     refVehicle = be;
+            
             int hours = result.getInt("hours");
-            BERoleTime be = new BERoleTime(refFireman, refIncident, refRole, refVehicle, hours);
-            
-            
+            BERoleTime be = new BERoleTime(refIncident, refFireman, isOnStation, refRole, refVehicle, hours);
             res.add(be);
         }
         return res;
