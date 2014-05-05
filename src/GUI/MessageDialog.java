@@ -73,7 +73,7 @@ public class MessageDialog {
         return "Vælg materiel..";
     }
     
-    public String teamLeaderTextUsage() {
+    public String teamLeaderTextAmountMaterials() {
         return "Forbrug..";
     }
     
@@ -87,5 +87,9 @@ public class MessageDialog {
     
     public String teamLeaderTextGroup() {
         return "Gruppe nummer..";
+    }
+    
+    public final String EMPTY_TEXT(){
+        return "";
     }
 }

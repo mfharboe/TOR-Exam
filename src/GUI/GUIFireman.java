@@ -50,6 +50,7 @@ public class GUIFireman extends javax.swing.JFrame {
         setManpowerEnabled(false);
         setMyContributionEnabled(false);
         setAllFunctionsEnabled(false);
+        btnNext.setEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
         tblRoleTime.setModel(roleTimeModel);
@@ -85,12 +86,14 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void fillFiremanList() {
         for (BEFireman befireman : BLLFireman.getInstance().readAllFiremen()) {
-            if(befireman.isM_isTeamLeader())
+            if (befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
+            }
         }
         for (BEFireman befireman : BLLFireman.getInstance().readAllFiremen()) {
-            if(!befireman.isM_isTeamLeader())
+            if (!befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
+            }
         }
     }
 
@@ -123,11 +126,11 @@ public class GUIFireman extends javax.swing.JFrame {
             cmbIncident.addItem(beincident);
         }
     }
-    
+
     /**
      * Fills all ComboBoxes
      */
-    private void fillBoxes(){
+    private void fillBoxes() {
         fillFiremanList();
         fillVehicleCombo();
         fillIncidentTypeCombo();
@@ -151,7 +154,6 @@ public class GUIFireman extends javax.swing.JFrame {
     private void setMyContributionEnabled(boolean enable) {
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
-        btnNext.setEnabled(enable);
         tblRoleTime.setEnabled(enable);
     }
 
@@ -167,28 +169,28 @@ public class GUIFireman extends javax.swing.JFrame {
 
     /**
      * Enables or disables the ST-button
-     * 
-     * @param enable 
+     *
+     * @param enable
      */
     private void setSTFunctionEnabled(boolean enable) {
         btnST.setEnabled(enable);
     }
-    
+
     /**
      * Enables or disables the HL-button
-     * 
-     * @param enable 
+     *
+     * @param enable
      */
-    private void setHLFunctionEnabled(boolean enable){
+    private void setHLFunctionEnabled(boolean enable) {
         btnHL.setEnabled(enable);
     }
-    
+
     /**
      * Enables or disables all functions (CH, BM, HL, ST)
-     * 
-     * @param enable 
+     *
+     * @param enable
      */
-    private void setAllFunctionsEnabled(boolean enable){
+    private void setAllFunctionsEnabled(boolean enable) {
         setBM_CHFunctionEnabled(enable);
         setSTFunctionEnabled(enable);
         setHLFunctionEnabled(enable);
@@ -209,7 +211,7 @@ public class GUIFireman extends javax.swing.JFrame {
     /**
      * Clears and disables the My Contribution panel
      */
-    private void clearMyContribution(){
+    private void clearMyContribution() {
         lstManpower.clearSelection();
         cmbVehicle.setSelectedIndex(0);
         cmbVehicle.setEnabled(false);
@@ -219,11 +221,13 @@ public class GUIFireman extends javax.swing.JFrame {
         setBM_CHFunctionEnabled(false);
         setHLFunctionEnabled(false);
     }
+
     /**
      * Invokes this method when the Incident ComboBox changes values
      */
     private void onComboIncidentChange() {
         setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
+        btnNext.setEnabled(cmbIncident.getSelectedIndex() != 0);
         lstManpower.clearSelection();
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
@@ -234,6 +238,7 @@ public class GUIFireman extends javax.swing.JFrame {
             cmbIncidentType.setSelectedItem(selected.getM_incidentType());
             roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime(selected));
             clearMyContribution();
+
         } else {
             clearInfoBox();
         }
@@ -337,13 +342,12 @@ public class GUIFireman extends javax.swing.JFrame {
         BLLFireman.getInstance().createHLOnIncident(myContribution(false));
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
-    
-    private void onClickNext(){
-        JFrame guiteamleader =  GUITeamLeader.getInstance();
-        GUITeamLeader.getInstance().setIncident((BEIncident)cmbIncident.getSelectedItem());
+
+    private void onClickNext() {
+        JFrame guiteamleader = GUITeamLeader.getInstance();
+        GUITeamLeader.getInstance().setIncident((BEIncident) cmbIncident.getSelectedItem());
         guiteamleader.setVisible(true);
-        
-        
+
     }
 
     /**
@@ -358,32 +362,32 @@ public class GUIFireman extends javax.swing.JFrame {
      * Enables and disables the buttons depending on conditions
      */
     private void CheckHoursAndVehicles() {
-        if(lstManpower.isSelectionEmpty()){
+        if (lstManpower.isSelectionEmpty()) {
             setAllFunctionsEnabled(!lstManpower.isSelectionEmpty());
             return;
         }
         setSTFunctionEnabled(isTextIntegers());
-        if(isTextIntegers()){
+        if (isTextIntegers()) {
             setBM_CHFunctionEnabled(cmbVehicle.getSelectedIndex() != 0);
-            if(cmbVehicle.getSelectedIndex() != 0){
+            if (cmbVehicle.getSelectedIndex() != 0) {
                 setHLFunctionEnabled(((BEFireman) lstManpower.getSelectedValue()).isM_isTeamLeader());
             }
         } else {
             setBM_CHFunctionEnabled(false);
             setHLFunctionEnabled(false);
         }
-       
-        
+
     }
 
     /**
      * Checks if the ManHours text field is empty or contains the premade text
-     * 
+     *
      * @return boolean
      */
-    private boolean isTextIntegers(){
+    private boolean isTextIntegers() {
         return !(txtManHours.getText().isEmpty() || txtManHours.getText().equals(MessageDialog.getInstance().firemanTextHours()));
     }
+
     /**
      * Listener for the Incident ComboBox
      */
@@ -416,8 +420,9 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickCH();
             } else if (e.getSource().equals(btnHL)) {
                 onClickHL();
-            }else if (e.getSource().equals(btnNext))
+            } else if (e.getSource().equals(btnNext)) {
                 onClickNext();
+            }
         }
     }
 
@@ -442,18 +447,18 @@ public class GUIFireman extends javax.swing.JFrame {
             CheckHoursAndVehicles();
         }
     }
-    
+
     /**
      * focusListener for the text field
      */
-    private class txtFocus extends FocusAdapter{
+    private class txtFocus extends FocusAdapter {
 
         @Override
         public void focusGained(FocusEvent e) {
             txtManHours.setText("");
             CheckHoursAndVehicles();
         }
-}
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

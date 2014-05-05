@@ -1,10 +1,10 @@
-
 package DAL;
 
 import BE.BEIncident;
 import BE.BEIncidentType;
 import BE.BEIncidentVehicle;
 import BE.BERoleTime;
+import BE.BEUsage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,14 +12,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
 public class DALCreate {
-    
+
     Connection m_connection;
     private static DALCreate m_instance;
-    
+
     ArrayList<BEIncidentType> resIncidentType;
-  
 
     private DALCreate() {
         m_connection = DB_Connection.getInstance().getConnection();
@@ -34,10 +32,12 @@ public class DALCreate {
         }
         return m_instance;
     }
+
     /**
      * Creates a new incident in the DB
+     *
      * @param c
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void createIncident(BEIncident c) throws SQLException {
         String sql = "insert into Incident values (?,?,?,?,?); ";
@@ -48,16 +48,17 @@ public class DALCreate {
         ps.setInt(4, c.getM_incidentType().getM_id());
         ps.setBoolean(5, c.isM_isDone());
         ps.executeUpdate();
-        
+
         String sql2 = "Select * from Incident where incident.id = (Select MAX(id) from Incident);";
         Statement stm = m_connection.createStatement();
         stm.execute(sql2);
         ResultSet result = stm.getResultSet();
-        while(result.next())
-        c.setM_id(result.getInt("id"));
-      
+        while (result.next()) {
+            c.setM_id(result.getInt("id"));
+        }
+
     }
-    
+
     public void createRoleTime(BERoleTime be) throws SQLException {
         String sql = "insert into [Role/Time] values (?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
@@ -65,16 +66,17 @@ public class DALCreate {
         ps.setInt(2, be.getM_fireman().getM_id());
         ps.setBoolean(3, be.isM_isOnStation());
         ps.setInt(4, be.getM_role().getM_id());
-        
-        if(be.getM_vehicle() == null){
+
+        if (be.getM_vehicle() == null) {
             ps.setString(5, null);
-        } else 
+        } else {
             ps.setInt(5, be.getM_vehicle().getM_odinNumber());
+        }
         ps.setInt(6, be.getM_hours());
         ps.executeUpdate();
     }
-    
-    public void createIncidentVehicle(BEIncidentVehicle be) throws SQLException{
+
+    public void createIncidentVehicle(BEIncidentVehicle be) throws SQLException {
         String sql = " insert into [Incident/Vehicle] values (?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setInt(1, be.getM_incident().getM_id());
@@ -83,7 +85,16 @@ public class DALCreate {
         ps.setInt(4, be.getM_amountCrew());
         ps.setBoolean(5, be.isM_isDiverged());
         ps.executeUpdate();
-                
+
     }
-    
+
+    public void createUsage(BEUsage be) throws SQLException {
+        String sql = "insert into Usage values (?,?,?)";
+        PreparedStatement ps = m_connection.prepareCall(sql);
+        ps.setInt(1, be.getM_material().getM_id());
+        ps.setInt(2, be.getM_amount());
+        ps.setInt(3, be.getM_incident().getM_id());
+        ps.executeUpdate();
+    }
+
 }

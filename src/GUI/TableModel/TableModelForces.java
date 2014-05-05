@@ -70,7 +70,7 @@ public class TableModelForces extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public BEIncidentVehicle getRoleTimeByRow(int row) {
+    public BEIncidentVehicle getForcesByRow(int row) {
         return forces.get(row);
     }
 

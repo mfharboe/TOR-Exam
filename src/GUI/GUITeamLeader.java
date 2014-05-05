@@ -3,6 +3,7 @@ package GUI;
 import BE.BEAlarm;
 import BE.BEEmergency;
 import BE.BEIncident;
+import BE.BEIncidentDetails;
 import BE.BEIncidentVehicle;
 import BE.BEMaterial;
 import BE.BEUsage;
@@ -17,7 +18,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
-import sun.security.jca.GetInstance;
 
 public class GUITeamLeader extends javax.swing.JFrame {
 
@@ -29,8 +29,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private ArrayList<BEUsage> usageList;
     private ArrayList<BEIncidentVehicle> forcesList;
     private BEIncident m_incident;
-   
-   
 
     /**
      * Creates new form GUITeamLeader
@@ -52,8 +50,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void initializeSettings() {
         addListeners();
         fillBoxes();
+        clearForces();
+        clearMaterials();
         usageList = new ArrayList<>();
-        forcesList  = new ArrayList<>();
+        forcesList = new ArrayList<>();
         usageModel = new TableModelUsage(usageList);
         forcesModel = new TableModelForces(forcesList);
         tblUsage.setModel(usageModel);
@@ -68,8 +68,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void addListeners() {
         btnAction btn = new btnAction();
         txtAction txt = new txtAction();
-        txtAmount.addKeyListener(txt);
-        txtMaterielAmount.addKeyListener(txt);
+        txtAmountMen.addKeyListener(txt);
+        txtAmountMaterial.addKeyListener(txt);
         btnAddForces.addActionListener(btn);
         btnAddMateriel.addActionListener(btn);
         btnSaveAndFinish.addActionListener(btn);
@@ -102,7 +102,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
             cmbAlarmType.addItem(bealarm);
         }
 
-
     }
 
     private void fillMaterialCombo() {
@@ -111,29 +110,63 @@ public class GUITeamLeader extends javax.swing.JFrame {
             cmbMaterial.addItem(bematerial);
         }
     }
+
+    private void clearIncidentDetails() {
+        txtIncidentLeader.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtMessage.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtEvaNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtFireReportNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtInvolvedName.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtInvolvedAddress.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtRemarks.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        cmbAlarmType.setSelectedIndex(0);
+    }
     
-    public void setIncident(BEIncident beincident){
+    private void clearForces(){
+        cmbVehicle.setSelectedIndex(0);
+        cmbEmergency.setSelectedIndex(0);
+        txtAmountMen.setText(MessageDialog.getInstance().teamLeaderTextAmountMen());
+        chkIsDiverged.setSelected(false);
+    }
+    private void clearMaterials(){
+        cmbMaterial.setSelectedIndex(0);
+        txtAmountMaterial.setText(MessageDialog.getInstance().teamLeaderTextAmountMaterials());
+    }
+
+    public void setIncident(BEIncident beincident) {
         m_incident = beincident;
         forcesModel.setForceList(BLLTeamLeader.getInstance().incidentToIncidentVehicle(m_incident));
-        
+        usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
+        BEIncidentDetails details = BLLTeamLeader.getInstance().incidentToIncidentDetails(m_incident);
+        if (details == null) {
+            clearIncidentDetails();
+        } else {
+            txtIncidentLeader.setText(details.getM_incidentLeader());
+            txtMessage.setText(details.getM_message());
+            txtEvaNumber.setText(details.getM_evaNumber());
+            txtFireReportNumber.setText(details.getM_fireReport());
+            txtInvolvedName.setText(details.getM_involvedName());
+            txtInvolvedAddress.setText(details.getM_involvedAddress());
+            txtRemarks.setText(details.getM_remark());
+            cmbAlarmType.setSelectedItem(details.getM_alarm());
+        }
     }
-    private BEIncidentVehicle getMyForcesContribution(){
-        BEVehicle bevehicle = (BEVehicle)cmbVehicle.getSelectedItem();
+
+    private BEIncidentVehicle getMyForcesContribution() {
+        BEVehicle bevehicle = (BEVehicle) cmbVehicle.getSelectedItem();
         BEEmergency beemergency = (BEEmergency) cmbEmergency.getSelectedItem();
-        int amount = Integer.parseInt(txtAmount.getText());
+        int amount = Integer.parseInt(txtAmountMen.getText());
         boolean isdiverged = chkIsDiverged.isSelected();
         BEIncidentVehicle beincidentvehicle = new BEIncidentVehicle(m_incident, bevehicle, beemergency, amount, isdiverged);
-        
+
         return beincidentvehicle;
-        
     }
 
     private void onClickAddForces() {
         if (isForcesfilled()) {
             BLLTeamLeader.getInstance().createIncidentVehicle(getMyForcesContribution());
             forcesModel.setForceList(BLLTeamLeader.getInstance().incidentToIncidentVehicle(m_incident));
-            
-            
+            clearForces();
         }
     }
 
@@ -144,9 +177,34 @@ public class GUITeamLeader extends javax.swing.JFrame {
         if (cmbEmergency.getSelectedIndex() == 0) {
             return false;
         }
-        if (txtAmount.getText().isEmpty() || txtAmount.getText().equals(MessageDialog.getInstance().teamLeaderTextAmountMen())) {
+        if (txtAmountMen.getText().isEmpty() || txtAmountMen.getText().equals(MessageDialog.getInstance().teamLeaderTextAmountMen())) {
             return false;
-            
+
+        }
+        return true;
+    }
+
+    private BEUsage getMyMaterialContribution() {
+        BEMaterial bematerial = (BEMaterial) cmbMaterial.getSelectedItem();
+        int amount = Integer.parseInt(txtAmountMaterial.getText());
+        BEUsage beusage = new BEUsage(0, bematerial, amount, m_incident);
+        return beusage;
+    }
+
+    private void onClickAddMaterial() {
+        if (isUsageFilled()) {
+            BLLTeamLeader.getInstance().createUsage(getMyMaterialContribution());
+            usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
+            clearMaterials();
+        }
+    }
+
+    private boolean isUsageFilled() {
+        if (cmbMaterial.getSelectedIndex() == 0) {
+            return false;
+        }
+        if (txtAmountMaterial.getText().isEmpty() || txtAmountMaterial.getText().equals(MessageDialog.getInstance().teamLeaderTextAmountMaterials())) {
+            return false;
         }
         return true;
     }
@@ -157,6 +215,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btnAddForces)) {
                 onClickAddForces();
+            } else if (e.getSource().equals(btnAddMateriel)) {
+                onClickAddMaterial();
             }
 
         }
@@ -187,10 +247,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblForces = new javax.swing.JTable();
         btnAddForces = new javax.swing.JButton();
-        txtAmount = new javax.swing.JTextField();
+        txtAmountMen = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         cmbMaterial = new javax.swing.JComboBox();
-        txtMaterielAmount = new javax.swing.JTextField();
+        txtAmountMaterial = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsage = new javax.swing.JTable();
@@ -253,16 +313,16 @@ public class GUITeamLeader extends javax.swing.JFrame {
         btnAddForces.setText("Tilføj");
         jPanel1.add(btnAddForces);
         btnAddForces.setBounds(220, 140, 90, 40);
-        jPanel1.add(txtAmount);
-        txtAmount.setBounds(20, 80, 140, 40);
+        jPanel1.add(txtAmountMen);
+        txtAmountMen.setBounds(20, 80, 140, 40);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forbrug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel2.setLayout(null);
 
         jPanel2.add(cmbMaterial);
         cmbMaterial.setBounds(18, 32, 290, 40);
-        jPanel2.add(txtMaterielAmount);
-        txtMaterielAmount.setBounds(20, 80, 140, 40);
+        jPanel2.add(txtAmountMaterial);
+        txtAmountMaterial.setBounds(20, 80, 140, 40);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("liter/stk/kg");
@@ -446,7 +506,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tblForces;
     private javax.swing.JTable tblUsage;
-    private javax.swing.JTextField txtAmount;
+    private javax.swing.JTextField txtAmountMaterial;
+    private javax.swing.JTextField txtAmountMen;
     private javax.swing.JTextField txtDetectorNumber;
     private javax.swing.JTextField txtEvaNumber;
     private javax.swing.JTextField txtFireReportNumber;
@@ -454,7 +515,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JTextField txtIncidentLeader;
     private javax.swing.JTextField txtInvolvedAddress;
     private javax.swing.JTextField txtInvolvedName;
-    private javax.swing.JTextField txtMaterielAmount;
     private javax.swing.JTextField txtMessage;
     private javax.swing.JTextArea txtRemarks;
     // End of variables declaration//GEN-END:variables

@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BLL;
 
 import BE.BEAlarm;
 import BE.BEEmergency;
 import BE.BEIncident;
+import BE.BEIncidentDetails;
 import BE.BEIncidentVehicle;
 import BE.BEMaterial;
 import BE.BEUsage;
@@ -17,10 +14,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Morten
- */
 public class BLLTeamLeader {
 
     private static BLLTeamLeader m_instance;
@@ -29,9 +22,10 @@ public class BLLTeamLeader {
     ArrayList<BEIncidentVehicle> incidentVehicles;
     ArrayList<BEEmergency> emergencies;
     ArrayList<BEAlarm> alarms;
+    ArrayList<BEIncidentDetails> incidentDetails;
 
     private BLLTeamLeader() {
-        
+
     }
 
     public static BLLTeamLeader getInstance() {
@@ -96,22 +90,64 @@ public class BLLTeamLeader {
         return alarms;
 
     }
-    
-    public void createIncidentVehicle(BEIncidentVehicle be){
+
+    public ArrayList<BEIncidentDetails> readIncidentDetails() {
+        if (incidentDetails == null) {
+            try {
+                incidentDetails = DALRead.getInstance().readIncidentDetails();
+            } catch (SQLException ex) {
+                Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return incidentDetails;
+    }
+
+    public void createIncidentVehicle(BEIncidentVehicle be) {
         try {
             DALCreate.getInstance().createIncidentVehicle(be);
         } catch (SQLException ex) {
-           return;
+            return;
         }
         readIncidentVehicles();
         incidentVehicles.add(be);
     }
-    public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident beincident){
+
+    public void createUsage(BEUsage be) {
+        try {
+            DALCreate.getInstance().createUsage(be);
+        } catch (SQLException ex) {
+            return;
+        }
+        usages.add(be);
+    }
+
+    public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident beincident) {
         ArrayList<BEIncidentVehicle> beincidentvehicle = new ArrayList<>();
-        for(BEIncidentVehicle be : readIncidentVehicles())
-            if(be.getM_incident().getM_id() == beincident.getM_id())
+        for (BEIncidentVehicle be : readIncidentVehicles()) {
+            if (be.getM_incident().getM_id() == beincident.getM_id()) {
                 beincidentvehicle.add(be);
+            }
+        }
         return beincidentvehicle;
     }
+
+    public ArrayList<BEUsage> incidentToUsage(BEIncident beincident) {
+        ArrayList<BEUsage> beusage = new ArrayList<>();
+        for (BEUsage be : readUsage()) {
+            if (be.getM_incident().getM_id() == beincident.getM_id()) {
+                beusage.add(be);
+            }
+        }
+        return beusage;
+    }
     
+    public BEIncidentDetails incidentToIncidentDetails(BEIncident beincident) {
+        for(BEIncidentDetails be : readIncidentDetails()) {
+            if(be.getM_incident().getM_id() == beincident.getM_id()){
+                return be;
+            }
+        }
+        return null;
+    }
+
 }

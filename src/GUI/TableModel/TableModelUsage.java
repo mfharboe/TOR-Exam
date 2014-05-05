@@ -90,7 +90,7 @@ public class TableModelUsage extends AbstractTableModel {
      * 
      * @param usageList 
      */
-    public void setRoleTimeList(ArrayList<BEUsage> usageList) {
+    public void setUsageList(ArrayList<BEUsage> usageList) {
         usage = usageList;
         fireTableDataChanged();
     }
@@ -100,7 +100,7 @@ public class TableModelUsage extends AbstractTableModel {
      * @param row
      * @return 
      */
-    public BEUsage getRoleTimeByRow(int row) {
+    public BEUsage getUsageByRow(int row) {
         return usage.get(row);
     }
     
