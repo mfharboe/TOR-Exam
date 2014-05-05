@@ -2,11 +2,16 @@
 package GUI;
 
 import BE.BEUsage;
-import javax.swing.DefaultListModel;
+import GUI.TableModel.TableModelUsage;
+import java.util.ArrayList;
+import javax.swing.table.TableRowSorter;
 
 public class GUITeamLeader extends javax.swing.JFrame {
     
-    DefaultListModel<BEUsage> usageListModel;
+    TableRowSorter<TableModelUsage> sorter;
+    private TableModelUsage usageModel;
+   // private TableModelForces forcesModel;
+    private static final ArrayList<BEUsage> EMPTY_ARRAY_LIST = new ArrayList<>();
     
 
     /**
@@ -19,8 +24,16 @@ public class GUITeamLeader extends javax.swing.JFrame {
     }
     
     private void initializeSettings(){
-        
+      //  addListeners();
+        usageModel = new TableModelUsage(EMPTY_ARRAY_LIST);
+       // forcesModel = new TableModelForces(EMPTY_ARRAY_LIST);
+        tblUsage.setModel(usageModel);
+       // tblForces.setModel(forcesModel);
+        sorter = new TableRowSorter<>(usageModel);
+       // sorter = new TableRowSorter<>(forcesModel);
     }
+    
+    
     
     
     
@@ -56,7 +69,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtMaterielAmount = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblMateriel = new javax.swing.JTable();
+        tblUsage = new javax.swing.JTable();
         btnAddMateriel = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtFireReportNumber = new javax.swing.JTextField();
@@ -147,7 +160,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel2.add(jLabel3);
         jLabel3.setBounds(120, 90, 100, 20);
 
-        tblMateriel.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsage.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -158,7 +171,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblMateriel);
+        jScrollPane1.setViewportView(tblUsage);
 
         jPanel2.add(jScrollPane1);
         jScrollPane1.setBounds(330, 30, 730, 150);
@@ -289,7 +302,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable tblForces;
-    private javax.swing.JTable tblMateriel;
+    private javax.swing.JTable tblUsage;
     private javax.swing.JTextField txtAmount;
     private javax.swing.JTextField txtDetectorNumber;
     private javax.swing.JTextField txtEvaNumber;
