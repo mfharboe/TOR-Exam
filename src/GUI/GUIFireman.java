@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -73,6 +74,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnCH.addActionListener(btn);
         btnHL.addActionListener(btn);
         btnST.addActionListener(btn);
+        btnNext.addActionListener(btn);
         cmbIncident.addItemListener(cmb);
         cmbVehicle.addItemListener(cmb);
 
@@ -335,6 +337,14 @@ public class GUIFireman extends javax.swing.JFrame {
         BLLFireman.getInstance().createHLOnIncident(myContribution(false));
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
+    
+    private void onClickNext(){
+        JFrame guiteamleader =  GUITeamLeader.getInstance();
+        GUITeamLeader.getInstance().setIncident((BEIncident)cmbIncident.getSelectedItem());
+        guiteamleader.setVisible(true);
+        
+        
+    }
 
     /**
      * Invokes this method when the list of firemen changes the selected value
@@ -406,7 +416,8 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickCH();
             } else if (e.getSource().equals(btnHL)) {
                 onClickHL();
-            }
+            }else if (e.getSource().equals(btnNext))
+                onClickNext();
         }
     }
 

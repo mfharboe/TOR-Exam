@@ -65,7 +65,7 @@ public class TableModelForces extends AbstractTableModel {
         return false;
     }
 
-    public void setRoleTimeList(ArrayList<BEIncidentVehicle> forcesList) {
+    public void setForceList(ArrayList<BEIncidentVehicle> forcesList) {
         forces = forcesList;
         fireTableDataChanged();
     }

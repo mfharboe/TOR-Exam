@@ -42,4 +42,7 @@ public class BEEmergency {
     public void setM_description(String m_description) {
         this.m_description = m_description;
     }
+    public String toString(){
+        return m_description;
+    }
 }

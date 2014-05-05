@@ -45,4 +45,8 @@ public class BEMaterial {
         this.m_description = m_description;
     }
     
+    public String toString(){
+        return m_description;
+    }
+    
 }

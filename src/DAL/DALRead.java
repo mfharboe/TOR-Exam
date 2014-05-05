@@ -288,7 +288,7 @@ public class DALRead {
     public ArrayList<BEMaterial> readMaterial() throws SQLException{
         ArrayList<BEMaterial> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
-        stm.execute("select * from Material");
+        stm.execute("select * from Material order by description");
         ResultSet result = stm.getResultSet();
         while(result.next()){
             int id = result.getInt("id");
@@ -307,7 +307,7 @@ public class DALRead {
         ResultSet result = stm.getResultSet();
         while(result.next()){
            int id = result.getInt("id");
-           String description = result.getString("description");
+           String description = result.getString("emergencyDescription");
            
            BEEmergency be = new BEEmergency(id, description);
            res.add(be);
@@ -318,10 +318,13 @@ public class DALRead {
     public ArrayList<BEIncidentVehicle> readIncidentVehicle() throws SQLException{
         ArrayList<BEIncidentVehicle> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
-        stm.execute("select * from [Incident/Vehicle]");
+        stm.execute("Select [Incident/Vehicle].incidentId, [Incident/Vehicle].odinNumber,"
+                + " [Incident/Vehicle].emergencyId, [Incident/Vehicle].amountCrew, "
+                + "[Incident/Vehicle].isDiverged from [Incident/Vehicle] "
+                + "inner join Incident on incidentId = incident.id where incident.isDone = 0");
         ResultSet result = stm.getResultSet();
         while(result.next()){
-            int incidentId = result.getInt("inidentId");
+            int incidentId = result.getInt("incidentId");
             BEIncident refIncident = null;
             for(BEIncident be : readIncidents())
                 if(be.getM_id() == incidentId)
@@ -346,5 +349,6 @@ public class DALRead {
         return res;
         
     }
+    
     
 }

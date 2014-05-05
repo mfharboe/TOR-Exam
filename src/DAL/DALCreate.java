@@ -3,6 +3,7 @@ package DAL;
 
 import BE.BEIncident;
 import BE.BEIncidentType;
+import BE.BEIncidentVehicle;
 import BE.BERoleTime;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,6 +72,18 @@ public class DALCreate {
             ps.setInt(5, be.getM_vehicle().getM_odinNumber());
         ps.setInt(6, be.getM_hours());
         ps.executeUpdate();
+    }
+    
+    public void createIncidentVehicle(BEIncidentVehicle be) throws SQLException{
+        String sql = " insert into [Incident/Vehicle] values (?,?,?,?,?)";
+        PreparedStatement ps = m_connection.prepareStatement(sql);
+        ps.setInt(1, be.getM_incident().getM_id());
+        ps.setInt(2, be.getM_vehicle().getM_odinNumber());
+        ps.setInt(3, be.getM_emergency().getM_id());
+        ps.setInt(4, be.getM_amountCrew());
+        ps.setBoolean(5, be.isM_isDiverged());
+        ps.executeUpdate();
+                
     }
     
 }
