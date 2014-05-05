@@ -9,6 +9,7 @@ import BE.BEIncident;
 import BE.BEIncidentType;
 import BE.BERole;
 import BE.BERoleTime;
+import BE.BEUsage;
 import BE.BEVehicle;
 import DAL.DALCreate;
 import DAL.DALRead;
@@ -29,6 +30,7 @@ public class BLLFireman {
     ArrayList<BEVehicle> vehicles;
     ArrayList<BERole> roles;
     ArrayList<BERoleTime> roletimes;
+    
 
     private BLLFireman() {
     }
@@ -136,6 +138,8 @@ public class BLLFireman {
         }
         return roletimes;
     }
+    
+    
 
     public void createIncident(BEIncident be) {
         try {
@@ -224,4 +228,6 @@ public class BLLFireman {
 
         return beroletime;
     }
+    
+  
 }
