@@ -1,18 +1,26 @@
-
 package GUI;
 
+import BE.BEIncidentVehicle;
 import BE.BEUsage;
+import BE.BEVehicle;
+import BLL.BLLFireman;
+import GUI.TableModel.TableModelForces;
 import GUI.TableModel.TableModelUsage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
 
 public class GUITeamLeader extends javax.swing.JFrame {
     
-    TableRowSorter<TableModelUsage> sorter;
+    TableRowSorter<TableModelUsage> usageSorter;
+    TableRowSorter<TableModelForces> forcesSorter;
     private TableModelUsage usageModel;
-   // private TableModelForces forcesModel;
-    private static final ArrayList<BEUsage> EMPTY_ARRAY_LIST = new ArrayList<>();
-    
+    private TableModelForces forcesModel;
+    private static final ArrayList<BEUsage> EMPTY_USAGE_LIST = new ArrayList<>();
+    private static final ArrayList<BEIncidentVehicle> EMPTY_FORCES_LIST = new ArrayList<>();
 
     /**
      * Creates new form GUITeamLeader
@@ -23,27 +31,72 @@ public class GUITeamLeader extends javax.swing.JFrame {
         initializeSettings();
     }
     
-    private void initializeSettings(){
-      //  addListeners();
-        usageModel = new TableModelUsage(EMPTY_ARRAY_LIST);
-       // forcesModel = new TableModelForces(EMPTY_ARRAY_LIST);
+    private void initializeSettings() {
+        addListeners();
+        fillBoxes();
+        usageModel = new TableModelUsage(EMPTY_USAGE_LIST);
+        forcesModel = new TableModelForces(EMPTY_FORCES_LIST);
         tblUsage.setModel(usageModel);
-       // tblForces.setModel(forcesModel);
-        sorter = new TableRowSorter<>(usageModel);
-       // sorter = new TableRowSorter<>(forcesModel);
+        tblForces.setModel(forcesModel);
+        usageSorter = new TableRowSorter<>(usageModel);
+        forcesSorter = new TableRowSorter<>(forcesModel);
+        tblUsage.setRowSorter(usageSorter);
+        tblForces.setRowSorter(forcesSorter);
+        
     }
     
+    private void addListeners() {
+        btnAction btn = new btnAction();
+        txtAction txt = new txtAction();
+        txtAmount.addKeyListener(txt);
+        txtMaterielAmount.addKeyListener(txt);
+        btnAddForces.addActionListener(btn);
+        btnAddMateriel.addActionListener(btn);
+        btnSaveAndFinish.addActionListener(btn);
+    }
     
+    private void fillBoxes() {
+        fillEmergencyCombo();
+        fillMaterialCombo();
+        fillReportCombo();
+        fillVehicleCombo();
+    }
     
+    private void fillVehicleCombo() {
+        cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
+        for (BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles()) {
+            cmbVehicle.addItem(bevehicle);
+        }
+    }
     
+    private void fillEmergencyCombo() {
+        
+    }
     
+    private void fillReportCombo() {
+        
+    }
     
+    private void fillMaterialCombo() {
+        
+    }
     
+    private class btnAction implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+        }
+        
+    }
     
-    
-    
-    
-    
+    private class txtAction extends KeyAdapter {
+        
+        @Override
+        public void keyReleased(KeyEvent e) {
+            
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,13 +112,13 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         cmbVehicle = new javax.swing.JComboBox();
         cbxVariations = new javax.swing.JCheckBox();
-        cmbDrivingType = new javax.swing.JComboBox();
+        cmbEmergency = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblForces = new javax.swing.JTable();
         btnAddForces = new javax.swing.JButton();
         txtAmount = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        cmbMateriel = new javax.swing.JComboBox();
+        cmbMaterial = new javax.swing.JComboBox();
         txtMaterielAmount = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -107,7 +160,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Indsatte Styrker", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel1.setLayout(null);
 
-        cmbVehicle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Køretøj..." }));
         jPanel1.add(cmbVehicle);
         cmbVehicle.setBounds(20, 30, 140, 40);
 
@@ -115,9 +167,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel1.add(cbxVariations);
         cbxVariations.setBounds(170, 90, 93, 25);
 
-        cmbDrivingType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kørsels Type..." }));
-        jPanel1.add(cmbDrivingType);
-        cmbDrivingType.setBounds(170, 30, 140, 40);
+        cmbEmergency.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kørsels Type..." }));
+        jPanel1.add(cmbEmergency);
+        cmbEmergency.setBounds(170, 30, 140, 40);
 
         tblForces.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,9 +189,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         btnAddForces.setText("Tilføj");
         jPanel1.add(btnAddForces);
-        btnAddForces.setBounds(230, 140, 90, 40);
+        btnAddForces.setBounds(220, 140, 90, 40);
 
-        txtAmount.setText("Antal...");
+        txtAmount.setText("Bemanding..");
         jPanel1.add(txtAmount);
         txtAmount.setBounds(20, 80, 140, 40);
 
@@ -149,16 +201,18 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forbrug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel2.setLayout(null);
 
-        cmbMateriel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Materiel..." }));
-        jPanel2.add(cmbMateriel);
-        cmbMateriel.setBounds(18, 32, 290, 40);
+        cmbMaterial.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Materiel..." }));
+        jPanel2.add(cmbMaterial);
+        cmbMaterial.setBounds(18, 32, 290, 40);
+
+        txtMaterielAmount.setText("Forbrug..");
         jPanel2.add(txtMaterielAmount);
-        txtMaterielAmount.setBounds(20, 80, 90, 40);
+        txtMaterielAmount.setBounds(20, 80, 140, 40);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("liter/stk/kg");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(120, 90, 100, 20);
+        jLabel3.setBounds(170, 90, 100, 20);
 
         tblUsage.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -178,7 +232,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         btnAddMateriel.setText("Tilføj");
         jPanel2.add(btnAddMateriel);
-        btnAddMateriel.setBounds(230, 140, 90, 40);
+        btnAddMateriel.setBounds(220, 140, 90, 40);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(10, 310, 1080, 190);
@@ -279,8 +333,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JButton btnAddMateriel;
     private javax.swing.JButton btnSaveAndFinish;
     private javax.swing.JCheckBox cbxVariations;
-    private javax.swing.JComboBox cmbDrivingType;
-    private javax.swing.JComboBox cmbMateriel;
+    private javax.swing.JComboBox cmbEmergency;
+    private javax.swing.JComboBox cmbMaterial;
     private javax.swing.JComboBox cmbReport;
     private javax.swing.JComboBox cmbVehicle;
     private javax.swing.JLabel jLabel1;

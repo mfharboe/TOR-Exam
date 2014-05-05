@@ -68,9 +68,7 @@
         <Component class="javax.swing.JComboBox" name="cmbVehicle">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="1">
-                <StringItem index="0" value="V&#xe6;lg K&#xf8;ret&#xf8;j..."/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -89,7 +87,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cmbDrivingType">
+        <Component class="javax.swing.JComboBox" name="cmbEmergency">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
@@ -135,13 +133,13 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="230" y="140" width="90" height="40"/>
+              <AbsoluteConstraints x="220" y="140" width="90" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAmount">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Antal..."/>
+            <Property name="text" type="java.lang.String" value="Bemanding.."/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -171,7 +169,7 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JComboBox" name="cmbMateriel">
+        <Component class="javax.swing.JComboBox" name="cmbMaterial">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
@@ -186,9 +184,12 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="txtMaterielAmount">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Forbrug.."/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="80" width="90" height="40"/>
+              <AbsoluteConstraints x="20" y="80" width="140" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -201,7 +202,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="120" y="90" width="100" height="20"/>
+              <AbsoluteConstraints x="170" y="90" width="100" height="20"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -237,7 +238,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="230" y="140" width="90" height="40"/>
+              <AbsoluteConstraints x="220" y="140" width="90" height="40"/>
             </Constraint>
           </Constraints>
         </Component>

@@ -27,7 +27,7 @@ import javax.swing.table.TableRowSorter;
 public class GUIFireman extends javax.swing.JFrame {
 
     DefaultListModel<BEFireman> firemanListModel;
-    TableRowSorter<TableModelRoleTime> sorter;
+    TableRowSorter<TableModelRoleTime> roleTimeSorter;
     private TableModelRoleTime roleTimeModel;
     private static final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
 
@@ -51,9 +51,9 @@ public class GUIFireman extends javax.swing.JFrame {
         setAllFunctionsEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
-        tblAttendance.setModel(roleTimeModel);
-        sorter = new TableRowSorter<>(roleTimeModel);
-
+        tblRoleTime.setModel(roleTimeModel);
+        roleTimeSorter = new TableRowSorter<>(roleTimeModel);
+        tblRoleTime.setRowSorter(roleTimeSorter);
     }
 
     /**
@@ -150,7 +150,7 @@ public class GUIFireman extends javax.swing.JFrame {
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
         btnNext.setEnabled(enable);
-        tblAttendance.setEnabled(enable);
+        tblRoleTime.setEnabled(enable);
     }
 
     /**
@@ -473,7 +473,7 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblAttendance = new javax.swing.JTable();
+        tblRoleTime = new javax.swing.JTable();
         btnError = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         cmbIncident = new javax.swing.JComboBox();
@@ -569,7 +569,7 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fremmødeliste", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel5.setLayout(null);
 
-        tblAttendance.setModel(new javax.swing.table.DefaultTableModel(
+        tblRoleTime.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -580,7 +580,7 @@ public class GUIFireman extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(tblAttendance);
+        jScrollPane3.setViewportView(tblRoleTime);
 
         jPanel5.add(jScrollPane3);
         jScrollPane3.setBounds(10, 40, 720, 430);
@@ -673,7 +673,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JList lstManpower;
-    private javax.swing.JTable tblAttendance;
+    private javax.swing.JTable tblRoleTime;
     private javax.swing.JTextField txtIncidentName;
     private javax.swing.JTextField txtIncidentTime;
     private javax.swing.JTextField txtManHours;
