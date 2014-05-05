@@ -60,4 +60,32 @@ public class MessageDialog {
     public String firemanTextClock() {
         return "TT:MM";
     }
+    
+    public String teamLeaderComboEmergency() {
+        return "Kørsels type..";
+    }
+    
+    public String teamLeaderTextAmountMen() {
+        return "Bemanding..";
+    }
+    
+    public String teamLeaderComboMaterial() {
+        return "Vælg materiel..";
+    }
+    
+    public String teamLeaderTextUsage() {
+        return "Forbrug..";
+    }
+    
+    public String teamLeaderComboReport(){
+        return "Vælg beretning..";
+    }
+    
+    public String teamLeaderTextDetector(){
+        return "Detektor nummer..";
+    }
+    
+    public String teamLeaderTextGroup() {
+        return "Gruppe nummer..";
+    }
 }

@@ -141,8 +141,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         txtDetectorNumber = new javax.swing.JTextField();
         txtGroupNumber = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtRemarks = new javax.swing.JTextArea();
@@ -167,7 +165,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel1.add(cbxVariations);
         cbxVariations.setBounds(170, 90, 93, 25);
 
-        cmbEmergency.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Kørsels Type..." }));
         jPanel1.add(cmbEmergency);
         cmbEmergency.setBounds(170, 30, 140, 40);
 
@@ -190,8 +187,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         btnAddForces.setText("Tilføj");
         jPanel1.add(btnAddForces);
         btnAddForces.setBounds(220, 140, 90, 40);
-
-        txtAmount.setText("Bemanding..");
         jPanel1.add(txtAmount);
         txtAmount.setBounds(20, 80, 140, 40);
 
@@ -201,11 +196,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forbrug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel2.setLayout(null);
 
-        cmbMaterial.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Materiel..." }));
         jPanel2.add(cmbMaterial);
         cmbMaterial.setBounds(18, 32, 290, 40);
-
-        txtMaterielAmount.setText("Forbrug..");
         jPanel2.add(txtMaterielAmount);
         txtMaterielAmount.setBounds(20, 80, 140, 40);
 
@@ -285,32 +277,21 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Beretning", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel4.setLayout(null);
 
-        cmbReport.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Vælg Beretning..." }));
         jPanel4.add(cmbReport);
-        cmbReport.setBounds(20, 30, 360, 40);
+        cmbReport.setBounds(20, 30, 290, 40);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ved ABA Alarm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel5.setLayout(null);
         jPanel5.add(txtDetectorNumber);
-        txtDetectorNumber.setBounds(190, 20, 160, 30);
+        txtDetectorNumber.setBounds(10, 30, 280, 30);
         jPanel5.add(txtGroupNumber);
-        txtGroupNumber.setBounds(190, 70, 160, 30);
-
-        jLabel10.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel10.setText("Gruppe nummer");
-        jPanel5.add(jLabel10);
-        jLabel10.setBounds(20, 70, 130, 16);
-
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel2.setText("Detektor nummer");
-        jPanel5.add(jLabel2);
-        jLabel2.setBounds(20, 30, 140, 16);
+        txtGroupNumber.setBounds(10, 70, 280, 30);
 
         jPanel4.add(jPanel5);
-        jPanel5.setBounds(20, 80, 360, 110);
+        jPanel5.setBounds(20, 80, 300, 110);
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(10, 510, 390, 200);
+        jPanel4.setBounds(10, 510, 330, 200);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bemærkninger", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel6.setLayout(null);
@@ -323,7 +304,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane3.setBounds(10, 30, 520, 160);
 
         getContentPane().add(jPanel6);
-        jPanel6.setBounds(410, 510, 540, 200);
+        jPanel6.setBounds(340, 510, 540, 200);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -338,8 +319,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbReport;
     private javax.swing.JComboBox cmbVehicle;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
