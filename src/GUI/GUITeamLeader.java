@@ -73,7 +73,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtFocus txtFc = new txtFocus();
         txtAmountMen.addKeyListener(txt);
         txtAmountMaterial.addKeyListener(txt);
-        
+
         txtAmountMen.addFocusListener(txtFc);
         txtAmountMaterial.addFocusListener(txtFc);
         txtDetectorNumber.addFocusListener(txtFc);
@@ -84,7 +84,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtInvolvedName.addFocusListener(txtFc);
         txtMessage.addFocusListener(txtFc);
         txtRemarks.addFocusListener(txtFc);
-   
+        txtEvaNumber.addFocusListener(txtFc);
+
         btnAddForces.addActionListener(btn);
         btnAddMateriel.addActionListener(btn);
         btnSaveAndFinish.addActionListener(btn);
@@ -230,6 +231,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
         return true;
     }
+    
+    private void onClickSaveAndFinish(){
+        
+    }
 
     private class btnAction implements ActionListener {
 
@@ -239,6 +244,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 onClickAddForces();
             } else if (e.getSource().equals(btnAddMateriel)) {
                 onClickAddMaterial();
+            } else if (e.getSource().equals(btnSaveAndFinish)) {
+                onClickSaveAndFinish();
             }
 
         }
@@ -255,17 +262,18 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         @Override
         public void focusGained(FocusEvent e) {
-            if(e.getSource().equals(txtAmountMen)){
+            if (e.getSource().equals(txtAmountMen)) {
                 txtAmountMen.setText(MessageDialog.getInstance().EMPTY_TEXT());
-            }else{
+            } else {
                 txtAmountMen.setText(MessageDialog.getInstance().teamLeaderTextAmountMen());
             }
-            if(e.getSource().equals(txtAmountMaterial)){
+            if (e.getSource().equals(txtAmountMaterial)) {
                 txtAmountMaterial.setText(MessageDialog.getInstance().EMPTY_TEXT());
-            }else{
+            } else {
                 txtAmountMaterial.setText(MessageDialog.getInstance().teamLeaderTextAmountMaterials());
             }
         }
+
     }
 
     /**
@@ -277,7 +285,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtMessage = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         cmbVehicle = new javax.swing.JComboBox();
         chkIsDiverged = new javax.swing.JCheckBox();
@@ -293,7 +300,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsage = new javax.swing.JTable();
         btnAddMateriel = new javax.swing.JButton();
-        txtEvaNumber = new javax.swing.JTextField();
         btnSaveAndFinish = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -310,15 +316,15 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtRemarks = new javax.swing.JTextArea();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtEvaNumber = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtIncidentLeader = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtFireReportNumber = new javax.swing.JTextField();
+        txtMessage = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        txtMessage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Indsatte Styrker", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel1.setLayout(null);
@@ -377,7 +383,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel3.setText("liter/stk/kg");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(170, 90, 100, 20);
+        jLabel3.setBounds(180, 90, 100, 20);
 
         tblUsage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblUsage.setModel(new javax.swing.table.DefaultTableModel(
@@ -400,8 +406,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         btnAddMateriel.setText("Tilføj");
         jPanel2.add(btnAddMateriel);
         btnAddMateriel.setBounds(230, 140, 90, 40);
-
-        txtEvaNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
         btnSaveAndFinish.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnSaveAndFinish.setText("Gem og Afslut");
@@ -467,6 +471,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel7.add(jLabel1);
         jLabel1.setBounds(360, 40, 94, 19);
 
+        txtEvaNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jPanel7.add(txtEvaNumber);
+        txtEvaNumber.setBounds(500, 30, 130, 30);
+
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel6.setText("Indsatsleder");
         jPanel7.add(jLabel6);
@@ -490,6 +498,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel7.add(txtFireReportNumber);
         txtFireReportNumber.setBounds(500, 60, 130, 30);
 
+        txtMessage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jPanel7.add(txtMessage);
+        txtMessage.setBounds(120, 30, 200, 30);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -498,14 +510,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(500, 500, 500)
-                                .addComponent(txtEvaNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(120, 120, 120)
-                                .addComponent(txtMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -524,12 +529,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(txtEvaNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(txtMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
