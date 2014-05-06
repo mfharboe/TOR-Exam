@@ -18,15 +18,34 @@ public class MessageDialog {
     }
 
     public void saveDialog() {
-        JOptionPane.showMessageDialog(null, "Udfyld venligst alle informationer!");
+        JOptionPane.showMessageDialog(null, "Udfyld venligst alle informationer");
     }
 
     public void stationDialog() {
-        JOptionPane.showMessageDialog(null, "Du er allerede stationsvagt på denne indsats!");
+        JOptionPane.showMessageDialog(null, "Du er allerede stationsvagt på denne indsats");
     }
 
     public void functionDialog() {
-        JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats!");
+        JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats");
+    }
+    
+    public void addForcesDialog(){
+        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
+    }
+    
+    public void addMaterialsDialog(){
+        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
+    }
+    
+    public void noTextHereDialog(){
+        JOptionPane.showMessageDialog(null, "Du kan kun skrive tal her");
+    }
+    
+    public void ErrorConfirmMessageApproved(){
+        JOptionPane.showMessageDialog(null, "Din fejl Rapport er registreret");
+    }
+    public void ErrorConfirmMessageNotApproved(){
+        JOptionPane.showMessageDialog(null, "Der opstod en fejl");
     }
 
     public String firemanTitle() {
