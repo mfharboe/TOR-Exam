@@ -122,7 +122,7 @@ public class GUIError extends javax.swing.JFrame {
         jScrollPane1.setBounds(10, 30, 420, 160);
 
         jPanel1.add(jPanel6);
-        jPanel6.setBounds(20, 270, 440, 200);
+        jPanel6.setBounds(10, 270, 440, 200);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evt. Årsag", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel7.setLayout(null);
@@ -135,10 +135,10 @@ public class GUIError extends javax.swing.JFrame {
         jScrollPane2.setBounds(10, 30, 420, 160);
 
         jPanel1.add(jPanel7);
-        jPanel7.setBounds(20, 479, 440, 200);
+        jPanel7.setBounds(10, 480, 440, 200);
 
         jPanel1.add(cmbVehicle);
-        cmbVehicle.setBounds(30, 120, 220, 40);
+        cmbVehicle.setBounds(20, 130, 220, 40);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Udfyld af"));
         jPanel4.setLayout(null);
@@ -153,7 +153,7 @@ public class GUIError extends javax.swing.JFrame {
         dateChooser.setBounds(290, 30, 120, 40);
 
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(20, 30, 420, 80);
+        jPanel4.setBounds(10, 30, 420, 80);
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Status på Fejl Rapport", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel8.setLayout(null);
@@ -161,7 +161,7 @@ public class GUIError extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel1.setText("Haster");
         jPanel8.add(jLabel1);
-        jLabel1.setBounds(20, 27, 70, 23);
+        jLabel1.setBounds(20, 20, 70, 30);
         jPanel8.add(chkUrgent);
         chkUrgent.setBounds(130, 20, 30, 30);
 
@@ -173,7 +173,7 @@ public class GUIError extends javax.swing.JFrame {
         chkOutOfOrder.setBounds(130, 50, 30, 25);
 
         jPanel1.add(jPanel8);
-        jPanel8.setBounds(270, 120, 190, 80);
+        jPanel8.setBounds(250, 120, 190, 80);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Brandragt", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel2.setLayout(null);
@@ -186,7 +186,7 @@ public class GUIError extends javax.swing.JFrame {
         jLabel4.setBounds(20, 20, 87, 30);
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(270, 210, 190, 60);
+        jPanel2.setBounds(250, 200, 190, 60);
 
         btnCancel.setText("Fortryd");
 
@@ -197,22 +197,27 @@ public class GUIError extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(290, 290, 290)
-                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(290, 290, 290)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
