@@ -1,5 +1,6 @@
 package BLL;
 
+import BE.BEABA;
 import BE.BEAlarm;
 import BE.BEEmergency;
 import BE.BEIncident;
@@ -9,6 +10,7 @@ import BE.BEMaterial;
 import BE.BEUsage;
 import DAL.DALCreate;
 import DAL.DALRead;
+import DAL.DALUpdate;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -119,6 +121,22 @@ public class BLLTeamLeader {
             return;
         }
         usages.add(be);
+    }
+    
+    public void updateIncidentDetails(BEIncidentDetails be){
+        try {
+            DALUpdate.getInstance().updateIncidentDetails(be);
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateABA(BEABA be){
+        try {
+            DALUpdate.getInstance().updateABA(be);
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident beincident) {

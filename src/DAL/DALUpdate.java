@@ -1,20 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DAL;
 
+import BE.BEABA;
 import BE.BEIncident;
+import BE.BEIncidentDetails;
 import BE.BEIncidentType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Morten
- */
 public class DALUpdate {
 
     Connection m_connection;
@@ -36,7 +31,7 @@ public class DALUpdate {
     }
 
     public void updateIncident(BEIncident c) throws SQLException {
-        String sql = "update Incident Set incidentName = ?, "
+        String sql = "Update Incident set incidentName = ?, "
                 + "Incident.[date] = ?, "
                 + "startTime = ?, "
                 + "incidentTypeId = ?, "
@@ -49,9 +44,41 @@ public class DALUpdate {
         ps.setInt(4, c.getM_incidentType().getM_id());
         ps.setBoolean(5, c.isM_isDone());
         ps.setInt(6, c.getM_id());
-
-        ps.execute();
-
-
+        ps.executeUpdate();
+    }
+    
+    public void updateIncidentDetails(BEIncidentDetails c) throws SQLException{
+        String sql = "Update IncidentDetails set incidentLeader = ?, "
+                + "evaNumber = ?, "
+                + "fireReport = ?, "
+                + "message = ?, "
+                + "involvedName = ?, "
+                + "involvedAddress = ?, "
+                + "remark = ?, "
+                + "alarmId = ? "
+                + "where incidentId = ?";
+        PreparedStatement ps = m_connection.prepareStatement(sql);
+        ps.setString(1, c.getM_incidentLeader());
+        ps.setString(2, c.getM_evaNumber());
+        ps.setString(3, c.getM_fireReport());
+        ps.setString(4, c.getM_message());
+        ps.setString(5, c.getM_involvedName());
+        ps.setString(6, c.getM_involvedAddress());
+        ps.setString(7, c.getM_remark());
+        ps.setInt(8, c.getM_alarm().getM_id());
+        ps.setInt(9, c.getM_incident().getM_id());
+        ps.executeUpdate();
+                
+    }
+    
+    public void updateABA(BEABA c) throws SQLException{
+        String sql = "Update ABA set detectorNumber = ?, "
+                + "groupNumber = ? "
+                + "where incidentId = ?";
+        PreparedStatement ps = m_connection.prepareStatement(sql);
+        ps.setString(1, c.getM_detectorNumber());
+        ps.setString(2, c.getM_groupNumber());
+        ps.setInt(3, c.getM_incident().getM_id());
+        ps.executeUpdate(); 
     }
 }

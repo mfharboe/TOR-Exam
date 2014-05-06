@@ -1,5 +1,6 @@
 package GUI;
 
+import BE.BEABA;
 import BE.BEAlarm;
 import BE.BEEmergency;
 import BE.BEIncident;
@@ -88,7 +89,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         btnAddForces.addActionListener(btn);
         btnAddMateriel.addActionListener(btn);
-        btnSaveAndFinish.addActionListener(btn);
+        btnSave.addActionListener(btn);
     }
 
     private void fillBoxes() {
@@ -136,8 +137,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtInvolvedAddress.setText(MessageDialog.getInstance().EMPTY_TEXT());
         txtRemarks.setText(MessageDialog.getInstance().EMPTY_TEXT());
         cmbAlarmType.setSelectedIndex(0);
-        txtDetectorNumber.setText(MessageDialog.getInstance().teamLeaderTextDetector());
-        txtGroupNumber.setText(MessageDialog.getInstance().teamLeaderTextGroupNumber());
     }
 
     private void clearForces() {
@@ -171,7 +170,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
-    private BEIncidentVehicle getMyForcesContribution() {
+    private BEIncidentVehicle getMyForces() {
         BEVehicle bevehicle = (BEVehicle) cmbVehicle.getSelectedItem();
         BEEmergency beemergency = (BEEmergency) cmbEmergency.getSelectedItem();
         int amount = Integer.parseInt(txtAmountMen.getText());
@@ -183,7 +182,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     private void onClickAddForces() {
         if (isForcesfilled()) {
-            BLLTeamLeader.getInstance().createIncidentVehicle(getMyForcesContribution());
+            BLLTeamLeader.getInstance().createIncidentVehicle(getMyForces());
             forcesModel.setForceList(BLLTeamLeader.getInstance().incidentToIncidentVehicle(m_incident));
             clearForces();
         }
@@ -205,7 +204,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         return true;
     }
 
-    private BEUsage getMyMaterialContribution() {
+    private BEUsage getMyMaterials() {
         BEMaterial bematerial = (BEMaterial) cmbMaterial.getSelectedItem();
         int amount = Integer.parseInt(txtAmountMaterial.getText());
         BEUsage beusage = new BEUsage(0, bematerial, amount, m_incident);
@@ -214,7 +213,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     private void onClickAddMaterial() {
         if (isUsageFilled()) {
-            BLLTeamLeader.getInstance().createUsage(getMyMaterialContribution());
+            BLLTeamLeader.getInstance().createUsage(getMyMaterials());
             usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
             clearMaterials();
         }
@@ -231,9 +230,32 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
         return true;
     }
+
+    private BEIncidentDetails getMyDetails() {
+        String leader = txtIncidentLeader.getText();
+        String evaNr = txtEvaNumber.getText();
+        String fireNr = txtFireReportNumber.getText();
+        String message = txtMessage.getText();
+        String involvedName = txtInvolvedName.getText();
+        String involvedAddress = txtInvolvedAddress.getText();
+        String remarks = txtRemarks.getText();
+        BEAlarm alarm = (BEAlarm) cmbAlarmType.getSelectedItem();
+        BEIncidentDetails bedetails = new BEIncidentDetails(leader, evaNr, fireNr, message, m_incident, involvedName, involvedAddress, remarks, alarm);
+        return bedetails;
+    }
     
-    private void onClickSaveAndFinish(){
-        
+    private BEABA getMyABA(){
+        String detectorNr = txtDetectorNumber.getText();
+        String groupNr = txtGroupNumber.getText();
+        BEABA beaba = new BEABA(m_incident, detectorNr, groupNr);
+        return beaba;   
+    }
+
+    private void onClickSaveAndFinish() {
+        BLLTeamLeader.getInstance().updateIncidentDetails(getMyDetails());
+        BLLTeamLeader.getInstance().updateABA(getMyABA());
+        MessageDialog.getInstance().teamLeaderSaveDialog();
+        this.dispose();
     }
 
     private class btnAction implements ActionListener {
@@ -244,7 +266,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 onClickAddForces();
             } else if (e.getSource().equals(btnAddMateriel)) {
                 onClickAddMaterial();
-            } else if (e.getSource().equals(btnSaveAndFinish)) {
+            } else if (e.getSource().equals(btnSave)) {
                 onClickSaveAndFinish();
             }
 
@@ -300,7 +322,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsage = new javax.swing.JTable();
         btnAddMateriel = new javax.swing.JButton();
-        btnSaveAndFinish = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -309,8 +331,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         cmbAlarmType = new javax.swing.JComboBox();
         jPanel5 = new javax.swing.JPanel();
-        txtDetectorNumber = new javax.swing.JTextField();
         txtGroupNumber = new javax.swing.JTextField();
+        txtDetectorNumber = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtRemarks = new javax.swing.JTextArea();
@@ -407,8 +431,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel2.add(btnAddMateriel);
         btnAddMateriel.setBounds(230, 140, 90, 40);
 
-        btnSaveAndFinish.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        btnSaveAndFinish.setText("Gem og Afslut");
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        btnSave.setText("Gem");
+        btnSave.setActionCommand("Gem");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Skadeslidte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel3.setLayout(null);
@@ -441,13 +466,23 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ved ABA Alarm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 15))); // NOI18N
         jPanel5.setLayout(null);
 
-        txtDetectorNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel5.add(txtDetectorNumber);
-        txtDetectorNumber.setBounds(10, 30, 280, 30);
-
         txtGroupNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jPanel5.add(txtGroupNumber);
-        txtGroupNumber.setBounds(10, 70, 280, 30);
+        txtGroupNumber.setBounds(100, 60, 190, 30);
+
+        txtDetectorNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jPanel5.add(txtDetectorNumber);
+        txtDetectorNumber.setBounds(100, 30, 190, 30);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel2.setText("Detektor nr.");
+        jPanel5.add(jLabel2);
+        jLabel2.setBounds(10, 40, 90, 19);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel4.setText("Gruppe nr.");
+        jPanel5.add(jLabel4);
+        jLabel4.setBounds(10, 70, 70, 19);
 
         jPanel4.add(jPanel5);
         jPanel5.setBounds(20, 80, 300, 110);
@@ -461,7 +496,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane3.setViewportView(txtRemarks);
 
         jPanel6.add(jScrollPane3);
-        jScrollPane3.setBounds(20, 30, 560, 100);
+        jScrollPane3.setBounds(20, 30, 570, 100);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Holdleder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel7.setLayout(null);
@@ -516,11 +551,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSaveAndFinish, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -538,7 +573,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSaveAndFinish, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -548,14 +583,16 @@ public class GUITeamLeader extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddForces;
     private javax.swing.JButton btnAddMateriel;
-    private javax.swing.JButton btnSaveAndFinish;
+    private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox chkIsDiverged;
     private javax.swing.JComboBox cmbAlarmType;
     private javax.swing.JComboBox cmbEmergency;
     private javax.swing.JComboBox cmbMaterial;
     private javax.swing.JComboBox cmbVehicle;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

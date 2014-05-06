@@ -28,23 +28,28 @@ public class MessageDialog {
     public void functionDialog() {
         JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats");
     }
-    
-    public void addForcesDialog(){
+
+    public void addForcesDialog() {
         JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
     }
-    
-    public void addMaterialsDialog(){
+
+    public void addMaterialsDialog() {
         JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
     }
-    
-    public void noTextHereDialog(){
+
+    public void noTextHereDialog() {
         JOptionPane.showMessageDialog(null, "Du kan kun skrive tal her");
     }
     
-    public void ErrorConfirmMessageApproved(){
+    public void teamLeaderSaveDialog() {
+        JOptionPane.showMessageDialog(null, "Oplysningerne blev gemt");
+    }
+
+    public void ErrorConfirmMessageApproved() {
         JOptionPane.showMessageDialog(null, "Din fejl Rapport er registreret");
     }
-    public void ErrorConfirmMessageNotApproved(){
+
+    public void ErrorConfirmMessageNotApproved() {
         JOptionPane.showMessageDialog(null, "Der opstod en fejl");
     }
 
@@ -79,36 +84,36 @@ public class MessageDialog {
     public String firemanTextClock() {
         return "TT:MM";
     }
-    
+
     public String teamLeaderComboEmergency() {
         return "Kørsels type..";
     }
-    
+
     public String teamLeaderTextAmountMen() {
         return "Bemanding..";
     }
-    
+
     public String teamLeaderComboMaterial() {
         return "Vælg materiel..";
     }
-    
+
     public String teamLeaderTextAmountMaterials() {
         return "Forbrug..";
     }
-    
-    public String teamLeaderComboReport(){
+
+    public String teamLeaderComboReport() {
         return "Vælg beretning..";
     }
-    
-    public String teamLeaderTextDetector(){
+
+    public String teamLeaderTextDetector() {
         return "Detektor nummer..";
     }
-    
+
     public String teamLeaderTextGroupNumber() {
         return "Gruppe nummer..";
     }
-    
-    public final String EMPTY_TEXT(){
+
+    public final String EMPTY_TEXT() {
         return "";
     }
 }
