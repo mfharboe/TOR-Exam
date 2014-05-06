@@ -455,7 +455,7 @@ public class GUIFireman extends javax.swing.JFrame {
 
         @Override
         public void focusGained(FocusEvent e) {
-            txtManHours.setText("");
+            txtManHours.setText(MessageDialog.getInstance().EMPTY_TEXT());
             CheckHoursAndVehicles();
         }
     }
