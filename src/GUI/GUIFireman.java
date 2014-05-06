@@ -76,6 +76,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnHL.addActionListener(btn);
         btnST.addActionListener(btn);
         btnNext.addActionListener(btn);
+        btnError.addActionListener(btn);
         cmbIncident.addItemListener(cmb);
         cmbVehicle.addItemListener(cmb);
 
@@ -349,6 +350,10 @@ public class GUIFireman extends javax.swing.JFrame {
         guiteamleader.setVisible(true);
 
     }
+    private void onClickErrorReport(){
+        JFrame guierror = new GUIError();
+        guierror.setVisible(true);
+    }
 
     /**
      * Invokes this method when the list of firemen changes the selected value
@@ -422,6 +427,8 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickHL();
             } else if (e.getSource().equals(btnNext)) {
                 onClickNext();
+            }else if( e.getSource().equals(btnError)){
+                onClickErrorReport();
             }
         }
     }

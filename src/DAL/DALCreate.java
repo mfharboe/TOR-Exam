@@ -1,5 +1,6 @@
 package DAL;
 
+import BE.BEError;
 import BE.BEIncident;
 import BE.BEIncidentType;
 import BE.BEIncidentVehicle;
@@ -16,7 +17,6 @@ public class DALCreate {
 
     Connection m_connection;
     private static DALCreate m_instance;
-
     ArrayList<BEIncidentType> resIncidentType;
 
     private DALCreate() {
@@ -90,11 +90,29 @@ public class DALCreate {
 
     public void createUsage(BEUsage be) throws SQLException {
         String sql = "insert into Usage values (?,?,?)";
-        PreparedStatement ps = m_connection.prepareCall(sql);
+        PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setInt(1, be.getM_material().getM_id());
         ps.setInt(2, be.getM_amount());
         ps.setInt(3, be.getM_incident().getM_id());
         ps.executeUpdate();
     }
 
+    public void createErrorReport(BEError be) throws SQLException {
+        String sql = " insert into Error values (?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = m_connection.prepareStatement(sql);
+       if (be.getM_vehicleOdinNumber()== null) {
+            ps.setString(1, null);
+        } else {
+            ps.setInt(1, be.getM_vehicleOdinNumber().getM_odinNumber());
+        }
+        ps.setString(2, be.getM_filledBy());
+        ps.setDate(3, be.getM_date());
+        ps.setBoolean(4, be.isM_outOfOrder());
+        ps.setBoolean(5, be.isM_urgent());
+        ps.setString(6, be.getM_description());
+        ps.setString(7, be.getM_cause());
+        ps.setBoolean(8, be.isM_suitWash());
+        ps.executeUpdate();
+
+    }
 }
