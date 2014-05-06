@@ -6,6 +6,7 @@ package BLL;
 
 import BE.BEFireman;
 import BE.BEIncident;
+import BE.BEIncidentDetails;
 import BE.BEIncidentType;
 import BE.BERole;
 import BE.BERoleTime;
@@ -204,6 +205,14 @@ public class BLLFireman {
                 }
                 roletimes.add(be);
             }
+        }
+    }
+    
+    public void createInitialIncidentDetails(BEIncident be){
+        try {
+            DALCreate.getInstance().createInitialIncidentDetails(be);
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
