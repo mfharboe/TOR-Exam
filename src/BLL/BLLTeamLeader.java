@@ -1,6 +1,5 @@
 package BLL;
 
-import BE.BEABA;
 import BE.BEAlarm;
 import BE.BEEmergency;
 import BE.BEIncident;
@@ -130,14 +129,6 @@ public class BLLTeamLeader {
             Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-//    public void updateABA(BEABA be){
-//        try {
-//            DALUpdate.getInstance().updateABA(be);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 
     public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident beincident) {
         ArrayList<BEIncidentVehicle> beincidentvehicle = new ArrayList<>();

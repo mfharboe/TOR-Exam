@@ -52,7 +52,7 @@ public class GUIFireman extends javax.swing.JFrame {
         setManpowerEnabled(false);
         setMyContributionEnabled(false);
         setAllFunctionsEnabled(false);
-        btnNext.setEnabled(false);
+        btnTeamLeader.setEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
         tblRoleTime.setModel(roleTimeModel);
@@ -77,7 +77,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnCH.addActionListener(btn);
         btnHL.addActionListener(btn);
         btnST.addActionListener(btn);
-        btnNext.addActionListener(btn);
+        btnTeamLeader.addActionListener(btn);
         btnError.addActionListener(btn);
         cmbIncident.addItemListener(cmb);
         cmbVehicle.addItemListener(cmb);
@@ -230,7 +230,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onComboIncidentChange() {
         setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
-        btnNext.setEnabled(cmbIncident.getSelectedIndex() != 0);
+        btnTeamLeader.setEnabled(cmbIncident.getSelectedIndex() != 0);
         lstManpower.clearSelection();
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
@@ -437,7 +437,7 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickCH();
             } else if (e.getSource().equals(btnHL)) {
                 onClickHL();
-            } else if (e.getSource().equals(btnNext)) {
+            } else if (e.getSource().equals(btnTeamLeader)) {
                 onClickNext();
             }else if( e.getSource().equals(btnError)){
                 onClickErrorReport();
@@ -504,7 +504,7 @@ public class GUIFireman extends javax.swing.JFrame {
         cmbIncidentType = new javax.swing.JComboBox();
         btnSave = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
-        btnNext = new javax.swing.JButton();
+        btnTeamLeader = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -536,7 +536,7 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel6.add(txtManHours);
         txtManHours.setBounds(20, 100, 180, 40);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Funktion"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Funktion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 15))); // NOI18N
         jPanel1.setLayout(null);
 
         btnCH.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -597,6 +597,7 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel4.add(cmbIncidentType);
         cmbIncidentType.setBounds(20, 30, 120, 40);
 
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnSave.setText("Gem");
         jPanel4.add(btnSave);
         btnSave.setBounds(360, 80, 110, 40);
@@ -604,8 +605,8 @@ public class GUIFireman extends javax.swing.JFrame {
         lblLogo.setFont(new java.awt.Font("Calibri", 0, 72)); // NOI18N
         lblLogo.setText("LOGO");
 
-        btnNext.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        btnNext.setText("Næste");
+        btnTeamLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        btnTeamLeader.setText("Holdleder");
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fremmødeliste", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel5.setLayout(null);
@@ -642,28 +643,28 @@ public class GUIFireman extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(286, 286, 286)
-                .addComponent(lblLogo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(286, 286, 286)
+                        .addComponent(lblLogo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(919, 919, 919)
-                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -684,14 +685,11 @@ public class GUIFireman extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -701,9 +699,9 @@ public class GUIFireman extends javax.swing.JFrame {
     private javax.swing.JButton btnCH;
     private javax.swing.JButton btnError;
     private javax.swing.JButton btnHL;
-    private javax.swing.JButton btnNext;
     private javax.swing.JButton btnST;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnTeamLeader;
     private javax.swing.JComboBox cmbIncident;
     private javax.swing.JComboBox cmbIncidentType;
     private javax.swing.JComboBox cmbVehicle;

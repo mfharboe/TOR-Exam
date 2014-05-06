@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package BLL;
 
 import BE.BEFireman;
 import BE.BEIncident;
-import BE.BEIncidentDetails;
 import BE.BEIncidentType;
 import BE.BERole;
 import BE.BERoleTime;

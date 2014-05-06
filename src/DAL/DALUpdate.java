@@ -1,7 +1,6 @@
 
 package DAL;
 
-import BE.BEABA;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BEIncidentType;
@@ -75,14 +74,4 @@ public class DALUpdate {
                 
     }
     
-//    public void updateABA(BEABA c) throws SQLException{
-//        String sql = "Update ABA set detectorNumber = ?, "
-//                + "groupNumber = ? "
-//                + "where incidentId = ?";
-//        PreparedStatement ps = m_connection.prepareStatement(sql);
-//        ps.setString(1, c.getM_detectorNumber());
-//        ps.setString(2, c.getM_groupNumber());
-//        ps.setInt(3, c.getM_incident().getM_id());
-//        ps.executeUpdate(); 
-//    }
 }

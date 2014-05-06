@@ -1,6 +1,5 @@
 package GUI;
 
-import BE.BEABA;
 import BE.BEAlarm;
 import BE.BEEmergency;
 import BE.BEIncident;
@@ -17,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -70,11 +71,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     private void addListeners() {
         btnAction btn = new btnAction();
-        txtAction txt = new txtAction();
         txtFocus txtFc = new txtFocus();
-        txtAmountMen.addKeyListener(txt);
-        txtAmountMaterial.addKeyListener(txt);
+        cmbAction cmb = new cmbAction();
 
+        cmbAlarmType.addItemListener(cmb);
         txtAmountMen.addFocusListener(txtFc);
         txtAmountMaterial.addFocusListener(txtFc);
         txtDetectorNumber.addFocusListener(txtFc);
@@ -249,17 +249,20 @@ public class GUITeamLeader extends javax.swing.JFrame {
         BEIncidentDetails bedetails = new BEIncidentDetails(leader, evaNr, fireNr, message, m_incident, involvedName, involvedAddress, remarks, alarm, detectorNr, groupNr);
         return bedetails;
     }
-    
-//    private BEABA getMyABA(){
-//        String detectorNr = txtDetectorNumber.getText();
-//        String groupNr = txtGroupNumber.getText();
-//        BEABA beaba = new BEABA(m_incident, detectorNr, groupNr);
-//        return beaba;   
-//    }
+
+    private void onItemChange() {
+        if (cmbAlarmType.getSelectedIndex() == 0) {
+            txtDetectorNumber.setEnabled(false);
+            txtGroupNumber.setEnabled(false);
+        } else {
+            txtDetectorNumber.setEnabled(true);
+            txtGroupNumber.setEnabled(true);
+        }
+
+    }
 
     private void onClickSaveDetails() {
         BLLTeamLeader.getInstance().updateIncidentDetails(getMyDetails());
-        //BLLTeamLeader.getInstance().updateABA(getMyABA());
         MessageDialog.getInstance().teamLeaderSaveDialog();
         this.dispose();
     }
@@ -279,11 +282,13 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
-    private class txtAction extends KeyAdapter {
+    private class cmbAction implements ItemListener {
 
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void itemStateChanged(ItemEvent e) {
+            onItemChange();
         }
+
     }
 
     private class txtFocus extends FocusAdapter {
@@ -439,7 +444,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnSave.setText("Gem");
-        btnSave.setActionCommand("Gem");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Skadeslidte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel3.setLayout(null);
@@ -548,7 +552,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -562,12 +566,12 @@ public class GUITeamLeader extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))

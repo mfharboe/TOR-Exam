@@ -1,17 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 
-/**
- *
- * @author Morten
- */
 public class DB_Connection {
 
     private static final String SERVER_NAME = "vestergade.no-ip.org";
@@ -39,7 +32,6 @@ public class DB_Connection {
         ds.setPassword(PASSWORD);
         try {
             m_connection = ds.getConnection();
-            System.out.println("online");
         } catch (SQLServerException ex) {
         }
     }
