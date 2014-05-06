@@ -12,6 +12,8 @@ public class BEIncidentDetails {
     private String m_involvedAddress;
     private String m_remark;
     private BEAlarm m_alarm;
+    private String m_detectorNumber;
+    private String m_groupNumber;
     
     
     /**
@@ -25,9 +27,12 @@ public class BEIncidentDetails {
      * @param involvedAddress
      * @param remark
      * @param alarm 
+     * @param detectorNumber 
+     * @param groupNumber 
      */
     public BEIncidentDetails(String incidentLeader, String evaNumber, String fireReport, String message,
-            BEIncident incident, String involvedName, String involvedAddress, String remark, BEAlarm alarm){
+            BEIncident incident, String involvedName, String involvedAddress, String remark, BEAlarm alarm,
+            String detectorNumber, String groupNumber){
         
         
         m_incidentLeader = incidentLeader;
@@ -39,6 +44,8 @@ public class BEIncidentDetails {
         m_involvedAddress = involvedAddress;
         m_remark = remark;
         m_alarm = alarm;
+        m_detectorNumber = detectorNumber;
+        m_groupNumber = groupNumber;
               
     }
 
@@ -166,5 +173,33 @@ public class BEIncidentDetails {
      */
     public void setM_alarm(BEAlarm m_alarm) {
         this.m_alarm = m_alarm;
+    }
+
+    /**
+     * @return the m_detectorNumber
+     */
+    public String getM_detectorNumber() {
+        return m_detectorNumber;
+    }
+
+    /**
+     * @param m_detectorNumber the m_detectorNumber to set
+     */
+    public void setM_detectorNumber(String m_detectorNumber) {
+        this.m_detectorNumber = m_detectorNumber;
+    }
+
+    /**
+     * @return the m_groupNumber
+     */
+    public String getM_groupNumber() {
+        return m_groupNumber;
+    }
+
+    /**
+     * @param m_groupNumber the m_groupNumber to set
+     */
+    public void setM_groupNumber(String m_groupNumber) {
+        this.m_groupNumber = m_groupNumber;
     }
 }

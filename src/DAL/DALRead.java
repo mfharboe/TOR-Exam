@@ -386,10 +386,12 @@ public class DALRead {
                 + "IncidentDetails.fireReport, "
                 + "IncidentDetails.[message], "
                 + "IncidentDetails.incidentid, "
-                + "involvedName, "
+                + "IncidentDetails.involvedName, "
                 + "IncidentDetails.involvedAddress, "
                 + "IncidentDetails.remark, "
-                + "IncidentDetails.alarmId "
+                + "IncidentDetails.alarmId,"
+                + "IncidentDetails.detectorNumber,"
+                + "IncidentDetails.groupNumber "
                 + "from IncidentDetails inner join Incident "
                 + "on IncidentDetails.incidentId = incident.id "
                 + "where incident.isDone = 0");
@@ -418,6 +420,8 @@ public class DALRead {
                     break;
                 }
             }
+            String detectorNumber = result.getString("detectorNumber");
+            String groupNumber = result.getString("groupNumber");
 
             BEIncidentDetails be = new BEIncidentDetails(incidentLeader,
                     evaNumber,
@@ -427,7 +431,10 @@ public class DALRead {
                     involvedName,
                     involvedAddress,
                     remark,
-                    refAlarm);
+                    refAlarm,
+                    detectorNumber,
+                    groupNumber);
+            
             res.add(be);
         }
 

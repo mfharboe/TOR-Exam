@@ -136,6 +136,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtInvolvedName.setText(MessageDialog.getInstance().EMPTY_TEXT());
         txtInvolvedAddress.setText(MessageDialog.getInstance().EMPTY_TEXT());
         txtRemarks.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtDetectorNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtGroupNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
         cmbAlarmType.setSelectedIndex(0);
     }
 
@@ -167,6 +169,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
             txtInvolvedAddress.setText(details.getM_involvedAddress());
             txtRemarks.setText(details.getM_remark());
             cmbAlarmType.setSelectedItem(details.getM_alarm());
+            txtDetectorNumber.setText(details.getM_detectorNumber());
+            txtGroupNumber.setText(details.getM_groupNumber());
         }
     }
 
@@ -240,20 +244,22 @@ public class GUITeamLeader extends javax.swing.JFrame {
         String involvedAddress = txtInvolvedAddress.getText();
         String remarks = txtRemarks.getText();
         BEAlarm alarm = (BEAlarm) cmbAlarmType.getSelectedItem();
-        BEIncidentDetails bedetails = new BEIncidentDetails(leader, evaNr, fireNr, message, m_incident, involvedName, involvedAddress, remarks, alarm);
+        String detectorNr = txtDetectorNumber.getText();
+        String groupNr = txtGroupNumber.getText();
+        BEIncidentDetails bedetails = new BEIncidentDetails(leader, evaNr, fireNr, message, m_incident, involvedName, involvedAddress, remarks, alarm, detectorNr, groupNr);
         return bedetails;
     }
     
-    private BEABA getMyABA(){
-        String detectorNr = txtDetectorNumber.getText();
-        String groupNr = txtGroupNumber.getText();
-        BEABA beaba = new BEABA(m_incident, detectorNr, groupNr);
-        return beaba;   
-    }
+//    private BEABA getMyABA(){
+//        String detectorNr = txtDetectorNumber.getText();
+//        String groupNr = txtGroupNumber.getText();
+//        BEABA beaba = new BEABA(m_incident, detectorNr, groupNr);
+//        return beaba;   
+//    }
 
-    private void onClickSaveAndFinish() {
+    private void onClickSaveDetails() {
         BLLTeamLeader.getInstance().updateIncidentDetails(getMyDetails());
-        BLLTeamLeader.getInstance().updateABA(getMyABA());
+        //BLLTeamLeader.getInstance().updateABA(getMyABA());
         MessageDialog.getInstance().teamLeaderSaveDialog();
         this.dispose();
     }
@@ -267,7 +273,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
             } else if (e.getSource().equals(btnAddMateriel)) {
                 onClickAddMaterial();
             } else if (e.getSource().equals(btnSave)) {
-                onClickSaveAndFinish();
+                onClickSaveDetails();
             }
 
         }

@@ -55,7 +55,9 @@ public class DALUpdate {
                 + "involvedName = ?, "
                 + "involvedAddress = ?, "
                 + "remark = ?, "
-                + "alarmId = ? "
+                + "alarmId = ?,"
+                + "detectorNumber = ?,"
+                + "groupNumber = ? "
                 + "where incidentId = ?";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setString(1, c.getM_incidentLeader());
@@ -66,19 +68,21 @@ public class DALUpdate {
         ps.setString(6, c.getM_involvedAddress());
         ps.setString(7, c.getM_remark());
         ps.setInt(8, c.getM_alarm().getM_id());
-        ps.setInt(9, c.getM_incident().getM_id());
+        ps.setString(9, c.getM_detectorNumber());
+        ps.setString(10, c.getM_groupNumber());
+        ps.setInt(11, c.getM_incident().getM_id());
         ps.executeUpdate();
                 
     }
     
-    public void updateABA(BEABA c) throws SQLException{
-        String sql = "Update ABA set detectorNumber = ?, "
-                + "groupNumber = ? "
-                + "where incidentId = ?";
-        PreparedStatement ps = m_connection.prepareStatement(sql);
-        ps.setString(1, c.getM_detectorNumber());
-        ps.setString(2, c.getM_groupNumber());
-        ps.setInt(3, c.getM_incident().getM_id());
-        ps.executeUpdate(); 
-    }
+//    public void updateABA(BEABA c) throws SQLException{
+//        String sql = "Update ABA set detectorNumber = ?, "
+//                + "groupNumber = ? "
+//                + "where incidentId = ?";
+//        PreparedStatement ps = m_connection.prepareStatement(sql);
+//        ps.setString(1, c.getM_detectorNumber());
+//        ps.setString(2, c.getM_groupNumber());
+//        ps.setInt(3, c.getM_incident().getM_id());
+//        ps.executeUpdate(); 
+//    }
 }

@@ -131,13 +131,13 @@ public class BLLTeamLeader {
         }
     }
     
-    public void updateABA(BEABA be){
-        try {
-            DALUpdate.getInstance().updateABA(be);
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void updateABA(BEABA be){
+//        try {
+//            DALUpdate.getInstance().updateABA(be);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident beincident) {
         ArrayList<BEIncidentVehicle> beincidentvehicle = new ArrayList<>();
