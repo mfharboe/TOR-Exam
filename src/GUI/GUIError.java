@@ -54,7 +54,7 @@ public class GUIError extends javax.swing.JFrame {
         boolean suitWash = chkFireSuit.isSelected();
         BEError be = new BEError(vehicleOdinNumner, filledBy, sqlDate, outOfOrder, urgent, description, cause, suitWash);
         BLLError.getInstance().createErrorReport(be);
-        
+        MessageDialog.getInstance().ErrorConfirmMessageApproved();
         dispose();
 
     }
