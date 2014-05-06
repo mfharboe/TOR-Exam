@@ -2,6 +2,7 @@ package DAL;
 
 import BE.BEError;
 import BE.BEIncident;
+import BE.BEIncidentDetails;
 import BE.BEIncidentType;
 import BE.BEIncidentVehicle;
 import BE.BERoleTime;
@@ -100,7 +101,7 @@ public class DALCreate {
     public void createErrorReport(BEError be) throws SQLException {
         String sql = " insert into Error values (?,?,?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
-       if (be.getM_vehicleOdinNumber()== null) {
+        if (be.getM_vehicleOdinNumber() == null) {
             ps.setString(1, null);
         } else {
             ps.setInt(1, be.getM_vehicleOdinNumber().getM_odinNumber());
@@ -114,5 +115,20 @@ public class DALCreate {
         ps.setBoolean(8, be.isM_suitWash());
         ps.executeUpdate();
 
+    }
+
+    public void createInitialIncidentDetails(BEIncident be) throws SQLException {
+        String sql = "insert into IncidentDetails values (?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = m_connection.prepareStatement(sql);
+        ps.setString(1, null);
+        ps.setString(2, null);
+        ps.setString(3, null);
+        ps.setString(4, null);
+        ps.setInt(5, be.getM_id());
+        ps.setString(6, null);
+        ps.setString(7, null);
+        ps.setString(8, null);
+        ps.setString(9, null);
+        ps.executeUpdate();
     }
 }

@@ -269,6 +269,7 @@ public class GUIFireman extends javax.swing.JFrame {
             } else {
                 selected = new BEIncident(incidentname, sqlDate, time, incidenttype, isdone);
                 BLLFireman.getInstance().createIncident(selected);
+                BLLFireman.getInstance().createInitialIncidentDetails(selected);
                 cmbIncident.addItem(selected);
             }
             cmbIncident.repaint();
