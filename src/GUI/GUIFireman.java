@@ -500,6 +500,7 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mandskab", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel3.setLayout(null);
 
+        lstManpower.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lstManpower.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Michael", "Andreas", "Morten" };
             public int getSize() { return strings.length; }
@@ -513,26 +514,33 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Min Indsats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         jPanel6.setLayout(null);
 
+        cmbVehicle.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jPanel6.add(cmbVehicle);
         cmbVehicle.setBounds(20, 40, 180, 40);
+
+        txtManHours.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jPanel6.add(txtManHours);
         txtManHours.setBounds(20, 100, 180, 40);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Funktion"));
         jPanel1.setLayout(null);
 
+        btnCH.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnCH.setText("CH");
         jPanel1.add(btnCH);
         btnCH.setBounds(100, 70, 80, 40);
 
+        btnST.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnST.setText("ST");
         jPanel1.add(btnST);
         btnST.setBounds(10, 20, 80, 40);
 
+        btnBM.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnBM.setText("BM");
         jPanel1.add(btnBM);
         btnBM.setBounds(100, 20, 80, 40);
 
+        btnHL.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnHL.setText("HL");
         jPanel1.add(btnHL);
         btnHL.setBounds(10, 70, 80, 40);
@@ -555,21 +563,24 @@ public class GUIFireman extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("kl.");
         jPanel4.add(jLabel5);
-        jLabel5.setBounds(340, 40, 20, 22);
+        jLabel5.setBounds(330, 40, 20, 22);
         jPanel4.add(txtIncidentTime);
         txtIncidentTime.setBounds(360, 30, 110, 40);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("dato");
         jPanel4.add(jLabel7);
-        jLabel7.setBounds(160, 40, 40, 22);
+        jLabel7.setBounds(150, 40, 40, 22);
 
         dateChooser.setDateFormatString("yyyy-MM-dd");
         jPanel4.add(dateChooser);
         dateChooser.setBounds(200, 30, 120, 40);
+
+        txtIncidentName.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jPanel4.add(txtIncidentName);
         txtIncidentName.setBounds(20, 80, 300, 40);
 
+        cmbIncidentType.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jPanel4.add(cmbIncidentType);
         cmbIncidentType.setBounds(20, 30, 120, 40);
 
@@ -580,11 +591,13 @@ public class GUIFireman extends javax.swing.JFrame {
         lblLogo.setFont(new java.awt.Font("Calibri", 0, 72)); // NOI18N
         lblLogo.setText("LOGO");
 
+        btnNext.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnNext.setText("Næste");
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fremmødeliste", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel5.setLayout(null);
 
+        tblRoleTime.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblRoleTime.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -601,11 +614,13 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel5.add(jScrollPane3);
         jScrollPane3.setBounds(10, 40, 720, 430);
 
+        btnError.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnError.setText("Fejl & Mangler");
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vælg Indsats", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         jPanel7.setLayout(null);
 
+        cmbIncident.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jPanel7.add(cmbIncident);
         cmbIncident.setBounds(20, 30, 450, 40);
 
@@ -618,33 +633,38 @@ public class GUIFireman extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(230, 230, 230)
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(286, 286, 286)
+                .addComponent(lblLogo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(919, 919, 919)
-                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(919, 919, 919)
+                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()

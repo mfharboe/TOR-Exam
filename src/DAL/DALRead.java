@@ -228,7 +228,10 @@ public class DALRead {
     public ArrayList<BERoleTime> readRoleTime() throws SQLException {
         ArrayList<BERoleTime> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
-        stm.execute("select * from [Role/Time]");
+        stm.execute("select * from [Role/Time] "
+                + "inner join Incident "
+                + "on [Role/Time].incidentId = Incident.id "
+                + "where Incident.isDone = 0");
         ResultSet result = stm.getResultSet();
         while (result.next()) {
             int incidentid = result.getInt("incidentId");
@@ -274,7 +277,10 @@ public class DALRead {
     public ArrayList<BEUsage> readUsage() throws SQLException {
         ArrayList<BEUsage> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
-        stm.execute("select * from Usage");
+        stm.execute("select * from Usage "
+                + "inner join Incident "
+                + "on Usage.incidentId = Incident.id "
+                + "where Incident.isDone = 0");
         ResultSet result = stm.getResultSet();
         while (result.next()) {
             int id = result.getInt("id");

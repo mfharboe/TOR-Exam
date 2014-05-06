@@ -85,7 +85,7 @@ public class MessageDialog {
         return "Detektor nummer..";
     }
     
-    public String teamLeaderTextGroup() {
+    public String teamLeaderTextGroupNumber() {
         return "Gruppe nummer..";
     }
     
