@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -31,6 +32,7 @@ public class GUIFireman extends javax.swing.JFrame {
     TableRowSorter<TableModelRoleTime> roleTimeSorter;
     private TableModelRoleTime roleTimeModel;
     private static final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
+    ImageIcon image;
 
     public GUIFireman() {
         this.setTitle(MessageDialog.getInstance().firemanTitle());
@@ -361,8 +363,17 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onListChange() {
         setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
+        if(((BEFireman)lstManpower.getSelectedValue()).getM_photoPath() == null){
+            lblImage.setIcon(null);
+        CheckHoursAndVehicles();
+        }
+        else{
+        image = new ImageIcon(((BEFireman)lstManpower.getSelectedValue()).getM_photoPath());
+        lblImage.setIcon(image);
         CheckHoursAndVehicles();
     }
+        }
+    
 
     /**
      * Enables and disables the buttons depending on conditions
@@ -509,11 +520,6 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel3.setLayout(null);
 
         lstManpower.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lstManpower.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Michael", "Andreas", "Morten" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(lstManpower);
 
         jPanel3.add(jScrollPane2);
@@ -560,7 +566,6 @@ public class GUIFireman extends javax.swing.JFrame {
         jPanel6.setBounds(270, 180, 210, 290);
 
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblImage.setText("Foto");
         lblImage.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel3.add(lblImage);
         lblImage.setBounds(270, 40, 210, 130);
