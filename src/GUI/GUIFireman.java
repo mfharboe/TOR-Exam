@@ -36,7 +36,10 @@ public class GUIFireman extends javax.swing.JFrame {
     private static final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
     ImageIcon image;
     ImageIcon imageLogo;
-    
+
+    /**
+     * Creates new form GUIFireman.
+     */
     public GUIFireman() {
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         initComponents();
@@ -46,7 +49,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * THe initial settings for this class
+     * THe initial settings for this class.
      */
     private void initializeSettings() {
         firemanListModel = new DefaultListModel<>();
@@ -63,8 +66,11 @@ public class GUIFireman extends javax.swing.JFrame {
         roleTimeSorter = new TableRowSorter<>(roleTimeModel);
         tblRoleTime.setRowSorter(roleTimeSorter);
     }
-    private void addColors(){
-        
+
+    /**
+     * Adds color and the logo.
+     */
+    private void addColors() {
         this.getContentPane().setBackground(Color.WHITE);
         pnlFunctions.setBackground(Color.WHITE);
         pnlManPower.setBackground(Color.WHITE);
@@ -81,7 +87,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Adds Listeners to all buttons, comboboxes, etc.
+     * Adds Listeners.
      */
     private void addListeners() {
         cmbAction cmb = new cmbAction();
@@ -105,7 +111,17 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Fills the Fireman List ordered by HL-BM and then lastname
+     * Fills all Comboboxes and Lists.
+     */
+    private void fillBoxes() {
+        fillFiremanList();
+        fillVehicleCombo();
+        fillIncidentTypeCombo();
+        fillIncidentCombo();
+    }
+
+    /**
+     * Fills the Fireman List ordered by HL-BM and then lastname.
      */
     private void fillFiremanList() {
         for (BEFireman befireman : BLLFireman.getInstance().readAllFiremen()) {
@@ -121,7 +137,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Fills the Vehicle ComboBox
+     * Fills the Vehicle ComboBox.
      */
     private void fillVehicleCombo() {
         cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
@@ -131,7 +147,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Fills the IncidentType ComboBox
+     * Fills the IncidentType ComboBox.
      */
     private void fillIncidentTypeCombo() {
         cmbIncidentType.addItem(MessageDialog.getInstance().firemanComboIncidentType());
@@ -141,7 +157,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Fills the Incident ComboBox
+     * Fills the Incident ComboBox.
      */
     private void fillIncidentCombo() {
         cmbIncident.addItem(MessageDialog.getInstance().firemanComboIncident());
@@ -151,17 +167,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Fills all ComboBoxes
-     */
-    private void fillBoxes() {
-        fillFiremanList();
-        fillVehicleCombo();
-        fillIncidentTypeCombo();
-        fillIncidentCombo();
-    }
-
-    /**
-     * Set the manPower List to be enabled or disabled
+     * Set the ManPower List to be enabled or disabled
      *
      * @param enable
      */
@@ -170,7 +176,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Sets the contribution components to be enabled or disabled
+     * Sets the my contribution components to be enabled or disabled
      *
      * @param enable
      */
@@ -220,7 +226,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Clears the Info panel
+     * Clears the Info panel.
      */
     private void clearInfoBox() {
         txtIncidentName.setText("");
@@ -232,7 +238,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Clears and disables the My Contribution panel
+     * Clears and disables the my contribution panel.
      */
     private void clearMyContribution() {
         lstManpower.clearSelection();
@@ -246,7 +252,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Invokes this method when the Incident ComboBox changes values
+     * Invokes this method when the Incident ComboBox changes values.
      */
     private void onComboIncidentChange() {
         setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
@@ -270,7 +276,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Invokes this method when the Save button is pressed
+     * Invokes this method when the Save button is pressed.
      */
     private void onClickSave() {
         if (txtIncidentName.getText().isEmpty()
@@ -337,7 +343,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Invokes this method when the ST button is pressed
+     * Invokes this method when the ST button is pressed.
      */
     private void onClickST() {
         BLLFireman.getInstance().createSTOnIncident(myContribution(true));
@@ -345,7 +351,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Invokes this method when the BM button is pressed
+     * Invokes this method when the BM button is pressed.
      */
     private void onClickBM() {
         BLLFireman.getInstance().createBMOnIncident(myContribution(false));
@@ -353,7 +359,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Invokes this method when the CH button is pressed
+     * Invokes this method when the CH button is pressed.
      */
     private void onClickCH() {
         BLLFireman.getInstance().createCHOnIncident(myContribution(false));
@@ -361,27 +367,33 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Invokes this method when the HL button is pressed
+     * Invokes this method when the HL button is pressed.
      */
     private void onClickHL() {
         BLLFireman.getInstance().createHLOnIncident(myContribution(false));
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
-    private void onClickNext() {
+    /**
+     * Starts the TeamLeader GUI.
+     */
+    private void onClickTeamLeader() {
         JFrame guiteamleader = GUITeamLeader.getInstance();
         GUITeamLeader.getInstance().setIncident((BEIncident) cmbIncident.getSelectedItem());
         guiteamleader.setVisible(true);
 
     }
 
+    /**
+     * Starts the ErrorReport GUI.
+     */
     private void onClickErrorReport() {
         JFrame guierror = new GUIError();
         guierror.setVisible(true);
     }
 
     /**
-     * Invokes this method when the list of firemen changes the selected value
+     * Invokes this method when the list of firemen changes value.
      */
     private void onListChange() {
         if (!lstManpower.isSelectionEmpty()) {
@@ -398,7 +410,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Enables and disables the buttons depending on conditions
+     * Enables and disables buttons depending on conditions.
      */
     private void CheckHoursAndVehicles() {
         if (lstManpower.isSelectionEmpty()) {
@@ -428,7 +440,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Listener for the Incident ComboBox
+     * Listener for the Incident ComboBox.
      */
     private class cmbAction implements ItemListener {
 
@@ -443,7 +455,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Listener for all the buttons
+     * Listener for the buttons.
      */
     private class btnAction implements ActionListener {
 
@@ -460,7 +472,7 @@ public class GUIFireman extends javax.swing.JFrame {
             } else if (e.getSource().equals(btnHL)) {
                 onClickHL();
             } else if (e.getSource().equals(btnTeamLeader)) {
-                onClickNext();
+                onClickTeamLeader();
             } else if (e.getSource().equals(btnError)) {
                 onClickErrorReport();
             }
@@ -468,7 +480,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Listener for the ManPower list
+     * Listener for the ManPower List.
      */
     private class lstAction implements ListSelectionListener {
 
@@ -479,7 +491,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * Listener for the hours text field
+     * Listener for the hours Textfield.
      */
     private class txtAction extends KeyAdapter {
 
@@ -490,7 +502,7 @@ public class GUIFireman extends javax.swing.JFrame {
     }
 
     /**
-     * focusListener for the text field
+     * focusListener for the Textfield.
      */
     private class txtFocus extends FocusAdapter {
 
@@ -518,9 +530,9 @@ public class GUIFireman extends javax.swing.JFrame {
         btnHL = new javax.swing.JButton();
         lblImage = new javax.swing.JLabel();
         pnlInfo = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
         txtIncidentTime = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        lblDate = new javax.swing.JLabel();
         dateChooser = new com.toedter.calendar.JDateChooser();
         txtIncidentName = new javax.swing.JTextField();
         cmbIncidentType = new javax.swing.JComboBox();
@@ -593,17 +605,17 @@ public class GUIFireman extends javax.swing.JFrame {
         pnlInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Info", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlInfo.setLayout(null);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("kl.");
-        pnlInfo.add(jLabel5);
-        jLabel5.setBounds(330, 40, 20, 22);
+        lblTime.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTime.setText("kl.");
+        pnlInfo.add(lblTime);
+        lblTime.setBounds(340, 40, 20, 22);
         pnlInfo.add(txtIncidentTime);
         txtIncidentTime.setBounds(360, 30, 110, 40);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("dato");
-        pnlInfo.add(jLabel7);
-        jLabel7.setBounds(150, 40, 40, 22);
+        lblDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblDate.setText("dato");
+        pnlInfo.add(lblDate);
+        lblDate.setBounds(160, 40, 40, 22);
 
         dateChooser.setDateFormatString("yyyy-MM-dd");
         pnlInfo.add(dateChooser);
@@ -719,12 +731,12 @@ public class GUIFireman extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbIncidentType;
     private javax.swing.JComboBox cmbVehicle;
     private com.toedter.calendar.JDateChooser dateChooser;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JList lstManpower;
     private javax.swing.JPanel pnlAttendance;
     private javax.swing.JPanel pnlFunctions;

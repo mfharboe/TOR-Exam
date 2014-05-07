@@ -7,8 +7,6 @@ import BLL.BLLFireman;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import javax.swing.JOptionPane;
 
 public class GUIError extends javax.swing.JFrame {
 
@@ -18,6 +16,9 @@ public class GUIError extends javax.swing.JFrame {
         addColors();
     }
 
+    /**
+     * The initial settings for this class.
+     */
     private void initializeSettings() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setTitle(MessageDialog.getInstance().ErrorTitle());
@@ -25,13 +26,19 @@ public class GUIError extends javax.swing.JFrame {
         addListeners();
     }
 
+    /**
+     * Adds Listeners.
+     */
     private void addListeners() {
         btnAction btn = new btnAction();
         btnCancel.addActionListener(btn);
         btnOK.addActionListener(btn);
     }
 
-    private void addColors(){
+    /**
+     * Adds color.
+     */
+    private void addColors() {
         this.getContentPane().setBackground(Color.WHITE);
         pnlCause.setBackground(Color.WHITE);
         pnlError.setBackground(Color.WHITE);
@@ -43,8 +50,12 @@ public class GUIError extends javax.swing.JFrame {
         chkFireSuit.setBackground(Color.WHITE);
         chkOutOfOrder.setBackground(Color.WHITE);
         chkUrgent.setBackground(Color.WHITE);
-        
+
     }
+
+    /**
+     * Fills the Vehicle ComboBox.
+     */
     private void fillCmbVehicle() {
         cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
         for (BEVehicle beVehicle : BLLFireman.getInstance().readAllVehicles()) {
@@ -53,6 +64,9 @@ public class GUIError extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Invokes this method when the OK button is pressed.
+     */
     private void onClickOk() {
         BEVehicle vehicleOdinNumner;
         if (cmbVehicle.getSelectedIndex() != 0) {
@@ -70,15 +84,19 @@ public class GUIError extends javax.swing.JFrame {
         boolean suitWash = chkFireSuit.isSelected();
         BEError be = new BEError(vehicleOdinNumner, filledBy, sqlDate, outOfOrder, urgent, description, cause, suitWash);
         BLLError.getInstance().createErrorReport(be);
-        MessageDialog.getInstance().ErrorConfirmMessageApproved();
         dispose();
-
     }
 
+    /**
+     * Invokes this method when the Cancel button is pressed.
+     */
     private void onClickCancel() {
         dispose();
     }
 
+    /**
+     * Listener for the buttons.
+     */
     private class btnAction implements ActionListener {
 
         @Override

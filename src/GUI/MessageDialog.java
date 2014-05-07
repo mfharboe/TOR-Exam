@@ -10,11 +10,20 @@ public class MessageDialog {
 
     }
 
+    /**
+     *
+     * @return m_instance of MessageDialog
+     */
     public static MessageDialog getInstance() {
         if (m_instance == null) {
             m_instance = new MessageDialog();
         }
         return m_instance;
+    }
+
+    //FIREMAN MESSAGES----------------------------------------------------------
+    public void incidentUpdate() {
+        JOptionPane.showMessageDialog(null, "Dine ændringer blev registreret");
     }
 
     public void saveDialog() {
@@ -29,44 +38,8 @@ public class MessageDialog {
         JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats");
     }
 
-    public void addForcesDialog() {
-        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
-    }
-
-    public void addMaterialsDialog() {
-        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
-    }
-
-    public void noTextHereDialog() {
-        JOptionPane.showMessageDialog(null, "Du kan kun skrive tal her");
-    }
-    
-    public void teamLeaderSaveDialog() {
-        JOptionPane.showMessageDialog(null, "Oplysningerne blev gemt");
-    }
-
-    public void ErrorConfirmMessageApproved() {
-        JOptionPane.showMessageDialog(null, "Din fejl Rapport er registreret");
-    }
-
-    public void ErrorConfirmMessageNotApproved() {
-        JOptionPane.showMessageDialog(null, "Der opstod en fejl");
-    }
-    
-    public void incidentUpdate(){
-        JOptionPane.showMessageDialog(null, "Dine ændringer blev registreret");
-    }
-
     public String firemanTitle() {
         return "TOR - Tid & Registreringssytem";
-    }
-    
-    public String ErrorTitle(){
-        return "TOR - Fejlmeddelse";
-    }
-    
-    public String TeamLeaderTitle(){
-        return "TOR - Holdleder";
     }
 
     public String firemanComboIncident() {
@@ -86,7 +59,7 @@ public class MessageDialog {
     }
 
     public String firemanTextIncident() {
-        return "Skriv navnet på indsatsen..";
+        return "Skriv et navnet på indsatsen..";
     }
 
     public String firemanTextDate() {
@@ -95,6 +68,31 @@ public class MessageDialog {
 
     public String firemanTextClock() {
         return "TT:MM";
+    }
+
+    public String firemanListHL() {
+        return "(HL) ";
+    }
+
+    public String firemanListBM() {
+        return "(BM) ";
+    }
+
+    //TEAMLEADER MESSAGES-------------------------------------------------------
+    public void teamLeaderSaveDialog() {
+        JOptionPane.showMessageDialog(null, "Oplysningerne blev gemt");
+    }
+
+    public void addForcesDialog() {
+        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
+    }
+
+    public void addMaterialsDialog() {
+        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
+    }
+
+    public String TeamLeaderTitle() {
+        return "TOR - Holdleder";
     }
 
     public String teamLeaderComboEmergency() {
@@ -117,23 +115,23 @@ public class MessageDialog {
         return "Vælg beretning..";
     }
 
-    public String teamLeaderTextDetector() {
-        return "Detektor nummer..";
+    //ERRORREPORT MESSAGES------------------------------------------------------
+    public void ErrorConfirmMessageApproved() {
+        JOptionPane.showMessageDialog(null, "Din fejl rapport er registreret");
     }
 
-    public String teamLeaderTextGroupNumber() {
-        return "Gruppe nummer..";
+    public String ErrorTitle() {
+        return "TOR - Fejlmeddelse";
     }
 
-    public String firemanListHL(){
-        return "(HL) "; 
-    }
-    
-    public String firemanListBM(){
-        return "(BM) ";
-    }
-    
+    //MISC----------------------------------------------------------------------
     public final String EMPTY_TEXT() {
         return "";
+    }
+
+    //BLL ERROR MESSAGES--------------------------------------------------------
+    
+    public void DataBaseError(){
+        JOptionPane.showMessageDialog(null, "Der er sket en fejl, handlingen afsluttes");
     }
 }

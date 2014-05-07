@@ -47,7 +47,9 @@ public class BLLFireman {
             try {
                 firemen = DALRead.getInstance().readFiremen();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return firemen;
@@ -62,7 +64,9 @@ public class BLLFireman {
             try {
                 vehicles = DALRead.getInstance().readVehicles();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return vehicles;
@@ -76,7 +80,9 @@ public class BLLFireman {
             try {
                 incidentTypes = DALRead.getInstance().readIncidentTypes();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return incidentTypes;
@@ -90,7 +96,9 @@ public class BLLFireman {
             try {
                 incidents = DALRead.getInstance().readIncidents();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return incidents;
@@ -105,7 +113,9 @@ public class BLLFireman {
             try {
                 roles = DALRead.getInstance().readRoles();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return roles;
@@ -120,7 +130,9 @@ public class BLLFireman {
             try {
                 roletimes = DALRead.getInstance().readRoleTime();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return roletimes;
@@ -135,7 +147,8 @@ public class BLLFireman {
         try {
             DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
         }
     }
 
@@ -152,6 +165,7 @@ public class BLLFireman {
                     roleTime.setM_role(role);
                     DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
+                    //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
@@ -172,6 +186,7 @@ public class BLLFireman {
                     roleTime.setM_role(role);
                     DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
+                    //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
@@ -192,6 +207,7 @@ public class BLLFireman {
                     roleTime.setM_role(role);
                     DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
+                    //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().stationDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
@@ -212,6 +228,7 @@ public class BLLFireman {
                     roleTime.setM_role(role);
                     DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
+                   //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
@@ -229,7 +246,9 @@ public class BLLFireman {
         try {
             DALUpdate.getInstance().updateIncident(incident);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            return;
         }
         MessageDialog.getInstance().incidentUpdate(); //MÅ IKKE VÆRE HER
     }

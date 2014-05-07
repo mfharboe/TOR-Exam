@@ -32,7 +32,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private BEIncident m_incident;
 
     /**
-     * Creates new form GUITeamLeader
+     * Creates new form GUITeamLeader.
      */
     private GUITeamLeader() {
         initComponents();
@@ -42,6 +42,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    /**
+     *
+     * @return m_instance of GUITeamLeader
+     */
     public static GUITeamLeader getInstance() {
         if (m_instance == null) {
             m_instance = new GUITeamLeader();
@@ -49,6 +53,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         return m_instance;
     }
 
+    /**
+     * Sets the initial settings for this class.
+     */
     private void initializeSettings() {
         addListeners();
         fillBoxes();
@@ -66,7 +73,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
         tblForces.setRowSorter(forcesSorter);
 
     }
-    private void addColors(){
+
+    /**
+     * Adds color.
+     */
+    private void addColors() {
         this.getContentPane().setBackground(Color.WHITE);
         pnlForces.setBackground(Color.WHITE);
         pnlUsage.setBackground(Color.WHITE);
@@ -82,6 +93,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         chkIsDiverged.setBackground(Color.WHITE);
     }
 
+    /**
+     * Adds Listeners.
+     */
     private void addListeners() {
         btnAction btn = new btnAction();
         txtFocus txtFc = new txtFocus();
@@ -94,6 +108,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         btnSave.addActionListener(btn);
     }
 
+    /**
+     * Fills all the comboboxes.
+     */
     private void fillBoxes() {
         fillEmergencyCombo();
         fillMaterialCombo();
@@ -101,6 +118,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         fillVehicleCombo();
     }
 
+    /**
+     * Fills the Vehicle ComboBox.
+     */
     private void fillVehicleCombo() {
         cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
         for (BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles()) {
@@ -108,6 +128,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Fills the Emergency (Type of driving) ComboBox.
+     */
     private void fillEmergencyCombo() {
         cmbEmergency.addItem(MessageDialog.getInstance().teamLeaderComboEmergency());
         for (BEEmergency beemergency : BLLTeamLeader.getInstance().readEmergencies()) {
@@ -115,6 +138,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Fills the Alarm (Type of alarm) ComboBox.
+     */
     private void fillAlarmCombo() {
         cmbAlarmType.addItem(MessageDialog.getInstance().teamLeaderComboReport());
         for (BEAlarm bealarm : BLLTeamLeader.getInstance().readAlarms()) {
@@ -123,6 +149,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Fills the Material ComboBox.
+     */
     private void fillMaterialCombo() {
         cmbMaterial.addItem(MessageDialog.getInstance().teamLeaderComboMaterial());
         for (BEMaterial bematerial : BLLTeamLeader.getInstance().readMaterials()) {
@@ -130,6 +159,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Sets all IncidentDetail fields to empty.
+     */
     private void clearIncidentDetails() {
         txtIncidentLeader.setText(MessageDialog.getInstance().EMPTY_TEXT());
         txtMessage.setText(MessageDialog.getInstance().EMPTY_TEXT());
@@ -143,6 +175,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         cmbAlarmType.setSelectedIndex(0);
     }
 
+    /**
+     * Sets all Forces fields to empty and no selection.
+     */
     private void clearForces() {
         cmbVehicle.setSelectedIndex(0);
         cmbEmergency.setSelectedIndex(0);
@@ -150,13 +185,21 @@ public class GUITeamLeader extends javax.swing.JFrame {
         chkIsDiverged.setSelected(false);
     }
 
+    /**
+     * Set all Material fields to empty and no selection.
+     */
     private void clearMaterials() {
         cmbMaterial.setSelectedIndex(0);
         txtAmountMaterial.setText(MessageDialog.getInstance().teamLeaderTextAmountMaterials());
     }
 
-    public void setIncident(BEIncident beincident) {
-        m_incident = beincident;
+    /**
+     * Sets the IncidentDetails, Forces and Materials to the given Incident
+     *
+     * @param incident
+     */
+    public void setIncident(BEIncident incident) {
+        m_incident = incident;
         forcesModel.setForceList(BLLTeamLeader.getInstance().incidentToIncidentVehicle(m_incident));
         usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
         BEIncidentDetails details = BLLTeamLeader.getInstance().incidentToIncidentDetails(m_incident);
@@ -179,6 +222,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Reads the Forces fields
+     *
+     * @return BEIncidentVehicles
+     */
     private BEIncidentVehicle getMyForces() {
         BEVehicle bevehicle = (BEVehicle) cmbVehicle.getSelectedItem();
         BEEmergency beemergency = (BEEmergency) cmbEmergency.getSelectedItem();
@@ -189,6 +237,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         return beincidentvehicle;
     }
 
+    /**
+     * Invoke this method when the AddForces button is pressed.
+     */
     private void onClickAddForces() {
         if (isForcesfilled()) {
             BLLTeamLeader.getInstance().createIncidentVehicle(getMyForces());
@@ -197,6 +248,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Checks if all Forces fields is filled
+     *
+     * @return boolean
+     */
     private boolean isForcesfilled() {
         if (cmbVehicle.getSelectedIndex() == 0) {
             MessageDialog.getInstance().addForcesDialog();
@@ -213,6 +269,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Reads the Material fields
+     *
+     * @return BEUsage
+     */
     private BEUsage getMyMaterials() {
         BEMaterial bematerial = (BEMaterial) cmbMaterial.getSelectedItem();
         int amount = Integer.parseInt(txtAmountMaterial.getText());
@@ -220,6 +281,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         return beusage;
     }
 
+    /**
+     * Invoke this method when the AddMaterial button is pressed.
+     */
     private void onClickAddMaterial() {
         if (isUsageFilled()) {
             BLLTeamLeader.getInstance().createUsage(getMyMaterials());
@@ -228,6 +292,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Checks if all Usage fields are filled
+     *
+     * @return boolean
+     */
     private boolean isUsageFilled() {
         if (cmbMaterial.getSelectedIndex() == 0) {
             MessageDialog.getInstance().addMaterialsDialog();
@@ -240,6 +309,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Reads the IncidentDetails fields
+     *
+     * @return BEIncidentDetails
+     */
     private BEIncidentDetails getMyDetails() {
         String leader = txtIncidentLeader.getText();
         String evaNr = txtEvaNumber.getText();
@@ -258,11 +332,17 @@ public class GUITeamLeader extends javax.swing.JFrame {
         return bedetails;
     }
 
+    /**
+     * Invoke this method when the Save button is pressed.
+     */
     private void onClickSaveDetails() {
         BLLTeamLeader.getInstance().updateIncidentDetails(getMyDetails());
         this.dispose();
     }
 
+    /**
+     * Listeners for the buttons.
+     */
     private class btnAction implements ActionListener {
 
         @Override
@@ -278,6 +358,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * FokusListener for Textfield Forces and Material.
+     */
     private class txtFocus extends FocusAdapter {
 
         @Override

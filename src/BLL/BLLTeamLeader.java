@@ -50,7 +50,9 @@ public class BLLTeamLeader {
             try {
                 usages = DALRead.getInstance().readUsage();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return usages;
@@ -65,7 +67,9 @@ public class BLLTeamLeader {
             try {
                 materials = DALRead.getInstance().readMaterial();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return materials;
@@ -80,7 +84,9 @@ public class BLLTeamLeader {
             try {
                 incidentVehicles = DALRead.getInstance().readIncidentVehicle();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return incidentVehicles;
@@ -95,7 +101,9 @@ public class BLLTeamLeader {
             try {
                 emergencies = DALRead.getInstance().readEmergencies();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return emergencies;
@@ -110,7 +118,9 @@ public class BLLTeamLeader {
             try {
                 alarms = DALRead.getInstance().readAlarms();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return alarms;
@@ -126,7 +136,9 @@ public class BLLTeamLeader {
             try {
                 incidentDetails = DALRead.getInstance().readIncidentDetails();
             } catch (SQLException ex) {
-                Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return null;
             }
         }
         return incidentDetails;
@@ -141,6 +153,8 @@ public class BLLTeamLeader {
         try {
             DALCreate.getInstance().createIncidentVehicle(incidentVehicle);
         } catch (SQLException ex) {
+            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return;
         }
         readIncidentVehicles();
@@ -156,6 +170,8 @@ public class BLLTeamLeader {
         try {
             DALCreate.getInstance().createUsage(usage);
         } catch (SQLException ex) {
+            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return;
         }
         usages.add(usage);
@@ -173,7 +189,9 @@ public class BLLTeamLeader {
             BLLTeamLeader.getInstance().readIncidentDetails();
             DALCreate.getInstance().createInitialIncidentDetails(details);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            return;
         }
         incidentDetails.add(details);
     }
@@ -188,7 +206,8 @@ public class BLLTeamLeader {
         try {
             DALUpdate.getInstance().updateIncidentDetails(incidentDetails);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return;
         }
         for (BEIncidentDetails details : readIncidentDetails()) {
@@ -210,10 +229,10 @@ public class BLLTeamLeader {
     }
 
     /**
-     * Sets the IncidentVehicles for an Incident
+     * Checks and adds IncidentVehicles for a given Incident
      *
      * @param incident
-     * @return BEIncidentVehicles
+     * @return ArrayList of BEIncidentVehicles
      */
     public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident incident) {
         ArrayList<BEIncidentVehicle> beincidentvehicle = new ArrayList<>();
@@ -226,10 +245,10 @@ public class BLLTeamLeader {
     }
 
     /**
-     * Sets the Usage for an Incident
+     * Checks and adds Usage for a given Incident
      *
      * @param incident
-     * @return BEUsage
+     * @return ArrayList of BEUsage
      */
     public ArrayList<BEUsage> incidentToUsage(BEIncident incident) {
         ArrayList<BEUsage> beusage = new ArrayList<>();
@@ -242,10 +261,10 @@ public class BLLTeamLeader {
     }
 
     /**
-     * Sets IncidentDetails for an Incident
+     * Checks for IncidentDetails for a given Incident
      *
      * @param incident
-     * @return null
+     * @return The BEIncidentDetails or null if none is there
      */
     public BEIncidentDetails incidentToIncidentDetails(BEIncident incident) {
         for (BEIncidentDetails be : readIncidentDetails()) {

@@ -2,6 +2,7 @@ package BLL;
 
 import BE.BEError;
 import DAL.DALCreate;
+import GUI.MessageDialog;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,8 +35,10 @@ public class BLLError {
         try {
             DALCreate.getInstance().createErrorReport(error);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLError.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(BLLError.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            return;
         }
-
+        MessageDialog.getInstance().ErrorConfirmMessageApproved(); //MÅ IKKE VÆRE HER
     }
 }
