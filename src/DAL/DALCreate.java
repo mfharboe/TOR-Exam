@@ -117,18 +117,20 @@ public class DALCreate {
 
     }
 
-    public void createInitialIncidentDetails(BEIncident be) throws SQLException {
-        String sql = "insert into IncidentDetails values (?,?,?,?,?,?,?,?,?)";
+    public void createInitialIncidentDetails(BEIncidentDetails be) throws SQLException {
+        String sql = "insert into IncidentDetails values (?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setString(1, null);
         ps.setString(2, null);
         ps.setString(3, null);
         ps.setString(4, null);
-        ps.setInt(5, be.getM_id());
+        ps.setInt(5, be.getM_incident().getM_id());
         ps.setString(6, null);
         ps.setString(7, null);
         ps.setString(8, null);
         ps.setString(9, null);
+        ps.setString(10, null);
+        ps.setString(11, null);
         ps.executeUpdate();
     }
 }

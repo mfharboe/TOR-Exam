@@ -16,10 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
 
@@ -72,20 +68,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void addListeners() {
         btnAction btn = new btnAction();
         txtFocus txtFc = new txtFocus();
-        cmbAction cmb = new cmbAction();
 
-        cmbAlarmType.addItemListener(cmb);
         txtAmountMen.addFocusListener(txtFc);
         txtAmountMaterial.addFocusListener(txtFc);
-        txtDetectorNumber.addFocusListener(txtFc);
-        txtGroupNumber.addFocusListener(txtFc);
-        txtIncidentLeader.addFocusListener(txtFc);
-        txtFireReportNumber.addFocusListener(txtFc);
-        txtInvolvedAddress.addFocusListener(txtFc);
-        txtInvolvedName.addFocusListener(txtFc);
-        txtMessage.addFocusListener(txtFc);
-        txtRemarks.addFocusListener(txtFc);
-        txtEvaNumber.addFocusListener(txtFc);
 
         btnAddForces.addActionListener(btn);
         btnAddMateriel.addActionListener(btn);
@@ -169,6 +154,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
             txtInvolvedAddress.setText(details.getM_involvedAddress());
             txtRemarks.setText(details.getM_remark());
             cmbAlarmType.setSelectedItem(details.getM_alarm());
+            if (details.getM_alarm() == null) {
+                cmbAlarmType.setSelectedIndex(0);
+            }
             txtDetectorNumber.setText(details.getM_detectorNumber());
             txtGroupNumber.setText(details.getM_groupNumber());
         }
@@ -243,22 +231,14 @@ public class GUITeamLeader extends javax.swing.JFrame {
         String involvedName = txtInvolvedName.getText();
         String involvedAddress = txtInvolvedAddress.getText();
         String remarks = txtRemarks.getText();
-        BEAlarm alarm = (BEAlarm) cmbAlarmType.getSelectedItem();
+        BEAlarm alarm = null;
+        if (cmbAlarmType.getSelectedIndex() != 0) {
+            alarm = (BEAlarm) cmbAlarmType.getSelectedItem();
+        }
         String detectorNr = txtDetectorNumber.getText();
         String groupNr = txtGroupNumber.getText();
         BEIncidentDetails bedetails = new BEIncidentDetails(leader, evaNr, fireNr, message, m_incident, involvedName, involvedAddress, remarks, alarm, detectorNr, groupNr);
         return bedetails;
-    }
-
-    private void onItemChange() {
-        if (cmbAlarmType.getSelectedIndex() == 0) {
-            txtDetectorNumber.setEnabled(false);
-            txtGroupNumber.setEnabled(false);
-        } else {
-            txtDetectorNumber.setEnabled(true);
-            txtGroupNumber.setEnabled(true);
-        }
-
     }
 
     private void onClickSaveDetails() {
@@ -282,28 +262,25 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }
     }
 
-    private class cmbAction implements ItemListener {
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            onItemChange();
-        }
-
-    }
-
     private class txtFocus extends FocusAdapter {
 
         @Override
         public void focusGained(FocusEvent e) {
             if (e.getSource().equals(txtAmountMen)) {
                 txtAmountMen.setText(MessageDialog.getInstance().EMPTY_TEXT());
-            } else {
-                txtAmountMen.setText(MessageDialog.getInstance().teamLeaderTextAmountMen());
             }
             if (e.getSource().equals(txtAmountMaterial)) {
                 txtAmountMaterial.setText(MessageDialog.getInstance().EMPTY_TEXT());
-            } else {
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            if (txtAmountMaterial.getText().isEmpty()) {
                 txtAmountMaterial.setText(MessageDialog.getInstance().teamLeaderTextAmountMaterials());
+            }
+            if (txtAmountMen.getText().isEmpty()) {
+                txtAmountMen.setText(MessageDialog.getInstance().teamLeaderTextAmountMen());
             }
         }
 

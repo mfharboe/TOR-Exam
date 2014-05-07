@@ -127,6 +127,22 @@ public class BLLTeamLeader {
             DALUpdate.getInstance().updateIncidentDetails(be);
         } catch (SQLException ex) {
             Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        for(BEIncidentDetails details : readIncidentDetails()){
+            if(details.getM_incident().getM_id() == be.getM_incident().getM_id()){
+                details.setM_alarm(be.getM_alarm());
+                details.setM_detectorNumber(be.getM_detectorNumber());
+                details.setM_evaNumber(be.getM_evaNumber());
+                details.setM_fireReport(be.getM_fireReport());
+                details.setM_groupNumber(be.getM_groupNumber());
+                details.setM_incidentLeader(be.getM_incidentLeader());
+                details.setM_involvedAddress(be.getM_involvedAddress());
+                details.setM_involvedName(be.getM_involvedName());
+                details.setM_message(be.getM_message());
+                details.setM_remark(be.getM_remark());
+                break;
+            }
         }
     }
 
@@ -157,6 +173,17 @@ public class BLLTeamLeader {
             }
         }
         return null;
+    }
+
+    public void createInitialIncidentDetails(BEIncident be) {
+        BEIncidentDetails details = new BEIncidentDetails(null, null, null, null, be, null, null, null, null, null, null);
+        try {
+            BLLTeamLeader.getInstance().readIncidentDetails();
+            DALCreate.getInstance().createInitialIncidentDetails(details);
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        incidentDetails.add(details);
     }
 
 }

@@ -1,4 +1,3 @@
-
 package DAL;
 
 import BE.BEIncident;
@@ -45,8 +44,8 @@ public class DALUpdate {
         ps.setInt(6, c.getM_id());
         ps.executeUpdate();
     }
-    
-    public void updateIncidentDetails(BEIncidentDetails c) throws SQLException{
+
+    public void updateIncidentDetails(BEIncidentDetails c) throws SQLException {
         String sql = "Update IncidentDetails set incidentLeader = ?, "
                 + "evaNumber = ?, "
                 + "fireReport = ?, "
@@ -66,12 +65,16 @@ public class DALUpdate {
         ps.setString(5, c.getM_involvedName());
         ps.setString(6, c.getM_involvedAddress());
         ps.setString(7, c.getM_remark());
-        ps.setInt(8, c.getM_alarm().getM_id());
+        if (c.getM_alarm() == null) {
+            ps.setString(8, null);
+        } else {
+            ps.setInt(8, c.getM_alarm().getM_id());
+        }
         ps.setString(9, c.getM_detectorNumber());
         ps.setString(10, c.getM_groupNumber());
         ps.setInt(11, c.getM_incident().getM_id());
         ps.executeUpdate();
-                
+
     }
-    
+
 }

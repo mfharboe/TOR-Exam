@@ -6,6 +6,7 @@ import BE.BEIncidentType;
 import BE.BERoleTime;
 import BE.BEVehicle;
 import BLL.BLLFireman;
+import BLL.BLLTeamLeader;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -232,6 +233,7 @@ public class GUIFireman extends javax.swing.JFrame {
         setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
         btnTeamLeader.setEnabled(cmbIncident.getSelectedIndex() != 0);
         lstManpower.clearSelection();
+        lblImage.setIcon(null);
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
             txtIncidentName.setText(selected.getM_incidentName());
@@ -271,7 +273,7 @@ public class GUIFireman extends javax.swing.JFrame {
             } else {
                 selected = new BEIncident(incidentname, sqlDate, time, incidenttype, isdone);
                 BLLFireman.getInstance().createIncident(selected);
-                BLLFireman.getInstance().createInitialIncidentDetails(selected);
+                BLLTeamLeader.getInstance().createInitialIncidentDetails(selected);
                 cmbIncident.addItem(selected);
             }
             cmbIncident.repaint();
@@ -353,7 +355,8 @@ public class GUIFireman extends javax.swing.JFrame {
         guiteamleader.setVisible(true);
 
     }
-    private void onClickErrorReport(){
+
+    private void onClickErrorReport() {
         JFrame guierror = new GUIError();
         guierror.setVisible(true);
     }
@@ -362,18 +365,18 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the list of firemen changes the selected value
      */
     private void onListChange() {
-        setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
-        if(((BEFireman)lstManpower.getSelectedValue()).getM_photoPath() == null){
-            lblImage.setIcon(null);
-        CheckHoursAndVehicles();
+        if (!lstManpower.isSelectionEmpty()) {
+            setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
+
+            if (((BEFireman) lstManpower.getSelectedValue()).getM_photoPath() == null) {
+                lblImage.setIcon(null);
+            } else {
+                image = new ImageIcon(((BEFireman) lstManpower.getSelectedValue()).getM_photoPath());
+                lblImage.setIcon(image);
+            }
+            CheckHoursAndVehicles();
         }
-        else{
-        image = new ImageIcon(((BEFireman)lstManpower.getSelectedValue()).getM_photoPath());
-        lblImage.setIcon(image);
-        CheckHoursAndVehicles();
     }
-        }
-    
 
     /**
      * Enables and disables the buttons depending on conditions
@@ -439,7 +442,7 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickHL();
             } else if (e.getSource().equals(btnTeamLeader)) {
                 onClickNext();
-            }else if( e.getSource().equals(btnError)){
+            } else if (e.getSource().equals(btnError)) {
                 onClickErrorReport();
             }
         }

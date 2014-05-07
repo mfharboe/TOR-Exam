@@ -203,14 +203,6 @@ public class BLLFireman {
             }
         }
     }
-    
-    public void createInitialIncidentDetails(BEIncident be){
-        try {
-            DALCreate.getInstance().createInitialIncidentDetails(be);
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     public void updateFireman(BEIncident be) {
         try {
