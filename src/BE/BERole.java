@@ -1,18 +1,27 @@
-
 package BE;
 
 public class BERole {
-    
+
     private int m_id;
     private String m_description;
     private boolean m_isFireman;
     private boolean m_isDriver;
     private boolean m_isLeader;
     private boolean m_isStation;
-    
+
+    /**
+     * Read Role
+     *
+     * @param id
+     * @param description
+     * @param isFireman
+     * @param isDriver
+     * @param isLeader
+     * @param isStation
+     */
     public BERole(int id, String description, boolean isFireman, boolean isDriver,
-            boolean isLeader, boolean isStation){
-        
+            boolean isLeader, boolean isStation) {
+
         m_id = id;
         m_description = description;
         m_isFireman = isFireman;
@@ -104,5 +113,5 @@ public class BERole {
     public void setM_isStation(boolean m_isStation) {
         this.m_isStation = m_isStation;
     }
-    
+
 }

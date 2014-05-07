@@ -10,6 +10,7 @@ import BE.BEUsage;
 import DAL.DALCreate;
 import DAL.DALRead;
 import DAL.DALUpdate;
+import GUI.MessageDialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -29,6 +30,10 @@ public class BLLTeamLeader {
 
     }
 
+    /**
+     *
+     * @return m_instance of BLLTeamLeader
+     */
     public static BLLTeamLeader getInstance() {
         if (m_instance == null) {
             m_instance = new BLLTeamLeader();
@@ -36,6 +41,10 @@ public class BLLTeamLeader {
         return m_instance;
     }
 
+    /**
+     *
+     * @return ArrayList of Usage
+     */
     public ArrayList<BEUsage> readUsage() {
         if (usages == null) {
             try {
@@ -47,6 +56,10 @@ public class BLLTeamLeader {
         return usages;
     }
 
+    /**
+     *
+     * @return ArrayList of Materials
+     */
     public ArrayList<BEMaterial> readMaterials() {
         if (materials == null) {
             try {
@@ -58,6 +71,10 @@ public class BLLTeamLeader {
         return materials;
     }
 
+    /**
+     *
+     * @return ArrayList of IncidentVehicles
+     */
     public ArrayList<BEIncidentVehicle> readIncidentVehicles() {
         if (incidentVehicles == null) {
             try {
@@ -69,6 +86,10 @@ public class BLLTeamLeader {
         return incidentVehicles;
     }
 
+    /**
+     *
+     * @return ArrayList of Emergencies
+     */
     public ArrayList<BEEmergency> readEmergencies() {
         if (emergencies == null) {
             try {
@@ -80,6 +101,10 @@ public class BLLTeamLeader {
         return emergencies;
     }
 
+    /**
+     *
+     * @return ArrayList of Alarms
+     */
     public ArrayList<BEAlarm> readAlarms() {
         if (alarms == null) {
             try {
@@ -92,6 +117,10 @@ public class BLLTeamLeader {
 
     }
 
+    /**
+     *
+     * @return ArrayList of IncidentDetails
+     */
     public ArrayList<BEIncidentDetails> readIncidentDetails() {
         if (incidentDetails == null) {
             try {
@@ -103,80 +132,43 @@ public class BLLTeamLeader {
         return incidentDetails;
     }
 
-    public void createIncidentVehicle(BEIncidentVehicle be) {
+    /**
+     * Creates a new Vehicle on an Incident and adds it to the current Array
+     *
+     * @param incidentVehicle
+     */
+    public void createIncidentVehicle(BEIncidentVehicle incidentVehicle) {
         try {
-            DALCreate.getInstance().createIncidentVehicle(be);
+            DALCreate.getInstance().createIncidentVehicle(incidentVehicle);
         } catch (SQLException ex) {
             return;
         }
         readIncidentVehicles();
-        incidentVehicles.add(be);
+        incidentVehicles.add(incidentVehicle);
     }
 
-    public void createUsage(BEUsage be) {
+    /**
+     * Creates a new Usage on an Incident and adds it to the current Array
+     *
+     * @param usage
+     */
+    public void createUsage(BEUsage usage) {
         try {
-            DALCreate.getInstance().createUsage(be);
+            DALCreate.getInstance().createUsage(usage);
         } catch (SQLException ex) {
             return;
         }
-        usages.add(be);
-    }
-    
-    public void updateIncidentDetails(BEIncidentDetails be){
-        try {
-            DALUpdate.getInstance().updateIncidentDetails(be);
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-        for(BEIncidentDetails details : readIncidentDetails()){
-            if(details.getM_incident().getM_id() == be.getM_incident().getM_id()){
-                details.setM_alarm(be.getM_alarm());
-                details.setM_detectorNumber(be.getM_detectorNumber());
-                details.setM_evaNumber(be.getM_evaNumber());
-                details.setM_fireReport(be.getM_fireReport());
-                details.setM_groupNumber(be.getM_groupNumber());
-                details.setM_incidentLeader(be.getM_incidentLeader());
-                details.setM_involvedAddress(be.getM_involvedAddress());
-                details.setM_involvedName(be.getM_involvedName());
-                details.setM_message(be.getM_message());
-                details.setM_remark(be.getM_remark());
-                break;
-            }
-        }
+        usages.add(usage);
     }
 
-    public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident beincident) {
-        ArrayList<BEIncidentVehicle> beincidentvehicle = new ArrayList<>();
-        for (BEIncidentVehicle be : readIncidentVehicles()) {
-            if (be.getM_incident().getM_id() == beincident.getM_id()) {
-                beincidentvehicle.add(be);
-            }
-        }
-        return beincidentvehicle;
-    }
-
-    public ArrayList<BEUsage> incidentToUsage(BEIncident beincident) {
-        ArrayList<BEUsage> beusage = new ArrayList<>();
-        for (BEUsage be : readUsage()) {
-            if (be.getM_incident().getM_id() == beincident.getM_id()) {
-                beusage.add(be);
-            }
-        }
-        return beusage;
-    }
-    
-    public BEIncidentDetails incidentToIncidentDetails(BEIncident beincident) {
-        for(BEIncidentDetails be : readIncidentDetails()) {
-            if(be.getM_incident().getM_id() == beincident.getM_id()){
-                return be;
-            }
-        }
-        return null;
-    }
-
-    public void createInitialIncidentDetails(BEIncident be) {
-        BEIncidentDetails details = new BEIncidentDetails(null, null, null, null, be, null, null, null, null, null, null);
+    /**
+     * Creates a new IncidentDetails on an Incident and adds it to the current
+     * Array, it is filled with null until updatet later by the TeamLeader
+     *
+     * @param incident
+     */
+    public void createInitialIncidentDetails(BEIncident incident) {
+        BEIncidentDetails details = new BEIncidentDetails(null, null, null, null, incident, null, null, null, null, null, null);
         try {
             BLLTeamLeader.getInstance().readIncidentDetails();
             DALCreate.getInstance().createInitialIncidentDetails(details);
@@ -186,4 +178,81 @@ public class BLLTeamLeader {
         incidentDetails.add(details);
     }
 
+    /**
+     * Updates IncidentDetails for an Incident and sets new values in
+     * BEIncidentDetails
+     *
+     * @param incidentDetails
+     */
+    public void updateIncidentDetails(BEIncidentDetails incidentDetails) {
+        try {
+            DALUpdate.getInstance().updateIncidentDetails(incidentDetails);
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        for (BEIncidentDetails details : readIncidentDetails()) {
+            if (details.getM_incident().getM_id() == incidentDetails.getM_incident().getM_id()) {
+                details.setM_alarm(incidentDetails.getM_alarm());
+                details.setM_detectorNumber(incidentDetails.getM_detectorNumber());
+                details.setM_evaNumber(incidentDetails.getM_evaNumber());
+                details.setM_fireReport(incidentDetails.getM_fireReport());
+                details.setM_groupNumber(incidentDetails.getM_groupNumber());
+                details.setM_incidentLeader(incidentDetails.getM_incidentLeader());
+                details.setM_involvedAddress(incidentDetails.getM_involvedAddress());
+                details.setM_involvedName(incidentDetails.getM_involvedName());
+                details.setM_message(incidentDetails.getM_message());
+                details.setM_remark(incidentDetails.getM_remark());
+                break;
+            }
+        }
+        MessageDialog.getInstance().teamLeaderSaveDialog(); //MÅ IKKE VÆRE HER
+    }
+
+    /**
+     * Sets the IncidentVehicles for an Incident
+     *
+     * @param incident
+     * @return BEIncidentVehicles
+     */
+    public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident incident) {
+        ArrayList<BEIncidentVehicle> beincidentvehicle = new ArrayList<>();
+        for (BEIncidentVehicle be : readIncidentVehicles()) {
+            if (be.getM_incident().getM_id() == incident.getM_id()) {
+                beincidentvehicle.add(be);
+            }
+        }
+        return beincidentvehicle;
+    }
+
+    /**
+     * Sets the Usage for an Incident
+     *
+     * @param incident
+     * @return BEUsage
+     */
+    public ArrayList<BEUsage> incidentToUsage(BEIncident incident) {
+        ArrayList<BEUsage> beusage = new ArrayList<>();
+        for (BEUsage be : readUsage()) {
+            if (be.getM_incident().getM_id() == incident.getM_id()) {
+                beusage.add(be);
+            }
+        }
+        return beusage;
+    }
+
+    /**
+     * Sets IncidentDetails for an Incident
+     *
+     * @param incident
+     * @return null
+     */
+    public BEIncidentDetails incidentToIncidentDetails(BEIncident incident) {
+        for (BEIncidentDetails be : readIncidentDetails()) {
+            if (be.getM_incident().getM_id() == incident.getM_id()) {
+                return be;
+            }
+        }
+        return null;
+    }
 }

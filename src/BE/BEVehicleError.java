@@ -1,9 +1,9 @@
-
 package BE;
 
 import java.sql.Date;
 
 public class BEVehicleError {
+
     private BEVehicle m_odinNumber;
     private String m_filledBy;
     private Date m_date;
@@ -11,19 +11,20 @@ public class BEVehicleError {
     private boolean m_urgent;
     private String m_description;
     private String m_cause;
-    
+
     /**
      * Read and Create VehicleError
+     *
      * @param odinNumber
      * @param filledBy
      * @param date
      * @param outOfOrder
      * @param urgent
      * @param description
-     * @param cause 
+     * @param cause
      */
     public BEVehicleError(BEVehicle odinNumber, String filledBy, Date date, boolean outOfOrder, boolean urgent,
-            String description, String cause){
+            String description, String cause) {
         m_odinNumber = odinNumber;
         m_filledBy = filledBy;
         m_date = date;

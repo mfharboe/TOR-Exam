@@ -1,22 +1,22 @@
-
 package BE;
 
 public class BEUsage {
-    
+
     private int m_id;
     private BEMaterial m_material;
     private int m_amount;
     private BEIncident m_incident;
-    
+
     /**
-     * Read and create usage
+     * Read and Create Usage
+     *
      * @param id
      * @param material
      * @param amount
-     * @param incident 
+     * @param incident
      */
-    public BEUsage(int id, BEMaterial material, int amount, BEIncident incident){
-        
+    public BEUsage(int id, BEMaterial material, int amount, BEIncident incident) {
+
         m_id = id;
         m_material = material;
         m_amount = amount;

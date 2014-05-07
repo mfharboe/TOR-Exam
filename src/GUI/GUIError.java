@@ -160,14 +160,14 @@ public class GUIError extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         jLabel3.setText("Dato");
         pnlFilledBy.add(jLabel3);
-        jLabel3.setBounds(240, 40, 36, 23);
+        jLabel3.setBounds(250, 40, 36, 23);
         pnlFilledBy.add(dateChooser);
         dateChooser.setBounds(290, 30, 120, 40);
 
         pnlError.add(pnlFilledBy);
         pnlFilledBy.setBounds(10, 0, 440, 80);
 
-        pnlStatus.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Status på Fejl Rapport", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
+        pnlStatus.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Status", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         pnlStatus.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -213,16 +213,16 @@ public class GUIError extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(pnlError, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlError, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(20, 20, 20)
+                .addComponent(pnlError, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         pack();

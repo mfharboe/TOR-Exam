@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package BE;
 
 import java.sql.Date;
@@ -37,13 +32,15 @@ public class BEIncident {
         m_incidentType = incidentType;
         m_isDone = isDone;
     }
+
     /**
-     * Create incident
+     * Create Incident
+     *
      * @param incidentName
      * @param date
      * @param time
      * @param incidentType
-     * @param isDone 
+     * @param isDone
      */
     public BEIncident(String incidentName, Date date, Time time, BEIncidentType incidentType, boolean isDone) {
         m_incidentName = incidentName;
@@ -52,7 +49,6 @@ public class BEIncident {
         m_incidentType = incidentType;
         m_isDone = isDone;
     }
-    
 
     /**
      * @return the m_id
@@ -138,6 +134,7 @@ public class BEIncident {
         this.m_isDone = m_isDone;
     }
 
+    @Override
     public String toString() {
         return m_incidentName;
     }

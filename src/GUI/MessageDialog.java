@@ -52,6 +52,10 @@ public class MessageDialog {
     public void ErrorConfirmMessageNotApproved() {
         JOptionPane.showMessageDialog(null, "Der opstod en fejl");
     }
+    
+    public void incidentUpdate(){
+        JOptionPane.showMessageDialog(null, "Dine ændringer blev registreret");
+    }
 
     public String firemanTitle() {
         return "TOR - Tid & Registreringssytem";
@@ -121,6 +125,14 @@ public class MessageDialog {
         return "Gruppe nummer..";
     }
 
+    public String firemanListHL(){
+        return "(HL) "; 
+    }
+    
+    public String firemanListBM(){
+        return "(BM) ";
+    }
+    
     public final String EMPTY_TEXT() {
         return "";
     }

@@ -10,9 +10,20 @@ public class BEVehicle {
     private boolean m_isReady;
     private int m_seats;
 
+    /**
+     * Read Vehicle
+     *
+     * @param odinNumber
+     * @param registrationNumber
+     * @param brand
+     * @param model
+     * @param description
+     * @param isReady
+     * @param seats
+     */
     public BEVehicle(int odinNumber, String registrationNumber, String brand, String model,
-            String description, boolean isReady, int seats){
-        
+            String description, boolean isReady, int seats) {
+
         m_odinNumber = odinNumber;
         m_registrationNumber = registrationNumber;
         m_brand = brand;
@@ -20,7 +31,7 @@ public class BEVehicle {
         m_description = description;
         m_isReady = isReady;
         m_seats = seats;
-                
+
     }
 
     /**
@@ -106,8 +117,9 @@ public class BEVehicle {
     public void setM_isReady(boolean m_isReady) {
         this.m_isReady = m_isReady;
     }
-    
-    public String toString(){
+
+    @Override
+    public String toString() {
         return "" + m_odinNumber;
     }
 
@@ -124,5 +136,5 @@ public class BEVehicle {
     public void setM_seats(int m_seats) {
         this.m_seats = m_seats;
     }
-    
+
 }

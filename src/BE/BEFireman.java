@@ -1,8 +1,9 @@
-
 package BE;
 
+import GUI.MessageDialog;
+
 public class BEFireman {
-    
+
     private int m_id;
     private String m_firstName;
     private String m_lastName;
@@ -13,10 +14,10 @@ public class BEFireman {
     private boolean m_isTeamLeader;
     private String m_photoPath;
     private String m_cpr;
-    
-    
+
     /**
-     * Read all Fireman
+     * Read Fireman
+     *
      * @param id
      * @param firstname
      * @param lastname
@@ -26,11 +27,11 @@ public class BEFireman {
      * @param paymentnumber
      * @param isteamleader
      * @param photopath
-     * @param cpr 
+     * @param cpr
      */
     public BEFireman(int id, String firstname, String lastname, String address, BEZipcode zipcode,
-            int phone, int paymentnumber, boolean isteamleader, String photopath, String cpr){
-        
+            int phone, int paymentnumber, boolean isteamleader, String photopath, String cpr) {
+
         m_id = id;
         m_firstName = firstname;
         m_lastName = lastname;
@@ -41,7 +42,7 @@ public class BEFireman {
         m_isTeamLeader = isteamleader;
         m_photoPath = photopath;
         m_cpr = cpr;
-        
+
     }
 
     /**
@@ -183,16 +184,16 @@ public class BEFireman {
     public void setM_cpr(String m_cpr) {
         this.m_cpr = m_cpr;
     }
-    
+
     @Override
-    public String toString(){
-        String tmp = m_lastName +", "+ m_firstName; 
-        if(m_isTeamLeader){
-            tmp = "(HL) " + tmp;
+    public String toString() {
+        String tmp = m_lastName + ", " + m_firstName;
+        if (m_isTeamLeader) {
+            tmp = MessageDialog.getInstance().firemanListHL() + tmp;
+        } else {
+            tmp = MessageDialog.getInstance().firemanListBM() + tmp;
         }
-        else
-            tmp = "(BM) " + tmp;
-        return tmp; 
+        return tmp;
     }
-              
+
 }

@@ -1,22 +1,23 @@
-
 package BE;
 
 public class BEIncidentVehicle {
+
     private BEIncident m_incident;
     private BEVehicle m_vehicle;
     private BEEmergency m_emergency;
     private int m_amountCrew;
     private boolean m_isDiverged;
-    
+
     /**
-     * Read IncidentVehicle
+     * Read and Create IncidentVehicle
+     *
      * @param incident
      * @param vehicle
      * @param emergency
      * @param amoutCrew
-     * @param isDiverged 
+     * @param isDiverged
      */
-    public BEIncidentVehicle(BEIncident incident, BEVehicle vehicle, BEEmergency emergency, int amoutCrew, boolean isDiverged){
+    public BEIncidentVehicle(BEIncident incident, BEVehicle vehicle, BEEmergency emergency, int amoutCrew, boolean isDiverged) {
         m_incident = incident;
         m_vehicle = vehicle;
         m_emergency = emergency;

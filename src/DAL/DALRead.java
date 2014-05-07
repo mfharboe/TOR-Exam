@@ -44,7 +44,7 @@ public class DALRead {
     }
 
     /**
-     * Creates an ArrayList of Incident types
+     * Creates an ArrayList of IncidentTypes
      *
      * @return ArrayList of Incident Types
      * @throws SQLException
@@ -275,6 +275,12 @@ public class DALRead {
         return res;
     }
 
+    /**
+     * Creates an ArrayList of Usage
+     *
+     * @return ArrayList of Usage
+     * @throws SQLException
+     */
     public ArrayList<BEUsage> readUsage() throws SQLException {
         ArrayList<BEUsage> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -308,6 +314,12 @@ public class DALRead {
 
     }
 
+    /**
+     * Creates an ArrayList of Material
+     *
+     * @return ArrayList of Material
+     * @throws SQLException
+     */
     public ArrayList<BEMaterial> readMaterial() throws SQLException {
         ArrayList<BEMaterial> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -323,6 +335,12 @@ public class DALRead {
 
     }
 
+    /**
+     * Creates an ArrayList of Emergencies
+     *
+     * @return ArrayList of Emergencies
+     * @throws SQLException
+     */
     public ArrayList<BEEmergency> readEmergencies() throws SQLException {
         ArrayList<BEEmergency> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -338,6 +356,12 @@ public class DALRead {
         return res;
     }
 
+    /**
+     * Creates an ArrayList of IncidentVehicle
+     *
+     * @return ArrayList of IncidentVehicle
+     * @throws SQLException
+     */
     public ArrayList<BEIncidentVehicle> readIncidentVehicle() throws SQLException {
         ArrayList<BEIncidentVehicle> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -379,6 +403,12 @@ public class DALRead {
 
     }
 
+    /**
+     * Creates an ArrayList of IncidentDetails
+     *
+     * @return ArrayList of IncidentDetails
+     * @throws SQLException
+     */
     public ArrayList<BEIncidentDetails> readIncidentDetails() throws SQLException {
         ArrayList<BEIncidentDetails> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -435,7 +465,7 @@ public class DALRead {
                     refAlarm,
                     detectorNumber,
                     groupNumber);
-            
+
             res.add(be);
         }
 

@@ -5,6 +5,12 @@ public class BEZipcode {
     private int m_zipCode;
     private String m_city;
 
+    /**
+     * Read ZipCode
+     *
+     * @param zipCode
+     * @param city
+     */
     public BEZipcode(int zipCode, String city) {
 
         m_zipCode = zipCode;

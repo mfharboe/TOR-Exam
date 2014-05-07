@@ -1,4 +1,3 @@
-
 package BE;
 
 public class BERoleTime {
@@ -10,6 +9,16 @@ public class BERoleTime {
     private BEVehicle m_vehicle;
     private int m_hours;
 
+    /**
+     * Read and Create RoleTime
+     *
+     * @param incident
+     * @param fireman
+     * @param isOnStation
+     * @param role
+     * @param vehicle
+     * @param hours
+     */
     public BERoleTime(BEIncident incident, BEFireman fireman, boolean isOnStation, BERole role, BEVehicle vehicle, int hours) {
         m_fireman = fireman;
         m_incident = incident;

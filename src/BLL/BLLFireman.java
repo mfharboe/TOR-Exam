@@ -1,4 +1,3 @@
-
 package BLL;
 
 import BE.BEFireman;
@@ -26,13 +25,12 @@ public class BLLFireman {
     ArrayList<BEVehicle> vehicles;
     ArrayList<BERole> roles;
     ArrayList<BERoleTime> roletimes;
-    
 
     private BLLFireman() {
     }
 
     /**
-     * @return current instance of BLLFireman
+     * @return m_instance of BLLFireman
      */
     public static BLLFireman getInstance() {
         if (m_instance == null) {
@@ -99,21 +97,10 @@ public class BLLFireman {
     }
 
     /**
-     * @return ArrayList of incomplete Incidents
+     *
+     * @return ArrayList of Roles
      */
-    public ArrayList<BEIncident> readIncompleteIncidents() {
-        if (incompleteIncidents == null) {
-            incompleteIncidents = new ArrayList<>();
-            for (BEIncident c : readAllIncidents()) {
-                if (!c.isM_isDone()) {
-                    incompleteIncidents.add(c);
-                }
-            }
-        }
-        return incompleteIncidents;
-    }
-
-    public ArrayList<BERole> readRoles() {
+    public ArrayList<BERole> readAllRoles() {
         if (roles == null) {
             try {
                 roles = DALRead.getInstance().readRoles();
@@ -124,7 +111,11 @@ public class BLLFireman {
         return roles;
     }
 
-    public ArrayList<BERoleTime> readRoleTimes() {
+    /**
+     *
+     * @return ArrayList of RoleTimes
+     */
+    public ArrayList<BERoleTime> readAllRoleTimes() {
         if (roletimes == null) {
             try {
                 roletimes = DALRead.getInstance().readRoleTime();
@@ -134,96 +125,131 @@ public class BLLFireman {
         }
         return roletimes;
     }
-    
-    
 
-    public void createIncident(BEIncident be) {
+    /**
+     * Creates a new Incident
+     *
+     * @param incident
+     */
+    public void createIncident(BEIncident incident) {
         try {
-            DALCreate.getInstance().createIncident(be);
+            DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
             Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void createBMOnIncident(BERoleTime be) {
+    /**
+     * Creates a new BM on an Incident and adds it to the currenct Array
+     *
+     * @param roleTime
+     */
+    public void createBMOnIncident(BERoleTime roleTime) {
 
-        for (BERole role : readRoles()) {
+        for (BERole role : readAllRoles()) {
             if (role.isM_isFireman()) {
                 try {
-                    be.setM_role(role);
-                    DALCreate.getInstance().createRoleTime(be);
+                    roleTime.setM_role(role);
+                    DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
                     MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
-                roletimes.add(be);
+                roletimes.add(roleTime);
             }
         }
     }
 
-    public void createCHOnIncident(BERoleTime be) {
-        for (BERole role : readRoles()) {
+    /**
+     * Creates a new CH on an Incident and adds it to the currenct Array
+     *
+     * @param roleTime
+     */
+    public void createCHOnIncident(BERoleTime roleTime) {
+        for (BERole role : readAllRoles()) {
             if (role.isM_isDriver()) {
                 try {
-                    be.setM_role(role);
-                    DALCreate.getInstance().createRoleTime(be);
+                    roleTime.setM_role(role);
+                    DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
+                    MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
-                roletimes.add(be);
+                roletimes.add(roleTime);
             }
         }
     }
 
-    public void createSTOnIncident(BERoleTime be) {
-        for (BERole role : readRoles()) {
+    /**
+     * Creates a new ST on an Incident and adds it to the currenct Array
+     *
+     * @param roleTime
+     */
+    public void createSTOnIncident(BERoleTime roleTime) {
+        for (BERole role : readAllRoles()) {
             if (role.isM_isStation()) {
                 try {
-                    be.setM_role(role);
-                    DALCreate.getInstance().createRoleTime(be);
+                    roleTime.setM_role(role);
+                    DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
                     MessageDialog.getInstance().stationDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
-                roletimes.add(be);
+                roletimes.add(roleTime);
             }
         }
     }
 
-    public void createHLOnIncident(BERoleTime be) {
-        for (BERole role : readRoles()) {
+    /**
+     * Creates an new HL on an Incident and adds it to the currenct Array
+     *
+     * @param roleTime
+     */
+    public void createHLOnIncident(BERoleTime roleTime) {
+        for (BERole role : readAllRoles()) {
             if (role.isM_isLeader()) {
                 try {
-                    be.setM_role(role);
-                    DALCreate.getInstance().createRoleTime(be);
+                    roleTime.setM_role(role);
+                    DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
+                    MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
                     break;
                 }
-                roletimes.add(be);
+                roletimes.add(roleTime);
             }
         }
     }
 
-    public void updateFireman(BEIncident be) {
+    /**
+     * Updates an Incident
+     *
+     * @param incident
+     */
+    public void updateIncident(BEIncident incident) {
         try {
-            DALUpdate.getInstance().updateIncident(be);
+            DALUpdate.getInstance().updateIncident(incident);
         } catch (SQLException ex) {
             Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        MessageDialog.getInstance().incidentUpdate(); //MÅ IKKE VÆRE HER
     }
 
-    public ArrayList<BERoleTime> incidentToRoleTime(BEIncident beincident) {
+    /**
+     * Sets the RoleTime for an Incident
+     *
+     * @param incident
+     * @return ArrayList of RoleTime
+     */
+    public ArrayList<BERoleTime> incidentToRoleTime(BEIncident incident) {
         ArrayList<BERoleTime> beroletime = new ArrayList<>();
 
-        for (BERoleTime be : readRoleTimes()) {
-            if (be.getM_incident().getM_id() == beincident.getM_id()) {
+        for (BERoleTime be : readAllRoleTimes()) {
+            if (be.getM_incident().getM_id() == incident.getM_id()) {
                 beroletime.add(be);
             }
         }
 
         return beroletime;
     }
-    
-  
+
 }

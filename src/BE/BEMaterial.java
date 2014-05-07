@@ -1,18 +1,18 @@
-
 package BE;
 
 public class BEMaterial {
-    
+
     private int m_id;
     private String m_description;
-    
+
     /**
-     * Read and create material
+     * Read Material
+     *
      * @param id
-     * @param description 
+     * @param description
      */
-    public BEMaterial(int id, String description){
-        
+    public BEMaterial(int id, String description) {
+
         m_id = id;
         m_description = description;
     }
@@ -44,9 +44,10 @@ public class BEMaterial {
     public void setM_description(String m_description) {
         this.m_description = m_description;
     }
-    
-    public String toString(){
+
+    @Override
+    public String toString() {
         return m_description;
     }
-    
+
 }

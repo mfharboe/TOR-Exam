@@ -1,26 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package BE;
 
-/**
- *
- * @author Zoracka
- */
 public class BEAlarm {
-    
+
     private int m_id;
     private String m_description;
-    
+
     /**
      * Read Alarms
+     *
      * @param id
-     * @param description 
+     * @param description
      */
-    public BEAlarm(int id, String description){
+    public BEAlarm(int id, String description) {
         m_id = id;
         m_description = description;
     }
@@ -52,8 +43,10 @@ public class BEAlarm {
     public void setM_description(String m_description) {
         this.m_description = m_description;
     }
-    public String toString(){
+
+    @Override
+    public String toString() {
         return m_description;
     }
-    
+
 }

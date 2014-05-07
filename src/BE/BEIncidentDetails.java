@@ -1,8 +1,7 @@
-
 package BE;
 
 public class BEIncidentDetails {
-    
+
     private String m_incidentLeader;
     private String m_evaNumber;
     private String m_fireReport;
@@ -14,10 +13,10 @@ public class BEIncidentDetails {
     private BEAlarm m_alarm;
     private String m_detectorNumber;
     private String m_groupNumber;
-    
-    
+
     /**
-     * Read and create incidentDetails
+     * Read and Create IncidentDetails
+     *
      * @param incidentLeader
      * @param evaNumber
      * @param fireReport
@@ -26,15 +25,14 @@ public class BEIncidentDetails {
      * @param involvedName
      * @param involvedAddress
      * @param remark
-     * @param alarm 
-     * @param detectorNumber 
-     * @param groupNumber 
+     * @param alarm
+     * @param detectorNumber
+     * @param groupNumber
      */
     public BEIncidentDetails(String incidentLeader, String evaNumber, String fireReport, String message,
             BEIncident incident, String involvedName, String involvedAddress, String remark, BEAlarm alarm,
-            String detectorNumber, String groupNumber){
-        
-        
+            String detectorNumber, String groupNumber) {
+
         m_incidentLeader = incidentLeader;
         m_evaNumber = evaNumber;
         m_fireReport = fireReport;
@@ -46,7 +44,7 @@ public class BEIncidentDetails {
         m_alarm = alarm;
         m_detectorNumber = detectorNumber;
         m_groupNumber = groupNumber;
-              
+
     }
 
     /**

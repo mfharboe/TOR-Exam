@@ -1,4 +1,3 @@
-
 package DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
@@ -37,16 +36,14 @@ public class DB_Connection {
     }
 
     /**
-     * return the connection
      *
-     * @return m_connection
+     * @return the connection
      */
     public Connection getConnection() {
         return m_connection;
     }
 
     /**
-     * Check if connection is 'cached' (singleton)
      *
      * @return m_instance
      */

@@ -7,8 +7,9 @@ public class BEEmergency {
 
     /**
      * Read Emergency
+     *
      * @param id
-     * @param description 
+     * @param description
      */
     public BEEmergency(int id, String description) {
         m_id = id;
@@ -42,7 +43,9 @@ public class BEEmergency {
     public void setM_description(String m_description) {
         this.m_description = m_description;
     }
-    public String toString(){
+
+    @Override
+    public String toString() {
         return m_description;
     }
 }

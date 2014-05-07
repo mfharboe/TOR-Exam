@@ -260,7 +260,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     private void onClickSaveDetails() {
         BLLTeamLeader.getInstance().updateIncidentDetails(getMyDetails());
-        MessageDialog.getInstance().teamLeaderSaveDialog();
         this.dispose();
     }
 

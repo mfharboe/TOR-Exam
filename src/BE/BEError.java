@@ -1,16 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BE;
 
 import java.sql.Date;
 
-/**
- *
- * @author Morten
- */
 public class BEError {
+
     private int m_id;
     private BEVehicle m_vehicleOdinNumber;
     private String m_filledBy;
@@ -20,9 +13,10 @@ public class BEError {
     private String m_description;
     private String m_cause;
     private boolean m_suitWash;
-    
+
     /**
-     * read BEError
+     * Read BEError
+     *
      * @param id
      * @param vehicleOdinNumber
      * @param filledby
@@ -31,11 +25,11 @@ public class BEError {
      * @param urgent
      * @param description
      * @param cause
-     * @param suitwash 
+     * @param suitwash
      */
-    public BEError(int id, BEVehicle vehicleOdinNumber, String filledby, Date date, boolean outoforder, 
-            boolean urgent, String description, String cause, boolean suitwash ){
-        
+    public BEError(int id, BEVehicle vehicleOdinNumber, String filledby, Date date, boolean outoforder,
+            boolean urgent, String description, String cause, boolean suitwash) {
+
         m_id = id;
         m_vehicleOdinNumber = vehicleOdinNumber;
         m_filledBy = filledby;
@@ -45,10 +39,12 @@ public class BEError {
         m_description = description;
         m_cause = cause;
         m_suitWash = suitwash;
-        
+
     }
+
     /**
      * Create BEError
+     *
      * @param vehicleOdinNumber
      * @param filledby
      * @param date
@@ -56,12 +52,12 @@ public class BEError {
      * @param urgent
      * @param description
      * @param cause
-     * @param suitwash 
+     * @param suitwash
      */
-    public BEError(BEVehicle vehicleOdinNumber, String filledby, Date date, boolean outoforder, 
-            boolean urgent, String description, String cause, boolean suitwash ){
-        
-        
+    
+    public BEError(BEVehicle vehicleOdinNumber, String filledby, Date date, boolean outoforder,
+            boolean urgent, String description, String cause, boolean suitwash) {
+
         m_vehicleOdinNumber = vehicleOdinNumber;
         m_filledBy = filledby;
         m_date = date;
@@ -70,7 +66,7 @@ public class BEError {
         m_description = description;
         m_cause = cause;
         m_suitWash = suitwash;
-        
+
     }
 
     /**
@@ -86,8 +82,6 @@ public class BEError {
     public void setM_id(int m_id) {
         this.m_id = m_id;
     }
-
-    
 
     /**
      * @return the m_filledBy
@@ -200,5 +194,5 @@ public class BEError {
     public void setM_vehicleOdinNumber(BEVehicle m_vehicleOdinNumber) {
         this.m_vehicleOdinNumber = m_vehicleOdinNumber;
     }
-    
+
 }

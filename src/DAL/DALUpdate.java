@@ -28,7 +28,13 @@ public class DALUpdate {
         return m_instance;
     }
 
-    public void updateIncident(BEIncident c) throws SQLException {
+    /**
+     * Updates an Incident row in the DB
+     *
+     * @param incident
+     * @throws SQLException
+     */
+    public void updateIncident(BEIncident incident) throws SQLException {
         String sql = "Update Incident set incidentName = ?, "
                 + "Incident.[date] = ?, "
                 + "startTime = ?, "
@@ -36,16 +42,22 @@ public class DALUpdate {
                 + "isDone = ? "
                 + "where Incident.id = ?";
         PreparedStatement ps = m_connection.prepareStatement(sql);
-        ps.setString(1, c.getM_incidentName());
-        ps.setDate(2, c.getM_date());
-        ps.setTime(3, c.getM_time());
-        ps.setInt(4, c.getM_incidentType().getM_id());
-        ps.setBoolean(5, c.isM_isDone());
-        ps.setInt(6, c.getM_id());
+        ps.setString(1, incident.getM_incidentName());
+        ps.setDate(2, incident.getM_date());
+        ps.setTime(3, incident.getM_time());
+        ps.setInt(4, incident.getM_incidentType().getM_id());
+        ps.setBoolean(5, incident.isM_isDone());
+        ps.setInt(6, incident.getM_id());
         ps.executeUpdate();
     }
 
-    public void updateIncidentDetails(BEIncidentDetails c) throws SQLException {
+    /**
+     * Updates an InincidentDetailsidentDetails row in the DB
+     *
+     * @param incidentDetails
+     * @throws SQLException
+     */
+    public void updateIncidentDetails(BEIncidentDetails incidentDetails) throws SQLException {
         String sql = "Update IncidentDetails set incidentLeader = ?, "
                 + "evaNumber = ?, "
                 + "fireReport = ?, "
@@ -58,21 +70,21 @@ public class DALUpdate {
                 + "groupNumber = ? "
                 + "where incidentId = ?";
         PreparedStatement ps = m_connection.prepareStatement(sql);
-        ps.setString(1, c.getM_incidentLeader());
-        ps.setString(2, c.getM_evaNumber());
-        ps.setString(3, c.getM_fireReport());
-        ps.setString(4, c.getM_message());
-        ps.setString(5, c.getM_involvedName());
-        ps.setString(6, c.getM_involvedAddress());
-        ps.setString(7, c.getM_remark());
-        if (c.getM_alarm() == null) {
+        ps.setString(1, incidentDetails.getM_incidentLeader());
+        ps.setString(2, incidentDetails.getM_evaNumber());
+        ps.setString(3, incidentDetails.getM_fireReport());
+        ps.setString(4, incidentDetails.getM_message());
+        ps.setString(5, incidentDetails.getM_involvedName());
+        ps.setString(6, incidentDetails.getM_involvedAddress());
+        ps.setString(7, incidentDetails.getM_remark());
+        if (incidentDetails.getM_alarm() == null) {
             ps.setString(8, null);
         } else {
-            ps.setInt(8, c.getM_alarm().getM_id());
+            ps.setInt(8, incidentDetails.getM_alarm().getM_id());
         }
-        ps.setString(9, c.getM_detectorNumber());
-        ps.setString(10, c.getM_groupNumber());
-        ps.setInt(11, c.getM_incident().getM_id());
+        ps.setString(9, incidentDetails.getM_detectorNumber());
+        ps.setString(10, incidentDetails.getM_groupNumber());
+        ps.setInt(11, incidentDetails.getM_incident().getM_id());
         ps.executeUpdate();
 
     }
