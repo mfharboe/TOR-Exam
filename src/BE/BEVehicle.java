@@ -8,9 +8,10 @@ public class BEVehicle {
     private String m_model;
     private String m_description;
     private boolean m_isReady;
+    private int m_seats;
 
     public BEVehicle(int odinNumber, String registrationNumber, String brand, String model,
-            String description, boolean isReady){
+            String description, boolean isReady, int seats){
         
         m_odinNumber = odinNumber;
         m_registrationNumber = registrationNumber;
@@ -18,6 +19,7 @@ public class BEVehicle {
         m_model = model;
         m_description = description;
         m_isReady = isReady;
+        m_seats = seats;
                 
     }
 
@@ -107,6 +109,20 @@ public class BEVehicle {
     
     public String toString(){
         return "" + m_odinNumber;
+    }
+
+    /**
+     * @return the m_seats
+     */
+    public int getM_seats() {
+        return m_seats;
+    }
+
+    /**
+     * @param m_seats the m_seats to set
+     */
+    public void setM_seats(int m_seats) {
+        this.m_seats = m_seats;
     }
     
 }

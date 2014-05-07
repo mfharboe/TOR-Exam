@@ -12,6 +12,7 @@ import BLL.BLLFireman;
 import BLL.BLLTeamLeader;
 import GUI.TableModel.TableModelForces;
 import GUI.TableModel.TableModelUsage;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -35,8 +36,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private GUITeamLeader() {
         initComponents();
-        this.setTitle("TOR - Holdleder");
+        this.setTitle(MessageDialog.getInstance().TeamLeaderTitle());
         initializeSettings();
+        addColors();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -63,6 +65,21 @@ public class GUITeamLeader extends javax.swing.JFrame {
         tblUsage.setRowSorter(usageSorter);
         tblForces.setRowSorter(forcesSorter);
 
+    }
+    private void addColors(){
+        this.getContentPane().setBackground(Color.WHITE);
+        pnlForces.setBackground(Color.WHITE);
+        pnlUsage.setBackground(Color.WHITE);
+        pnlInjured.setBackground(Color.WHITE);
+        pnlAlarm.setBackground(Color.WHITE);
+        jPanel5.setBackground(Color.WHITE);
+        pnlRemark.setBackground(Color.WHITE);
+        pnlTeamLeader.setBackground(Color.WHITE);
+        cmbAlarmType.setBackground(Color.WHITE);
+        cmbEmergency.setBackground(Color.WHITE);
+        cmbMaterial.setBackground(Color.WHITE);
+        cmbVehicle.setBackground(Color.WHITE);
+        chkIsDiverged.setBackground(Color.WHITE);
     }
 
     private void addListeners() {
@@ -295,7 +312,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlForces = new javax.swing.JPanel();
         cmbVehicle = new javax.swing.JComboBox();
         chkIsDiverged = new javax.swing.JCheckBox();
         cmbEmergency = new javax.swing.JComboBox();
@@ -303,7 +320,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         tblForces = new javax.swing.JTable();
         btnAddForces = new javax.swing.JButton();
         txtAmountMen = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        pnlUsage = new javax.swing.JPanel();
         cmbMaterial = new javax.swing.JComboBox();
         txtAmountMaterial = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -311,22 +328,22 @@ public class GUITeamLeader extends javax.swing.JFrame {
         tblUsage = new javax.swing.JTable();
         btnAddMateriel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        pnlInjured = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtInvolvedName = new javax.swing.JTextField();
         txtInvolvedAddress = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
+        pnlAlarm = new javax.swing.JPanel();
         cmbAlarmType = new javax.swing.JComboBox();
         jPanel5 = new javax.swing.JPanel();
         txtGroupNumber = new javax.swing.JTextField();
         txtDetectorNumber = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        pnlRemark = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtRemarks = new javax.swing.JTextArea();
-        jPanel7 = new javax.swing.JPanel();
+        pnlTeamLeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtEvaNumber = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -338,19 +355,19 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Indsatte Styrker", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        jPanel1.setLayout(null);
+        pnlForces.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Indsatte Styrker", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
+        pnlForces.setLayout(null);
 
         cmbVehicle.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel1.add(cmbVehicle);
+        pnlForces.add(cmbVehicle);
         cmbVehicle.setBounds(20, 30, 140, 40);
 
         chkIsDiverged.setText("Afvigelse i besætning");
-        jPanel1.add(chkIsDiverged);
+        pnlForces.add(chkIsDiverged);
         chkIsDiverged.setBounds(180, 90, 150, 25);
 
         cmbEmergency.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel1.add(cmbEmergency);
+        pnlForces.add(cmbEmergency);
         cmbEmergency.setBounds(180, 30, 140, 40);
 
         tblForces.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -367,34 +384,34 @@ public class GUITeamLeader extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblForces);
 
-        jPanel1.add(jScrollPane2);
+        pnlForces.add(jScrollPane2);
         jScrollPane2.setBounds(360, 30, 580, 150);
 
         btnAddForces.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnAddForces.setText("Tilføj");
-        jPanel1.add(btnAddForces);
+        pnlForces.add(btnAddForces);
         btnAddForces.setBounds(230, 140, 90, 40);
 
         txtAmountMen.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel1.add(txtAmountMen);
+        pnlForces.add(txtAmountMen);
         txtAmountMen.setBounds(20, 80, 140, 40);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forbrug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        jPanel2.setLayout(null);
+        pnlUsage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forbrug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
+        pnlUsage.setLayout(null);
 
         cmbMaterial.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel2.add(cmbMaterial);
+        pnlUsage.add(cmbMaterial);
         cmbMaterial.setBounds(18, 32, 300, 40);
 
         txtAmountMaterial.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtAmountMaterial.setToolTipText("");
         txtAmountMaterial.setAutoscrolls(false);
-        jPanel2.add(txtAmountMaterial);
+        pnlUsage.add(txtAmountMaterial);
         txtAmountMaterial.setBounds(20, 80, 140, 40);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel3.setText("liter/stk/kg");
-        jPanel2.add(jLabel3);
+        pnlUsage.add(jLabel3);
         jLabel3.setBounds(180, 90, 100, 20);
 
         tblUsage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -411,43 +428,43 @@ public class GUITeamLeader extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblUsage);
 
-        jPanel2.add(jScrollPane1);
+        pnlUsage.add(jScrollPane1);
         jScrollPane1.setBounds(360, 30, 580, 150);
 
         btnAddMateriel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnAddMateriel.setText("Tilføj");
-        jPanel2.add(btnAddMateriel);
+        pnlUsage.add(btnAddMateriel);
         btnAddMateriel.setBounds(230, 140, 90, 40);
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnSave.setText("Gem");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Skadeslidte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        jPanel3.setLayout(null);
+        pnlInjured.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Skadeslidte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
+        pnlInjured.setLayout(null);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel8.setText("Navn");
-        jPanel3.add(jLabel8);
+        pnlInjured.add(jLabel8);
         jLabel8.setBounds(10, 40, 120, 19);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel9.setText("Adresse");
-        jPanel3.add(jLabel9);
+        pnlInjured.add(jLabel9);
         jLabel9.setBounds(10, 70, 120, 22);
 
         txtInvolvedName.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel3.add(txtInvolvedName);
+        pnlInjured.add(txtInvolvedName);
         txtInvolvedName.setBounds(90, 30, 200, 30);
 
         txtInvolvedAddress.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel3.add(txtInvolvedAddress);
+        pnlInjured.add(txtInvolvedAddress);
         txtInvolvedAddress.setBounds(90, 60, 200, 30);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Beretning", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        jPanel4.setLayout(null);
+        pnlAlarm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Beretning", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
+        pnlAlarm.setLayout(null);
 
         cmbAlarmType.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel4.add(cmbAlarmType);
+        pnlAlarm.add(cmbAlarmType);
         cmbAlarmType.setBounds(20, 30, 300, 40);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ved ABA Alarm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 15))); // NOI18N
@@ -471,57 +488,57 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jPanel5.add(jLabel4);
         jLabel4.setBounds(10, 70, 70, 19);
 
-        jPanel4.add(jPanel5);
+        pnlAlarm.add(jPanel5);
         jPanel5.setBounds(20, 80, 300, 110);
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bemærkninger", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        jPanel6.setLayout(null);
+        pnlRemark.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bemærkninger", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
+        pnlRemark.setLayout(null);
 
         txtRemarks.setColumns(20);
         txtRemarks.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
         txtRemarks.setRows(5);
         jScrollPane3.setViewportView(txtRemarks);
 
-        jPanel6.add(jScrollPane3);
+        pnlRemark.add(jScrollPane3);
         jScrollPane3.setBounds(20, 30, 570, 100);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Holdleder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        jPanel7.setLayout(null);
+        pnlTeamLeader.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Holdleder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
+        pnlTeamLeader.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel1.setText("Evarapport nr.");
-        jPanel7.add(jLabel1);
+        pnlTeamLeader.add(jLabel1);
         jLabel1.setBounds(360, 40, 94, 19);
 
         txtEvaNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel7.add(txtEvaNumber);
+        pnlTeamLeader.add(txtEvaNumber);
         txtEvaNumber.setBounds(500, 30, 130, 30);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel6.setText("Indsatsleder");
-        jPanel7.add(jLabel6);
+        pnlTeamLeader.add(jLabel6);
         jLabel6.setBounds(10, 70, 120, 19);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel7.setText("Melding lød");
-        jPanel7.add(jLabel7);
+        pnlTeamLeader.add(jLabel7);
         jLabel7.setBounds(10, 40, 120, 22);
 
         txtIncidentLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel7.add(txtIncidentLeader);
+        pnlTeamLeader.add(txtIncidentLeader);
         txtIncidentLeader.setBounds(120, 60, 200, 30);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel5.setText("Brandrapport nr.");
-        jPanel7.add(jLabel5);
+        pnlTeamLeader.add(jLabel5);
         jLabel5.setBounds(360, 70, 150, 19);
 
         txtFireReportNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel7.add(txtFireReportNumber);
+        pnlTeamLeader.add(txtFireReportNumber);
         txtFireReportNumber.setBounds(500, 60, 130, 30);
 
         txtMessage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel7.add(txtMessage);
+        pnlTeamLeader.add(txtMessage);
         txtMessage.setBounds(120, 30, 200, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -532,17 +549,17 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlInjured, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlForces, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -550,15 +567,15 @@ public class GUITeamLeader extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlInjured, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlForces, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -585,16 +602,16 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel pnlAlarm;
+    private javax.swing.JPanel pnlForces;
+    private javax.swing.JPanel pnlInjured;
+    private javax.swing.JPanel pnlRemark;
+    private javax.swing.JPanel pnlTeamLeader;
+    private javax.swing.JPanel pnlUsage;
     private javax.swing.JTable tblForces;
     private javax.swing.JTable tblUsage;
     private javax.swing.JTextField txtAmountMaterial;

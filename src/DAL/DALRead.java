@@ -135,7 +135,8 @@ public class DALRead {
             String model = result.getString("model");
             String description = result.getString("description");
             boolean isReady = result.getBoolean("isReady");
-            BEVehicle be = new BEVehicle(odinNumber, registrationNumber, brand, model, description, isReady);
+            int seats = result.getInt("seats");
+            BEVehicle be = new BEVehicle(odinNumber, registrationNumber, brand, model, description, isReady, seats);
             res.add(be);
         }
         return res;

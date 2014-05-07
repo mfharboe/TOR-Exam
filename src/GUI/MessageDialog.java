@@ -54,7 +54,15 @@ public class MessageDialog {
     }
 
     public String firemanTitle() {
-        return "Tid og Registreringssystem - TOR";
+        return "TOR - Tid & Registreringssytem";
+    }
+    
+    public String ErrorTitle(){
+        return "TOR - Fejlmeddelse";
+    }
+    
+    public String TeamLeaderTitle(){
+        return "TOR - Holdleder";
     }
 
     public String firemanComboIncident() {
