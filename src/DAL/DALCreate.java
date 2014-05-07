@@ -36,7 +36,6 @@ public class DALCreate {
 
     /**
      * Creates a new incident in the DB
-     *
      * @param c
      * @throws SQLException
      */
@@ -60,6 +59,11 @@ public class DALCreate {
 
     }
 
+    /**
+     * Creates a new RoleTime in the DB
+     * @param be
+     * @throws SQLException 
+     */
     public void createRoleTime(BERoleTime be) throws SQLException {
         String sql = "insert into [Role/Time] values (?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
@@ -77,6 +81,11 @@ public class DALCreate {
         ps.executeUpdate();
     }
 
+    /**
+     * Creates a new IncidentVehicle
+     * @param be
+     * @throws SQLException 
+     */
     public void createIncidentVehicle(BEIncidentVehicle be) throws SQLException {
         String sql = " insert into [Incident/Vehicle] values (?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
