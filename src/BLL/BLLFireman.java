@@ -3,6 +3,7 @@ package BLL;
 import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentType;
+import BE.BEIncidentVehicle;
 import BE.BERole;
 import BE.BERoleTime;
 import BE.BEVehicle;
@@ -158,18 +159,21 @@ public class BLLFireman {
      * @param roleTime
      */
     public void createBMOnIncident(BERoleTime roleTime) {
-
+        int chk = 0;
         for (BERole role : readAllRoles()) {
             if (role.isM_isFireman()) {
                 try {
                     roleTime.setM_role(role);
                     DALCreate.getInstance().createRoleTime(roleTime);
+                    chk = 1;
                 } catch (SQLException ex) {
                     //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
-                    break;
+                    chk = 0;
                 }
-                roletimes.add(roleTime);
+                if(chk == 1)
+                    updateIncidentVehicleAmount(roleTime);
+                
             }
         }
     }
@@ -188,9 +192,10 @@ public class BLLFireman {
                 } catch (SQLException ex) {
                     //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
-                    break;
+                    return;
                 }
-                roletimes.add(roleTime);
+                updateIncidentVehicleAmount(roleTime);
+                break;
             }
         }
     }
@@ -209,7 +214,7 @@ public class BLLFireman {
                 } catch (SQLException ex) {
                     //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().stationDialog(); //MÅ IKKE VÆRE HER
-                    break;
+                    return;
                 }
                 roletimes.add(roleTime);
             }
@@ -228,13 +233,72 @@ public class BLLFireman {
                     roleTime.setM_role(role);
                     DALCreate.getInstance().createRoleTime(roleTime);
                 } catch (SQLException ex) {
-                   //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
-                    break;
+                    return;
                 }
-                roletimes.add(roleTime);
+                updateIncidentVehicleAmount(roleTime);
+                break;
             }
         }
+    }
+
+    public void updateIncidentVehicleAmount(BERoleTime roletime) {
+        int tmp;
+        int chk = 0;
+        ArrayList<BEIncidentVehicle> arrayIncidentVehicle = BLLTeamLeader.getInstance().readIncidentVehicles();
+        if (arrayIncidentVehicle.isEmpty()) {
+            BEIncidentVehicle incidentvehicle = new BEIncidentVehicle(roletime.getM_incident(), roletime.getM_vehicle(), null, 1, true);
+            try {
+                DALCreate.getInstance().createIncidentVehicle(incidentvehicle);
+            } catch (SQLException ex) {
+                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                return;
+            }
+            roletimes.add(roletime);
+            BLLTeamLeader.getInstance().addToIncidentVehicles(incidentvehicle);
+            return;
+        }
+
+        for (BEIncidentVehicle beincidentvehicle : arrayIncidentVehicle) {
+            if (roletime.getM_incident().getM_id() == beincidentvehicle.getM_incident().getM_id()
+                    && roletime.getM_vehicle().getM_odinNumber() == beincidentvehicle.getM_vehicle().getM_odinNumber()) {
+
+                tmp = beincidentvehicle.getM_amountCrew();
+                tmp++;
+                beincidentvehicle.setM_amountCrew(tmp);
+                if (beincidentvehicle.getM_amountCrew() == beincidentvehicle.getM_vehicle().getM_seats()) {
+                    beincidentvehicle.setM_isDiverged(false);
+
+                } else if (beincidentvehicle.getM_amountCrew() > beincidentvehicle.getM_vehicle().getM_seats()) {
+                    MessageDialog.getInstance().ErrorCarSeatsFilled();
+                    chk = 1;
+                    return;
+                }
+                try {
+                    DALUpdate.getInstance().updateIncidentVehicle(beincidentvehicle);
+                } catch (SQLException ex) {
+//                    Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                    MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                }
+                roletimes.add(roletime);
+                chk = 1;
+
+            }
+        }
+        if (chk == 0) {
+            BEIncidentVehicle incidentvehicle = new BEIncidentVehicle(roletime.getM_incident(), roletime.getM_vehicle(), null, 1, true);
+            try {
+                DALCreate.getInstance().createIncidentVehicle(incidentvehicle);
+            } catch (SQLException ex) {
+//                Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            }
+            roletimes.add(roletime);
+            BLLTeamLeader.getInstance().addToIncidentVehicles(incidentvehicle);
+        }
+
     }
 
     /**

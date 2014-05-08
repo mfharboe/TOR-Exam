@@ -3,6 +3,7 @@ package DAL;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BEIncidentType;
+import BE.BEIncidentVehicle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -87,6 +88,16 @@ public class DALUpdate {
         ps.setInt(11, incidentDetails.getM_incident().getM_id());
         ps.executeUpdate();
 
+    }
+    
+    public void updateIncidentVehicle(BEIncidentVehicle be) throws SQLException{
+        String sql = "update [Incident/Vehicle] set amountCrew = ?, isDiverged = ? where incidentId = ? and odinNumber = ?";
+        PreparedStatement ps = m_connection.prepareStatement(sql);
+        ps.setInt(1, be.getM_amountCrew());
+        ps.setBoolean(2, be.isM_isDiverged());
+        ps.setInt(3, be.getM_incident().getM_id());
+        ps.setInt(4, be.getM_vehicle().getM_odinNumber());
+        ps.executeUpdate();
     }
 
 }

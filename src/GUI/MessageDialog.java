@@ -22,6 +22,11 @@ public class MessageDialog {
     }
 
     //FIREMAN MESSAGES----------------------------------------------------------
+   public void ErrorCarSeatsFilled(){
+        JOptionPane.showMessageDialog(null, "Bilen er allerede fyldt op");
+    
+    }
+    
     public void incidentUpdate() {
         JOptionPane.showMessageDialog(null, "Dine ændringer blev registreret");
     }

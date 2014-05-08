@@ -40,7 +40,10 @@ public class TableModelForces extends AbstractTableModel {
             case 0:
                 return e.getM_vehicle().getM_odinNumber();
             case 1:
-                return e.getM_emergency().getM_description();
+                String tmp = "Kørsel 1"; //Skal skiftes ud..
+                if(e.getM_emergency() != null)
+                    tmp = e.getM_emergency().getM_description();
+                return tmp;
             case 2:
                 return e.getM_amountCrew();
             case 3:

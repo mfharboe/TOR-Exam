@@ -41,6 +41,10 @@ public class BLLTeamLeader {
         return m_instance;
     }
 
+    public void addToIncidentVehicles(BEIncidentVehicle be){
+       incidentVehicles.add(be);
+    }
+    
     /**
      *
      * @return ArrayList of Usage
@@ -144,22 +148,22 @@ public class BLLTeamLeader {
         return incidentDetails;
     }
 
-    /**
-     * Creates a new Vehicle on an Incident and adds it to the current Array
-     *
-     * @param incidentVehicle
-     */
-    public void createIncidentVehicle(BEIncidentVehicle incidentVehicle) {
-        try {
-            DALCreate.getInstance().createIncidentVehicle(incidentVehicle);
-        } catch (SQLException ex) {
-            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-            return;
-        }
-        readIncidentVehicles();
-        incidentVehicles.add(incidentVehicle);
-    }
+//    /**
+//     * Creates a new Vehicle on an Incident and adds it to the current Array
+//     *
+//     * @param incidentVehicle
+//     */
+//    public void createIncidentVehicle(BEIncidentVehicle incidentVehicle) {
+//        try {
+//            DALCreate.getInstance().createIncidentVehicle(incidentVehicle);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+//            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+//            return;
+//        }
+//        readIncidentVehicles();
+//        incidentVehicles.add(incidentVehicle);
+//    }
 
     /**
      * Creates a new Usage on an Incident and adds it to the current Array

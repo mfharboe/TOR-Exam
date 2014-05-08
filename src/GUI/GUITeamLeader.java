@@ -59,7 +59,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void initializeSettings() {
         addListeners();
         fillBoxes();
-        clearForces();
         clearMaterials();
         usageList = new ArrayList<>();
         forcesList = new ArrayList<>();
@@ -87,10 +86,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlRemark.setBackground(Color.WHITE);
         pnlTeamLeader.setBackground(Color.WHITE);
         cmbAlarmType.setBackground(Color.WHITE);
-        cmbEmergency.setBackground(Color.WHITE);
         cmbMaterial.setBackground(Color.WHITE);
-        cmbVehicle.setBackground(Color.WHITE);
-        chkIsDiverged.setBackground(Color.WHITE);
     }
 
     /**
@@ -100,10 +96,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
         btnAction btn = new btnAction();
         txtFocus txtFc = new txtFocus();
 
-        txtAmountMen.addFocusListener(txtFc);
         txtAmountMaterial.addFocusListener(txtFc);
 
-        btnAddForces.addActionListener(btn);
         btnAddMateriel.addActionListener(btn);
         btnSave.addActionListener(btn);
     }
@@ -112,30 +106,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * Fills all the comboboxes.
      */
     private void fillBoxes() {
-        fillEmergencyCombo();
         fillMaterialCombo();
         fillAlarmCombo();
-        fillVehicleCombo();
-    }
-
-    /**
-     * Fills the Vehicle ComboBox.
-     */
-    private void fillVehicleCombo() {
-        cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
-        for (BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles()) {
-            cmbVehicle.addItem(bevehicle);
-        }
-    }
-
-    /**
-     * Fills the Emergency (Type of driving) ComboBox.
-     */
-    private void fillEmergencyCombo() {
-        cmbEmergency.addItem(MessageDialog.getInstance().teamLeaderComboEmergency());
-        for (BEEmergency beemergency : BLLTeamLeader.getInstance().readEmergencies()) {
-            cmbEmergency.addItem(beemergency);
-        }
     }
 
     /**
@@ -176,16 +148,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     }
 
     /**
-     * Sets all Forces fields to empty and no selection.
-     */
-    private void clearForces() {
-        cmbVehicle.setSelectedIndex(0);
-        cmbEmergency.setSelectedIndex(0);
-        txtAmountMen.setText(MessageDialog.getInstance().teamLeaderTextAmountMen());
-        chkIsDiverged.setSelected(false);
-    }
-
-    /**
      * Set all Material fields to empty and no selection.
      */
     private void clearMaterials() {
@@ -220,53 +182,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
             txtDetectorNumber.setText(details.getM_detectorNumber());
             txtGroupNumber.setText(details.getM_groupNumber());
         }
-    }
-
-    /**
-     * Reads the Forces fields
-     *
-     * @return BEIncidentVehicles
-     */
-    private BEIncidentVehicle getMyForces() {
-        BEVehicle bevehicle = (BEVehicle) cmbVehicle.getSelectedItem();
-        BEEmergency beemergency = (BEEmergency) cmbEmergency.getSelectedItem();
-        int amount = Integer.parseInt(txtAmountMen.getText());
-        boolean isdiverged = chkIsDiverged.isSelected();
-        BEIncidentVehicle beincidentvehicle = new BEIncidentVehicle(m_incident, bevehicle, beemergency, amount, isdiverged);
-
-        return beincidentvehicle;
-    }
-
-    /**
-     * Invoke this method when the AddForces button is pressed.
-     */
-    private void onClickAddForces() {
-        if (isForcesfilled()) {
-            BLLTeamLeader.getInstance().createIncidentVehicle(getMyForces());
-            forcesModel.setForceList(BLLTeamLeader.getInstance().incidentToIncidentVehicle(m_incident));
-            clearForces();
-        }
-    }
-
-    /**
-     * Checks if all Forces fields is filled
-     *
-     * @return boolean
-     */
-    private boolean isForcesfilled() {
-        if (cmbVehicle.getSelectedIndex() == 0) {
-            MessageDialog.getInstance().addForcesDialog();
-            return false;
-        }
-        if (cmbEmergency.getSelectedIndex() == 0) {
-            MessageDialog.getInstance().addForcesDialog();
-            return false;
-        }
-        if (txtAmountMen.getText().isEmpty() || txtAmountMen.getText().equals(MessageDialog.getInstance().teamLeaderTextAmountMen())) {
-            MessageDialog.getInstance().addForcesDialog();
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -347,9 +262,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource().equals(btnAddForces)) {
-                onClickAddForces();
-            } else if (e.getSource().equals(btnAddMateriel)) {
+
+            if (e.getSource().equals(btnAddMateriel)) {
                 onClickAddMaterial();
             } else if (e.getSource().equals(btnSave)) {
                 onClickSaveDetails();
@@ -365,9 +279,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         @Override
         public void focusGained(FocusEvent e) {
-            if (e.getSource().equals(txtAmountMen)) {
-                txtAmountMen.setText(MessageDialog.getInstance().EMPTY_TEXT());
-            }
+        
             if (e.getSource().equals(txtAmountMaterial)) {
                 txtAmountMaterial.setText(MessageDialog.getInstance().EMPTY_TEXT());
             }
@@ -378,9 +290,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
             if (txtAmountMaterial.getText().isEmpty()) {
                 txtAmountMaterial.setText(MessageDialog.getInstance().teamLeaderTextAmountMaterials());
             }
-            if (txtAmountMen.getText().isEmpty()) {
-                txtAmountMen.setText(MessageDialog.getInstance().teamLeaderTextAmountMen());
-            }
+        
         }
 
     }
@@ -395,13 +305,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlForces = new javax.swing.JPanel();
-        cmbVehicle = new javax.swing.JComboBox();
-        chkIsDiverged = new javax.swing.JCheckBox();
-        cmbEmergency = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblForces = new javax.swing.JTable();
-        btnAddForces = new javax.swing.JButton();
-        txtAmountMen = new javax.swing.JTextField();
         pnlUsage = new javax.swing.JPanel();
         cmbMaterial = new javax.swing.JComboBox();
         txtAmountMaterial = new javax.swing.JTextField();
@@ -437,20 +342,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlForces.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Indsatte Styrker", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
+        pnlForces.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Oversigt", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlForces.setLayout(null);
-
-        cmbVehicle.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        pnlForces.add(cmbVehicle);
-        cmbVehicle.setBounds(20, 30, 140, 40);
-
-        chkIsDiverged.setText("Afvigelse i besætning");
-        pnlForces.add(chkIsDiverged);
-        chkIsDiverged.setBounds(180, 90, 150, 25);
-
-        cmbEmergency.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        pnlForces.add(cmbEmergency);
-        cmbEmergency.setBounds(180, 30, 140, 40);
 
         tblForces.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblForces.setModel(new javax.swing.table.DefaultTableModel(
@@ -467,16 +360,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblForces);
 
         pnlForces.add(jScrollPane2);
-        jScrollPane2.setBounds(360, 30, 580, 150);
-
-        btnAddForces.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        btnAddForces.setText("Tilføj");
-        pnlForces.add(btnAddForces);
-        btnAddForces.setBounds(230, 140, 90, 40);
-
-        txtAmountMen.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        pnlForces.add(txtAmountMen);
-        txtAmountMen.setBounds(20, 80, 140, 40);
+        jScrollPane2.setBounds(10, 30, 930, 150);
 
         pnlUsage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forbrug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlUsage.setLayout(null);
@@ -638,11 +522,12 @@ public class GUITeamLeader extends javax.swing.JFrame {
                     .addComponent(pnlUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(471, 471, 471)
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -659,22 +544,17 @@ public class GUITeamLeader extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddForces;
     private javax.swing.JButton btnAddMateriel;
     private javax.swing.JButton btnSave;
-    private javax.swing.JCheckBox chkIsDiverged;
     private javax.swing.JComboBox cmbAlarmType;
-    private javax.swing.JComboBox cmbEmergency;
     private javax.swing.JComboBox cmbMaterial;
-    private javax.swing.JComboBox cmbVehicle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -697,7 +577,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JTable tblForces;
     private javax.swing.JTable tblUsage;
     private javax.swing.JTextField txtAmountMaterial;
-    private javax.swing.JTextField txtAmountMen;
     private javax.swing.JTextField txtDetectorNumber;
     private javax.swing.JTextField txtEvaNumber;
     private javax.swing.JTextField txtFireReportNumber;

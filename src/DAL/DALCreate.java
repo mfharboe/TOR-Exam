@@ -94,7 +94,7 @@ public class DALCreate {
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setInt(1, incidentVehicle.getM_incident().getM_id());
         ps.setInt(2, incidentVehicle.getM_vehicle().getM_odinNumber());
-        ps.setInt(3, incidentVehicle.getM_emergency().getM_id());
+        ps.setInt(3, 1);
         ps.setInt(4, incidentVehicle.getM_amountCrew());
         ps.setBoolean(5, incidentVehicle.isM_isDiverged());
         ps.executeUpdate();
