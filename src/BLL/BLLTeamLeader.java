@@ -86,39 +86,5 @@ public class BLLTeamLeader {
 //        incidentVehicles.add(incidentVehicle);
 //    }
 
-   
-    
-
-    
-
-    /**
-     * Checks and adds Usage for a given Incident
-     *
-     * @param incident
-     * @return ArrayList of BEUsage
-     */
-    public ArrayList<BEUsage> incidentToUsage(BEIncident incident) {
-        ArrayList<BEUsage> beusage = new ArrayList<>();
-        for (BEUsage be : BLLRead.getInstance().readUsages()) {
-            if (be.getM_incident().getM_id() == incident.getM_id()) {
-                beusage.add(be);
-            }
-        }
-        return beusage;
-    }
-
-    /**
-     * Checks for IncidentDetails for a given Incident
-     *
-     * @param incident
-     * @return The BEIncidentDetails or null if none is there
-     */
-    public BEIncidentDetails incidentToIncidentDetails(BEIncident incident) {
-        for (BEIncidentDetails be : BLLRead.getInstance().readIncidentDetails()) {
-            if (be.getM_incident().getM_id() == incident.getM_id()) {
-                return be;
-            }
-        }
-        return null;
-    }
+ 
 }

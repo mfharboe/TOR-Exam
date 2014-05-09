@@ -4,6 +4,7 @@ import BE.BEFireman;
 import BE.BEIncident;
 import BE.BERoleTime;
 import BE.BEVehicle;
+import BLL.BLLAdapter;
 import BLL.BLLCreate;
 import BLL.BLLFireman;
 import BLL.BLLRead;
@@ -278,7 +279,7 @@ public class GUIFireman extends javax.swing.JFrame {
         lblImage.setIcon(null);
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
-            roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime(selected));
+            roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime(selected));
             clearMyContribution();
         } else {
             clearInfoBox();
@@ -309,7 +310,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickST() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(true), ST);
-        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
     
       /**
@@ -317,7 +318,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickBM() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), BM);
-        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+       roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -325,7 +326,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickCH() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), CH);
-        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -333,7 +334,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickHL() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), HL);
-        roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**

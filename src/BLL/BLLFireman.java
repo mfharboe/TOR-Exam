@@ -47,21 +47,6 @@ public class BLLFireman {
 
  
 
-    /**
-     * Sets the RoleTime for an Incident
-     *
-     * @param incident
-     * @return ArrayList of RoleTime
-     */
-    public ArrayList<BERoleTime> incidentToRoleTime(BEIncident incident) {
-        ArrayList<BERoleTime> beroletime = new ArrayList<>();
-
-        for (BERoleTime be : BLLRead.getInstance().readAllRoleTimes()) {
-            if (be.getM_incident().getM_id() == incident.getM_id()) {
-                beroletime.add(be);
-            }
-        }
-        return beroletime;
-    }
+  
 
 }

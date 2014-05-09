@@ -6,6 +6,7 @@ import BE.BEIncidentDetails;
 import BE.BEIncidentVehicle;
 import BE.BEMaterial;
 import BE.BEUsage;
+import BLL.BLLAdapter;
 import BLL.BLLCreate;
 import BLL.BLLRead;
 import BLL.BLLTeamLeader;
@@ -154,8 +155,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     public void setIncident(BEIncident incident) {
         m_incident = incident;
-        usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
-        BEIncidentDetails details = BLLTeamLeader.getInstance().incidentToIncidentDetails(m_incident);
+        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
+        BEIncidentDetails details = BLLAdapter.getInstance().incidentToIncidentDetails(m_incident);
         if (details == null) {
             clearIncidentDetails();
         } else {
@@ -193,7 +194,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void onClickAddMaterial() {
         if (isUsageFilled()) {
             BLLCreate.getInstance().createUsage(getMyMaterials());
-            usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
+            usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
             clearMaterials();
         }
     }
