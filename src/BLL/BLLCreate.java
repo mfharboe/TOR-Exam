@@ -80,7 +80,6 @@ public class BLLCreate {
             for (BERole role : BLLRead.getInstance().readAllRoles()) {
                 tmpPrevRole = tmpRoleTimes.getM_role();
                 if (role.getM_id() == roleNumber) {
-                  
                     tmpRoleTimes.setM_role(role);
                     try {
                         DALCreate.getInstance().createRoleTime(tmpRoleTimes);

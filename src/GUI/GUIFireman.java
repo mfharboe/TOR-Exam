@@ -291,7 +291,6 @@ public class GUIFireman extends javax.swing.JFrame {
     private ArrayList<BERoleTime> myContribution(boolean station) {
         ArrayList<BERoleTime> tmpRoleTimes = new ArrayList<>();
         BEIncident incident = (BEIncident) cmbIncident.getSelectedItem();
-        //BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
         ArrayList<BEFireman> fireman = (ArrayList<BEFireman>) lstManpower.getSelectedValuesList();
         boolean isOnStaion = station;
         BEVehicle vehicle = null;
@@ -389,7 +388,13 @@ public class GUIFireman extends javax.swing.JFrame {
         if (isTextIntegers()) {
             setBM_CHFunctionEnabled(cmbVehicle.getSelectedIndex() != 0);
             if (cmbVehicle.getSelectedIndex() != 0) {
-                setHLFunctionEnabled(((BEFireman) lstManpower.getSelectedValue()).isM_isTeamLeader());
+                ArrayList<BEFireman> tmpFiremen = (ArrayList<BEFireman>) lstManpower.getSelectedValuesList();
+                boolean isHL = true;
+                for(BEFireman selectedMen : tmpFiremen){
+                    if(!selectedMen.isM_isTeamLeader())
+                        isHL = false;
+                }
+                setHLFunctionEnabled(isHL);
             }
         } else {
             setBM_CHFunctionEnabled(false);
