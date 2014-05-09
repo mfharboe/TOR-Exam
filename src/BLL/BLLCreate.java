@@ -8,18 +8,22 @@ import BE.BEUsage;
 import DAL.DALCreate;
 import GUI.MessageDialog;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class BLLCreate {
+
     private static BLLCreate m_instance;
-    
-    private BLLCreate(){}
-    
-    public static BLLCreate getInstance(){
-        if(m_instance == null)
+
+    private BLLCreate() {
+    }
+
+    public static BLLCreate getInstance() {
+        if (m_instance == null) {
             m_instance = new BLLCreate();
+        }
         return m_instance;
     }
-    
+
     /**
      * Creates a new Incident
      *
@@ -36,15 +40,16 @@ public class BLLCreate {
         }
         return true;
     }
-    
+
     /**
      * Creates the RoleTime in the DB with the given role
+     *
      * @param roleTime
-     * @param roleNumber 
+     * @param roleNumber
      */
     public void createRoleOnIncident(BERoleTime roleTime, int roleNumber) {
         BERole tmpPrevRole = null;
-        
+
         for (BERole role : BLLRead.getInstance().readAllRoles()) {
             tmpPrevRole = roleTime.getM_role();
             if (role.getM_id() == roleNumber) {
@@ -62,7 +67,36 @@ public class BLLCreate {
             }
         }
     }
-    
+
+    /**
+     * Creates the RoleTime in the DB with the given role
+     *
+     * @param roleTime
+     * @param roleNumber
+     */
+    public void createRoleOnIncident(ArrayList<BERoleTime> roleTime, int roleNumber) {
+        BERole tmpPrevRole = null;
+        for (BERoleTime tmpRoleTimes : roleTime) {
+            for (BERole role : BLLRead.getInstance().readAllRoles()) {
+                tmpPrevRole = tmpRoleTimes.getM_role();
+                if (role.getM_id() == roleNumber) {
+                  
+                    tmpRoleTimes.setM_role(role);
+                    try {
+                        DALCreate.getInstance().createRoleTime(tmpRoleTimes);
+                    } catch (SQLException ex) {
+                        //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                        tmpRoleTimes.setM_role(tmpPrevRole);
+                        MessageDialog.getInstance().dialogFunction(); //MÅ IKKE VÆRE HER
+                        return;
+                    }
+                    BLLRead.getInstance().addToRoleTime(tmpRoleTimes);
+                    break;
+                }
+            }
+        }
+    }
+
     /**
      * Creates a new Usage on an Incident and adds it to the current Array
      *
@@ -78,7 +112,7 @@ public class BLLCreate {
         }
         BLLRead.getInstance().addToUsage(usage);
     }
-    
+
     /**
      * Creates a new IncidentDetails on an Incident and adds it to the current
      * Array, it is filled with null until updatet later by the TeamLeader

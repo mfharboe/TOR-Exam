@@ -9,6 +9,7 @@ import BLL.BLLFireman;
 import BLL.BLLRead;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.Color;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
@@ -72,16 +74,7 @@ public class GUIFireman extends javax.swing.JFrame {
         setMyContributionEnabled(false);
         setAllFunctionsEnabled(false);
         addListeners();
-        btnTeamLeader.setEnabled(false);
-        txtManHours.setText(MessageDialog.getInstance().txtHours());
-
-        firemanListModel = new DefaultListModel<>();
-        lstManpower.setModel(firemanListModel);
-
-        roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
-        tblRoleTime.setModel(roleTimeModel);
-        roleTimeSorter = new TableRowSorter<>(roleTimeModel);
-        tblRoleTime.setRowSorter(roleTimeSorter);
+        setTable();
         fillBoxes();
     }
 
@@ -126,6 +119,7 @@ public class GUIFireman extends javax.swing.JFrame {
 
     }
 
+    
     /**
      * Fills all Comboboxes and Lists.
      */
@@ -135,6 +129,22 @@ public class GUIFireman extends javax.swing.JFrame {
         fillIncidentCombo();
     }
 
+    /**
+     * Sets the table with the initial settings
+     */
+    private void setTable(){
+        btnTeamLeader.setEnabled(false);
+        txtManHours.setText(MessageDialog.getInstance().txtHours());
+
+        firemanListModel = new DefaultListModel<>();
+        lstManpower.setModel(firemanListModel);
+       
+        roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
+        tblRoleTime.setModel(roleTimeModel);
+        roleTimeSorter = new TableRowSorter<>(roleTimeModel);
+        tblRoleTime.setRowSorter(roleTimeSorter);
+    
+    }
     /**
      * Fills the Fireman List ordered by HL-BM and then lastname.
      */
@@ -278,19 +288,23 @@ public class GUIFireman extends javax.swing.JFrame {
     /**
      * @return BERoleTime with links to all the relevant BE classes
      */
-    private BERoleTime myContribution(boolean station) {
+    private ArrayList<BERoleTime> myContribution(boolean station) {
+        ArrayList<BERoleTime> tmpRoleTimes = new ArrayList<>();
         BEIncident incident = (BEIncident) cmbIncident.getSelectedItem();
-        BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
+        //BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
+        ArrayList<BEFireman> fireman = (ArrayList<BEFireman>) lstManpower.getSelectedValuesList();
         boolean isOnStaion = station;
         BEVehicle vehicle = null;
         if (cmbVehicle.getSelectedIndex() != 0 && station == false) {
             vehicle = (BEVehicle) cmbVehicle.getSelectedItem();
         }
         int time = Integer.parseInt(txtManHours.getText());
-        BERoleTime roletime = new BERoleTime(incident, fireman, isOnStaion, null, vehicle, time);
-        return roletime;
+        for(BEFireman selectedMen : fireman){
+            BERoleTime roletime = new BERoleTime(incident, selectedMen, isOnStaion, null, vehicle, time);
+            tmpRoleTimes.add(roletime);
+        }
+        return tmpRoleTimes;
     }
-
     /**
      * Invokes this method when the ST button is pressed.
      */
@@ -298,14 +312,13 @@ public class GUIFireman extends javax.swing.JFrame {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(true), ST);
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
-
-    /**
+    
+      /**
      * Invokes this method when the BM button is pressed.
      */
     private void onClickBM() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), BM);
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
-
     }
 
     /**
