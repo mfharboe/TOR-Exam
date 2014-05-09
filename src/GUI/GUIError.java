@@ -12,19 +12,19 @@ import java.awt.event.ActionListener;
 public class GUIError extends javax.swing.JFrame {
 
     public GUIError() {
+        this.setTitle(MessageDialog.getInstance().errorTitle());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
-        initializeSettings();
-        addColors();
+        initialSettings();
     }
 
     /**
      * The initial settings for this class.
      */
-    private void initializeSettings() {
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setTitle(MessageDialog.getInstance().ErrorTitle());
-        fillCmbVehicle();
+    private void initialSettings() {
         addListeners();
+        fillCmbVehicle();
+        addColors();
     }
 
     /**
@@ -58,7 +58,7 @@ public class GUIError extends javax.swing.JFrame {
      * Fills the Vehicle ComboBox.
      */
     private void fillCmbVehicle() {
-        cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
+        cmbVehicle.addItem(MessageDialog.getInstance().cmbVehicle());
         for (BEVehicle beVehicle : BLLRead.getInstance().readAllVehicles()) {
             cmbVehicle.addItem(beVehicle);
         }

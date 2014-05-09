@@ -189,9 +189,9 @@ public class BEFireman {
     public String toString() {
         String tmp = m_lastName + ", " + m_firstName;
         if (m_isTeamLeader) {
-            tmp = MessageDialog.getInstance().firemanListHL() + tmp;
+            tmp = MessageDialog.getInstance().txtHL() + tmp;
         } else {
-            tmp = MessageDialog.getInstance().firemanListBM() + tmp;
+            tmp = MessageDialog.getInstance().txtBM() + tmp;
         }
         return tmp;
     }

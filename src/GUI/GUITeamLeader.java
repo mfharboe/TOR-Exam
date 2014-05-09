@@ -33,12 +33,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * Creates new form GUITeamLeader.
      */
     private GUITeamLeader() {
+        this.setTitle(MessageDialog.getInstance().teamLeaderTitle());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
-        addListeners();
-        fillBoxes();
-        clearMaterials();
-        initializeSettings();
-        addColors();
+        initialSettings();
     }
 
     /**
@@ -55,9 +53,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
     /**
      * Sets the initial settings for this class.
      */
-    private void initializeSettings() {
-        this.setTitle(MessageDialog.getInstance().TeamLeaderTitle());
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    private void initialSettings() {
+        addListeners();
+        fillBoxes();
+        clearMaterials();
+        addColors();
         usageList = new ArrayList<>();
         usageModel = new TableModelUsage(usageList);
         tblUsage.setModel(usageModel);
@@ -106,7 +106,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * Fills the Alarm (Type of alarm) ComboBox.
      */
     private void fillAlarmCombo() {
-        cmbAlarmType.addItem(MessageDialog.getInstance().teamLeaderComboReport());
+        cmbAlarmType.addItem(MessageDialog.getInstance().cmbReport());
         for (BEAlarm bealarm : BLLRead.getInstance().readAlarms()) {
             cmbAlarmType.addItem(bealarm);
         }
@@ -117,7 +117,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * Fills the Material ComboBox.
      */
     private void fillMaterialCombo() {
-        cmbMaterial.addItem(MessageDialog.getInstance().teamLeaderComboMaterial());
+        cmbMaterial.addItem(MessageDialog.getInstance().cmbMaterials());
         for (BEMaterial bematerial : BLLRead.getInstance().readMaterials()) {
             cmbMaterial.addItem(bematerial);
         }
@@ -144,7 +144,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private void clearMaterials() {
         cmbMaterial.setSelectedIndex(0);
-        txtAmountMaterial.setText(MessageDialog.getInstance().txtAmountMaterial());
+        txtAmountMaterial.setText(MessageDialog.getInstance().txtUsage());
     }
 
     /**
@@ -205,11 +205,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private boolean isUsageFilled() {
         if (cmbMaterial.getSelectedIndex() == 0) {
-            MessageDialog.getInstance().addMaterialsDialog();
+            MessageDialog.getInstance().dialogFillAllInformation();
             return false;
         }
-        if (txtAmountMaterial.getText().isEmpty() || txtAmountMaterial.getText().equals(MessageDialog.getInstance().txtAmountMaterial())) {
-            MessageDialog.getInstance().addMaterialsDialog();
+        if (txtAmountMaterial.getText().isEmpty() || txtAmountMaterial.getText().equals(MessageDialog.getInstance().txtUsage())) {
+            MessageDialog.getInstance().dialogFillAllInformation();
             return false;
         }
         return true;
@@ -279,7 +279,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         @Override
         public void focusLost(FocusEvent e) {
             if (txtAmountMaterial.getText().isEmpty()) {
-                txtAmountMaterial.setText(MessageDialog.getInstance().txtAmountMaterial());
+                txtAmountMaterial.setText(MessageDialog.getInstance().txtUsage());
             }
 
         }

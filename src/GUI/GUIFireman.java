@@ -47,15 +47,9 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private GUIFireman() {
         this.setTitle(MessageDialog.getInstance().firemanTitle());
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
-        initializeSettings();
-        addColors();
-        fillBoxes();
-        addListeners();
-        setManpowerEnabled(false);
-        setMyContributionEnabled(false);
-        setAllFunctionsEnabled(false);
-
+        initialSettings();
     }
 
     /**
@@ -71,13 +65,20 @@ public class GUIFireman extends javax.swing.JFrame {
     /**
      * THe initial settings for this class.
      */
-    private void initializeSettings() {
+    private void initialSettings() {
+        addListeners();
+        addColors();
+        fillBoxes();
+        setManpowerEnabled(false);
+        setMyContributionEnabled(false);
+        setAllFunctionsEnabled(false);
         btnTeamLeader.setEnabled(false);
-        txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
+        txtManHours.setText(MessageDialog.getInstance().txtHours());
         
         firemanListModel = new DefaultListModel<>();
         lstManpower.setModel(firemanListModel);
         
+       
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
         tblRoleTime.setModel(roleTimeModel);
         roleTimeSorter = new TableRowSorter<>(roleTimeModel);
@@ -154,7 +155,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Fills the Vehicle ComboBox.
      */
     private void fillVehicleCombo() {
-        cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
+        cmbVehicle.addItem(MessageDialog.getInstance().cmbVehicle());
         for (BEVehicle bevehicle : BLLRead.getInstance().readAllVehicles()) {
             cmbVehicle.addItem(bevehicle);
         }
@@ -164,7 +165,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Fills the Incident ComboBox.
      */
     private void fillIncidentCombo() {
-        cmbIncident.addItem(MessageDialog.getInstance().firemanComboIncident());
+        cmbIncident.addItem(MessageDialog.getInstance().cmbIncidents());
         for (BEIncident beincident : BLLRead.getInstance().readAllIncidents()) {
             cmbIncident.addItem(beincident);
         }
@@ -231,6 +232,7 @@ public class GUIFireman extends javax.swing.JFrame {
 
     public void addToIncidentCombo(BEIncident incident) {
         cmbIncident.addItem(incident);
+        BLLRead.getInstance().addToIncident(incident);
         cmbIncident.setSelectedItem(incident);
     }
 
@@ -249,7 +251,7 @@ public class GUIFireman extends javax.swing.JFrame {
         lstManpower.clearSelection();
         cmbVehicle.setSelectedIndex(0);
         cmbVehicle.setEnabled(false);
-        txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
+        txtManHours.setText(MessageDialog.getInstance().txtHours());
         txtManHours.setEnabled(false);
         setSTFunctionEnabled(false);
         setBM_CHFunctionEnabled(false);
@@ -389,7 +391,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * @return boolean
      */
     private boolean isTextIntegers() {
-        return !(txtManHours.getText().isEmpty() || txtManHours.getText().equals(MessageDialog.getInstance().firemanTextHours()));
+        return !(txtManHours.getText().isEmpty() || txtManHours.getText().equals(MessageDialog.getInstance().txtHours()));
     }
 
     /**
@@ -623,7 +625,8 @@ public class GUIFireman extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();

@@ -20,9 +20,9 @@ public class GUICreateIncident extends javax.swing.JFrame {
      * Creates new form GUICreateIncident
      */
     private GUICreateIncident() {
+        this.setTitle("set title");
         initComponents();
         initialSettings();
-        addListeners();
         addColors();
     }
     
@@ -35,6 +35,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
         return m_instance;
     }
     private void initialSettings(){
+        addListeners();
         fillIncidentTypeCombo();
         clearMyInformation();
     }
@@ -114,7 +115,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
             }
         }
         else
-            MessageDialog.getInstance().FillAllInformation();
+            MessageDialog.getInstance().dialogFillAllInformation();
     }
     
     private class btnAction implements ActionListener{

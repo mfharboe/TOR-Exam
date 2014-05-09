@@ -21,123 +21,176 @@ public class MessageDialog {
         return m_instance;
     }
 
-    //FIREMAN MESSAGES----------------------------------------------------------
-   
-    public void ErrorCarSeatsFilled(){
-        JOptionPane.showMessageDialog(null, "Bilen er allerede fyldt op");
-    
-    }
-    
-    public void incidentUpdate() {
-        JOptionPane.showMessageDialog(null, "Dine ændringer blev registreret");
-    }
-
-    public void FillAllInformation() {
-        JOptionPane.showMessageDialog(null, "Udfyld venligst alle informationer");
-    }
-
-    public void stationDialog() {
-        JOptionPane.showMessageDialog(null, "Du er allerede stationsvagt på denne indsats");
-    }
-
-    public void functionDialog() {
-        JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats");
-    }
-
+    /**
+     * @return title for FiremanGUI
+     */
     public String firemanTitle() {
         return "TOR - Tid & Registreringssytem";
     }
 
-    public String firemanComboIncident() {
-        return "Vælg anden indsats / ny indsats..";
+    /**
+     * @return title for teamLeaderGUI
+     */
+    public String teamLeaderTitle() {
+        return "TOR - Holdleder";
     }
 
-    public String firemanComboVehicle() {
-        return "Vælg et køretøj..";
+    /**
+     * @return title for errorGUI
+     */
+    public String errorTitle() {
+        return "TOR - Fejlmeddelse";
     }
 
+    /**
+     * @return title for CreateIncidentGUI
+     */
+    public String createIncidentTitle() {
+        return "TOR - Lav ny indsats";
+    }
+
+    /**
+     * @return text for the incident comboboxes
+     */
+    public String cmbIncidents() {
+        return "Vælg en indsats..";
+    }
+
+    /**
+     * @return text for the incidentType comboboxes 
+     */
     public String cmbIncidentType() {
         return "Vælg type..";
     }
+    
+    /**
+     * @return text for the vehicle comboboxes 
+     */
+    public String cmbVehicle() {
+        return "Vælg et køretøj..";
+    }
 
-    public String firemanTextHours() {
+    /**
+     * @return text for the materials comboboxes 
+     */
+    public String cmbMaterials() {
+        return "Vælg materiel..";
+    }
+
+    /**
+     * @return text for the report comboboxes 
+     */
+    public String cmbReport() {
+        return "Vælg beretning..";
+    }
+
+    /**
+     * @return text for the hours textFields 
+     */
+    public String txtHours() {
         return "Skriv timer..";
     }
 
+    /**
+     * @return text for the incidentName textFields 
+     */
     public String txtIncidentName() {
         return "Skriv et navnet på indsatsen..";
     }
 
+    /**
+     * @return text for the date textFields 
+     */
     public String txtDate() {
         return "YYYY-MM-DD";
     }
 
+    /**
+     * @return text for the time textFields 
+     */
     public String txtIncidentTime() {
         return "TT:MM";
     }
 
-    public String firemanListHL() {
+    /**
+     * @return text for the usage textFields 
+     */
+    public String txtUsage() {
+        return "Forbrug..";
+    }
+    /**
+     * @return text for the create/update buttons 
+     */
+    public String txtCreate(){
+        return "Opret";
+    }
+    
+    /**
+     * @return text for the create/update buttons 
+     */
+    public String txtUpdate(){
+        return "Opdatér";
+    }
+    /**
+     * @return text for the HL title 
+     */
+    public String txtHL() {
         return "(HL) ";
     }
 
-    public String firemanListBM() {
+    /**
+     * @return text for the BM title 
+     */
+    public String txtBM() {
         return "(BM) ";
     }
 
-    //TEAMLEADER MESSAGES-------------------------------------------------------
-    public void teamLeaderSaveDialog() {
-        JOptionPane.showMessageDialog(null, "Oplysningerne blev gemt");
-    }
-
-    public void addForcesDialog() {
-        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
-    }
-
-    public void addMaterialsDialog() {
-        JOptionPane.showMessageDialog(null, "Udfyld venligst alle felter");
-    }
-
-    public String TeamLeaderTitle() {
-        return "TOR - Holdleder";
-    }
-
-    public String teamLeaderComboEmergency() {
-        return "Kørsels type..";
-    }
-
-    public String teamLeaderTextAmountMen() {
-        return "Bemanding..";
-    }
-
-    public String teamLeaderComboMaterial() {
-        return "Vælg materiel..";
-    }
-
-    public String txtAmountMaterial() {
-        return "Forbrug..";
-    }
-
-    public String teamLeaderComboReport() {
-        return "Vælg beretning..";
-    }
-
-    //ERRORREPORT MESSAGES------------------------------------------------------
-    public void ErrorConfirmMessageApproved() {
-        JOptionPane.showMessageDialog(null, "Din fejl rapport er registreret");
-    }
-
-    public String ErrorTitle() {
-        return "TOR - Fejlmeddelse";
-    }
-
-    //MISC----------------------------------------------------------------------
-    public final String EMPTY_TEXT() {
+    /**
+     * @return an empty String 
+     */
+    public String EMPTY_TEXT() {
         return "";
     }
 
-    //BLL ERROR MESSAGES--------------------------------------------------------
-    
-    public void DataBaseError(){
+    /**
+     * Dialog if the car is filled
+     */
+    public void dialogCarSeatsFilled() {
+        JOptionPane.showMessageDialog(null, "Bilen er allerede fyldt op");
+    }
+
+    /**
+     * Dialog if not all required information is filled
+     */
+    public void dialogFillAllInformation() {
+        JOptionPane.showMessageDialog(null, "Udfyld venligst alle informationer");
+    }
+
+    /**
+     * Dialog if the fireman is already on the station
+     */
+    public void dialogStation() {
+        JOptionPane.showMessageDialog(null, "Du er allerede stationsvagt på denne indsats");
+    }
+
+    /**
+     * Dialog if the fireman already has a function as either BM, HL or CH 
+     */
+    public void dialogFunction() {
+        JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats");
+    }
+
+    /**
+     * Dialog if an action is completed
+     */
+    public void dialogInformationSaved() {
+        JOptionPane.showMessageDialog(null, "Oplysningerne blev gemt");
+    }
+
+    /**
+     * Dialog if an error happened with the connection
+     */
+    public void DataBaseError() {
         JOptionPane.showMessageDialog(null, "Der er sket en fejl, handlingen afsluttes");
     }
 }

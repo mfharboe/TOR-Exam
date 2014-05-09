@@ -39,6 +39,6 @@ public class BLLError {
             MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return;
         }
-        MessageDialog.getInstance().ErrorConfirmMessageApproved(); //MÅ IKKE VÆRE HER
+        MessageDialog.getInstance().dialogInformationSaved(); //MÅ IKKE VÆRE HER
     }
 }

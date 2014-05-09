@@ -54,7 +54,7 @@ public class BLLCreate {
                 } catch (SQLException ex) {
                     //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
                     roleTime.setM_role(tmpPrevRole);
-                    MessageDialog.getInstance().functionDialog(); //MÅ IKKE VÆRE HER
+                    MessageDialog.getInstance().dialogFunction(); //MÅ IKKE VÆRE HER
                     return;
                 }
                 BLLRead.getInstance().addToRoleTime(roleTime);

@@ -33,7 +33,7 @@ public class BLLUpdate {
             MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return;
         }
-        MessageDialog.getInstance().incidentUpdate(); //MÅ IKKE VÆRE HER
+        MessageDialog.getInstance().dialogInformationSaved(); //MÅ IKKE VÆRE HER
     }
 
     /**
@@ -67,6 +67,6 @@ public class BLLUpdate {
                 break;
             }
         }
-        MessageDialog.getInstance().teamLeaderSaveDialog(); //MÅ IKKE VÆRE HER
+        MessageDialog.getInstance().dialogInformationSaved(); //MÅ IKKE VÆRE HER
     }
 }
