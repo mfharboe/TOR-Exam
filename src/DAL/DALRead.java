@@ -210,11 +210,7 @@ public class DALRead {
         while (result.next()) {
             int id = result.getInt("id");
             String description = result.getString("description");
-            boolean isFireman = result.getBoolean("isFireman");
-            boolean isDriver = result.getBoolean("isDriver");
-            boolean isLeader = result.getBoolean("isLeader");
-            boolean isStation = result.getBoolean("isStation");
-            BERole be = new BERole(id, description, isFireman, isDriver, isLeader, isStation);
+            BERole be = new BERole(id, description);
             res.add(be);
         }
         return res;

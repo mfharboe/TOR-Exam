@@ -44,40 +44,9 @@ public class BLLTeamLeader {
     public void addToIncidentVehicles(BEIncidentVehicle be){
        incidentVehicles.add(be);
     }
-    
-    /**
-     *
-     * @return ArrayList of Usage
-     */
-    public ArrayList<BEUsage> readUsage() {
-        if (usages == null) {
-            try {
-                usages = DALRead.getInstance().readUsage();
-            } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-                return null;
-            }
-        }
-        return usages;
-    }
+     
 
-    /**
-     *
-     * @return ArrayList of Materials
-     */
-    public ArrayList<BEMaterial> readMaterials() {
-        if (materials == null) {
-            try {
-                materials = DALRead.getInstance().readMaterial();
-            } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-                return null;
-            }
-        }
-        return materials;
-    }
+    
 
     /**
      *
@@ -96,57 +65,9 @@ public class BLLTeamLeader {
         return incidentVehicles;
     }
 
-    /**
-     *
-     * @return ArrayList of Emergencies
-     */
-    public ArrayList<BEEmergency> readEmergencies() {
-        if (emergencies == null) {
-            try {
-                emergencies = DALRead.getInstance().readEmergencies();
-            } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-                return null;
-            }
-        }
-        return emergencies;
-    }
 
-    /**
-     *
-     * @return ArrayList of Alarms
-     */
-    public ArrayList<BEAlarm> readAlarms() {
-        if (alarms == null) {
-            try {
-                alarms = DALRead.getInstance().readAlarms();
-            } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-                return null;
-            }
-        }
-        return alarms;
 
-    }
-
-    /**
-     *
-     * @return ArrayList of IncidentDetails
-     */
-    public ArrayList<BEIncidentDetails> readIncidentDetails() {
-        if (incidentDetails == null) {
-            try {
-                incidentDetails = DALRead.getInstance().readIncidentDetails();
-            } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-                return null;
-            }
-        }
-        return incidentDetails;
-    }
+  
 
 //    /**
 //     * Creates a new Vehicle on an Incident and adds it to the current Array
@@ -165,88 +86,10 @@ public class BLLTeamLeader {
 //        incidentVehicles.add(incidentVehicle);
 //    }
 
-    /**
-     * Creates a new Usage on an Incident and adds it to the current Array
-     *
-     * @param usage
-     */
-    public void createUsage(BEUsage usage) {
-        try {
-            DALCreate.getInstance().createUsage(usage);
-        } catch (SQLException ex) {
-            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-            return;
-        }
-        usages.add(usage);
-    }
+   
+    
 
-    /**
-     * Creates a new IncidentDetails on an Incident and adds it to the current
-     * Array, it is filled with null until updatet later by the TeamLeader
-     *
-     * @param incident
-     */
-    public void createInitialIncidentDetails(BEIncident incident) {
-        BEIncidentDetails details = new BEIncidentDetails(null, null, null, null, incident, null, null, null, null, null, null);
-        try {
-            BLLTeamLeader.getInstance().readIncidentDetails();
-            DALCreate.getInstance().createInitialIncidentDetails(details);
-        } catch (SQLException ex) {
-            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-            return;
-        }
-        incidentDetails.add(details);
-    }
-
-    /**
-     * Updates IncidentDetails for an Incident and sets new values in
-     * BEIncidentDetails
-     *
-     * @param incidentDetails
-     */
-    public void updateIncidentDetails(BEIncidentDetails incidentDetails) {
-        try {
-            DALUpdate.getInstance().updateIncidentDetails(incidentDetails);
-        } catch (SQLException ex) {
-            //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-            return;
-        }
-        for (BEIncidentDetails details : readIncidentDetails()) {
-            if (details.getM_incident().getM_id() == incidentDetails.getM_incident().getM_id()) {
-                details.setM_alarm(incidentDetails.getM_alarm());
-                details.setM_detectorNumber(incidentDetails.getM_detectorNumber());
-                details.setM_evaNumber(incidentDetails.getM_evaNumber());
-                details.setM_fireReport(incidentDetails.getM_fireReport());
-                details.setM_groupNumber(incidentDetails.getM_groupNumber());
-                details.setM_incidentLeader(incidentDetails.getM_incidentLeader());
-                details.setM_involvedAddress(incidentDetails.getM_involvedAddress());
-                details.setM_involvedName(incidentDetails.getM_involvedName());
-                details.setM_message(incidentDetails.getM_message());
-                details.setM_remark(incidentDetails.getM_remark());
-                break;
-            }
-        }
-        MessageDialog.getInstance().teamLeaderSaveDialog(); //MÅ IKKE VÆRE HER
-    }
-
-    /**
-     * Checks and adds IncidentVehicles for a given Incident
-     *
-     * @param incident
-     * @return ArrayList of BEIncidentVehicles
-     */
-    public ArrayList<BEIncidentVehicle> incidentToIncidentVehicle(BEIncident incident) {
-        ArrayList<BEIncidentVehicle> beincidentvehicle = new ArrayList<>();
-        for (BEIncidentVehicle be : readIncidentVehicles()) {
-            if (be.getM_incident().getM_id() == incident.getM_id()) {
-                beincidentvehicle.add(be);
-            }
-        }
-        return beincidentvehicle;
-    }
+    
 
     /**
      * Checks and adds Usage for a given Incident
@@ -256,7 +99,7 @@ public class BLLTeamLeader {
      */
     public ArrayList<BEUsage> incidentToUsage(BEIncident incident) {
         ArrayList<BEUsage> beusage = new ArrayList<>();
-        for (BEUsage be : readUsage()) {
+        for (BEUsage be : BLLRead.getInstance().readUsages()) {
             if (be.getM_incident().getM_id() == incident.getM_id()) {
                 beusage.add(be);
             }
@@ -271,7 +114,7 @@ public class BLLTeamLeader {
      * @return The BEIncidentDetails or null if none is there
      */
     public BEIncidentDetails incidentToIncidentDetails(BEIncident incident) {
-        for (BEIncidentDetails be : readIncidentDetails()) {
+        for (BEIncidentDetails be : BLLRead.getInstance().readIncidentDetails()) {
             if (be.getM_incident().getM_id() == incident.getM_id()) {
                 return be;
             }

@@ -2,11 +2,11 @@ package GUI;
 
 import BE.BEFireman;
 import BE.BEIncident;
-import BE.BEIncidentType;
 import BE.BERoleTime;
 import BE.BEVehicle;
+import BLL.BLLCreate;
 import BLL.BLLFireman;
-import BLL.BLLTeamLeader;
+import BLL.BLLRead;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -17,50 +17,67 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 
 public class GUIFireman extends javax.swing.JFrame {
 
+    private static GUIFireman m_instance;
+    
     DefaultListModel<BEFireman> firemanListModel;
     TableRowSorter<TableModelRoleTime> roleTimeSorter;
     private TableModelRoleTime roleTimeModel;
-    private static final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
+    private final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
+    
     ImageIcon image;
     ImageIcon imageLogo;
+
+    private final int BM = 1;
+    private final int CH = 2;
+    private final int HL = 3;
+    private final int ST = 4;
 
     /**
      * Creates new form GUIFireman.
      */
-    public GUIFireman() {
+    private GUIFireman() {
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         initComponents();
         initializeSettings();
         addColors();
+        fillBoxes();
+        addListeners();
+        setManpowerEnabled(false);
+        setMyContributionEnabled(false);
+        setAllFunctionsEnabled(false);
 
+    }
+
+    /**
+     * @return m_instance of GUIFireman
+     */
+    public static GUIFireman getInstance() {
+        if (m_instance == null) {
+            m_instance = new GUIFireman();
+        }
+        return m_instance;
     }
 
     /**
      * THe initial settings for this class.
      */
     private void initializeSettings() {
-        firemanListModel = new DefaultListModel<>();
-        lstManpower.setModel(firemanListModel);
-        fillBoxes();
-        addListeners();
-        setManpowerEnabled(false);
-        setMyContributionEnabled(false);
-        setAllFunctionsEnabled(false);
         btnTeamLeader.setEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().firemanTextHours());
+        
+        firemanListModel = new DefaultListModel<>();
+        lstManpower.setModel(firemanListModel);
+        
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
         tblRoleTime.setModel(roleTimeModel);
         roleTimeSorter = new TableRowSorter<>(roleTimeModel);
@@ -74,12 +91,10 @@ public class GUIFireman extends javax.swing.JFrame {
         this.getContentPane().setBackground(Color.WHITE);
         pnlFunctions.setBackground(Color.WHITE);
         pnlManPower.setBackground(Color.WHITE);
-        pnlInfo.setBackground(Color.WHITE);
         pnlAttendance.setBackground(Color.WHITE);
         pnlMyContribution.setBackground(Color.WHITE);
         pnlIncident.setBackground(Color.WHITE);
         cmbIncident.setBackground(Color.WHITE);
-        cmbIncidentType.setBackground(Color.WHITE);
         cmbVehicle.setBackground(Color.WHITE);
         tblRoleTime.setBackground(Color.WHITE);
         imageLogo = new ImageIcon("ebr.jpg");
@@ -98,13 +113,13 @@ public class GUIFireman extends javax.swing.JFrame {
         txtManHours.addKeyListener(txt);
         txtManHours.addFocusListener(txtFc);
         lstManpower.addListSelectionListener(lst);
-        btnSave.addActionListener(btn);
         btnBM.addActionListener(btn);
         btnCH.addActionListener(btn);
         btnHL.addActionListener(btn);
         btnST.addActionListener(btn);
         btnTeamLeader.addActionListener(btn);
         btnError.addActionListener(btn);
+        btnCreate.addActionListener(btn);
         cmbIncident.addItemListener(cmb);
         cmbVehicle.addItemListener(cmb);
 
@@ -116,7 +131,6 @@ public class GUIFireman extends javax.swing.JFrame {
     private void fillBoxes() {
         fillFiremanList();
         fillVehicleCombo();
-        fillIncidentTypeCombo();
         fillIncidentCombo();
     }
 
@@ -124,12 +138,12 @@ public class GUIFireman extends javax.swing.JFrame {
      * Fills the Fireman List ordered by HL-BM and then lastname.
      */
     private void fillFiremanList() {
-        for (BEFireman befireman : BLLFireman.getInstance().readAllFiremen()) {
+        for (BEFireman befireman : BLLRead.getInstance().readAllFiremen()) {
             if (befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
         }
-        for (BEFireman befireman : BLLFireman.getInstance().readAllFiremen()) {
+        for (BEFireman befireman : BLLRead.getInstance().readAllFiremen()) {
             if (!befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
@@ -141,18 +155,8 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void fillVehicleCombo() {
         cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
-        for (BEVehicle bevehicle : BLLFireman.getInstance().readAllVehicles()) {
+        for (BEVehicle bevehicle : BLLRead.getInstance().readAllVehicles()) {
             cmbVehicle.addItem(bevehicle);
-        }
-    }
-
-    /**
-     * Fills the IncidentType ComboBox.
-     */
-    private void fillIncidentTypeCombo() {
-        cmbIncidentType.addItem(MessageDialog.getInstance().firemanComboIncidentType());
-        for (BEIncidentType beincidenttype : BLLFireman.getInstance().readAllIncidentTypes()) {
-            cmbIncidentType.addItem(beincidenttype);
         }
     }
 
@@ -161,7 +165,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void fillIncidentCombo() {
         cmbIncident.addItem(MessageDialog.getInstance().firemanComboIncident());
-        for (BEIncident beincident : BLLFireman.getInstance().readAllIncidents()) {
+        for (BEIncident beincident : BLLRead.getInstance().readAllIncidents()) {
             cmbIncident.addItem(beincident);
         }
     }
@@ -225,14 +229,15 @@ public class GUIFireman extends javax.swing.JFrame {
         setHLFunctionEnabled(enable);
     }
 
+    public void addToIncidentCombo(BEIncident incident) {
+        cmbIncident.addItem(incident);
+        cmbIncident.setSelectedItem(incident);
+    }
+
     /**
      * Clears the Info panel.
      */
     private void clearInfoBox() {
-        txtIncidentName.setText("");
-        txtIncidentTime.setText("");
-        ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText("");
-        cmbIncidentType.setSelectedIndex(0);
         roleTimeModel.setRoleTimeList(EMPTY_ARRAY_LIST);
         clearMyContribution();
     }
@@ -261,69 +266,11 @@ public class GUIFireman extends javax.swing.JFrame {
         lblImage.setIcon(null);
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
-            txtIncidentName.setText(selected.getM_incidentName());
-            dateChooser.setDate(selected.getM_date());
-            txtIncidentTime.setText("" + selected.getM_time());
-            txtIncidentTime.setText(txtIncidentTime.getText().substring(0, 5));
-            cmbIncidentType.setSelectedItem(selected.getM_incidentType());
             roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime(selected));
             clearMyContribution();
-
         } else {
             clearInfoBox();
         }
-
-    }
-
-    /**
-     * Invokes this method when the Save button is pressed.
-     */
-    private void onClickSave() {
-        if (txtIncidentName.getText().isEmpty()
-                || cmbIncidentType.getSelectedIndex() == 0
-                || ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText().isEmpty()
-                || txtIncidentTime.getText().isEmpty()) {
-            MessageDialog.getInstance().saveDialog();
-        } else {
-            String incidentname = txtIncidentName.getText();
-            java.util.Date utilDate = dateChooser.getDate();
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            Time time = java.sql.Time.valueOf(txtIncidentTime.getText() + ":00");
-            BEIncidentType incidenttype = (BEIncidentType) cmbIncidentType.getSelectedItem();
-            Boolean isdone = false;
-            BEIncident selected;
-            if (cmbIncident.getSelectedIndex() != 0) {
-                selected = (BEIncident) cmbIncident.getSelectedItem();
-                updateIncident(selected, incidentname, sqlDate, time, incidenttype);
-            } else {
-                selected = new BEIncident(incidentname, sqlDate, time, incidenttype, isdone);
-                BLLFireman.getInstance().createIncident(selected);
-                BLLTeamLeader.getInstance().createInitialIncidentDetails(selected);
-                cmbIncident.addItem(selected);
-            }
-            cmbIncident.repaint();
-            cmbIncident.setSelectedItem(selected);
-            setManpowerEnabled(true);
-        }
-
-    }
-
-    /**
-     * Updates the current selected Incident
-     *
-     * @param selected
-     * @param incidentname
-     * @param sqlDate
-     * @param time
-     * @param incidenttype
-     */
-    private void updateIncident(BEIncident selected, String incidentname, Date sqlDate, Time time, BEIncidentType incidenttype) {
-        selected.setM_incidentName(incidentname);
-        selected.setM_date(sqlDate);
-        selected.setM_time(time);
-        selected.setM_incidentType(incidenttype);
-        selected.isM_isDone();
-        BLLFireman.getInstance().updateIncident(selected);
     }
 
     /**
@@ -334,7 +281,7 @@ public class GUIFireman extends javax.swing.JFrame {
         BEFireman fireman = (BEFireman) lstManpower.getSelectedValue();
         boolean isOnStaion = station;
         BEVehicle vehicle = null;
-        if (cmbVehicle.getSelectedIndex() != 0) {
+        if (cmbVehicle.getSelectedIndex() != 0 && station == false) {
             vehicle = (BEVehicle) cmbVehicle.getSelectedItem();
         }
         int time = Integer.parseInt(txtManHours.getText());
@@ -346,7 +293,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the ST button is pressed.
      */
     private void onClickST() {
-        BLLFireman.getInstance().createSTOnIncident(myContribution(true));
+        BLLCreate.getInstance().createRoleOnIncident(myContribution(true), ST);
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -354,15 +301,16 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the BM button is pressed.
      */
     private void onClickBM() {
-        BLLFireman.getInstance().createBMOnIncident(myContribution(false));
+        BLLCreate.getInstance().createRoleOnIncident(myContribution(false), BM);
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+
     }
 
     /**
      * Invokes this method when the CH button is pressed.
      */
     private void onClickCH() {
-        BLLFireman.getInstance().createCHOnIncident(myContribution(false));
+        BLLCreate.getInstance().createRoleOnIncident(myContribution(false), CH);
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -370,7 +318,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Invokes this method when the HL button is pressed.
      */
     private void onClickHL() {
-        BLLFireman.getInstance().createHLOnIncident(myContribution(false));
+        BLLCreate.getInstance().createRoleOnIncident(myContribution(false), HL);
         roleTimeModel.setRoleTimeList(BLLFireman.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -390,6 +338,11 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickErrorReport() {
         JFrame guierror = new GUIError();
         guierror.setVisible(true);
+    }
+
+    private void onClickCreate() {
+        JFrame guicreateincident = GUICreateIncident.getInstance();
+        guicreateincident.setVisible(true);
     }
 
     /**
@@ -461,9 +414,7 @@ public class GUIFireman extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource().equals(btnSave)) {
-                onClickSave();
-            } else if (e.getSource().equals(btnST)) {
+            if (e.getSource().equals(btnST)) {
                 onClickST();
             } else if (e.getSource().equals(btnBM)) {
                 onClickBM();
@@ -475,6 +426,8 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickTeamLeader();
             } else if (e.getSource().equals(btnError)) {
                 onClickErrorReport();
+            } else if (e.getSource().equals(btnCreate)) {
+                onClickCreate();
             }
         }
     }
@@ -529,14 +482,6 @@ public class GUIFireman extends javax.swing.JFrame {
         btnBM = new javax.swing.JButton();
         btnHL = new javax.swing.JButton();
         lblImage = new javax.swing.JLabel();
-        pnlInfo = new javax.swing.JPanel();
-        lblTime = new javax.swing.JLabel();
-        txtIncidentTime = new javax.swing.JTextField();
-        lblDate = new javax.swing.JLabel();
-        dateChooser = new com.toedter.calendar.JDateChooser();
-        txtIncidentName = new javax.swing.JTextField();
-        cmbIncidentType = new javax.swing.JComboBox();
-        btnSave = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
         btnTeamLeader = new javax.swing.JButton();
         pnlAttendance = new javax.swing.JPanel();
@@ -545,6 +490,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnError = new javax.swing.JButton();
         pnlIncident = new javax.swing.JPanel();
         cmbIncident = new javax.swing.JComboBox();
+        btnCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(null);
@@ -602,38 +548,6 @@ public class GUIFireman extends javax.swing.JFrame {
         pnlManPower.add(lblImage);
         lblImage.setBounds(270, 40, 210, 130);
 
-        pnlInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Info", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        pnlInfo.setLayout(null);
-
-        lblTime.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblTime.setText("kl.");
-        pnlInfo.add(lblTime);
-        lblTime.setBounds(340, 40, 20, 22);
-        pnlInfo.add(txtIncidentTime);
-        txtIncidentTime.setBounds(360, 30, 110, 40);
-
-        lblDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblDate.setText("dato");
-        pnlInfo.add(lblDate);
-        lblDate.setBounds(160, 40, 40, 22);
-
-        dateChooser.setDateFormatString("yyyy-MM-dd");
-        pnlInfo.add(dateChooser);
-        dateChooser.setBounds(200, 30, 120, 40);
-
-        txtIncidentName.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        pnlInfo.add(txtIncidentName);
-        txtIncidentName.setBounds(20, 80, 300, 40);
-
-        cmbIncidentType.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        pnlInfo.add(cmbIncidentType);
-        cmbIncidentType.setBounds(20, 30, 120, 40);
-
-        btnSave.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        btnSave.setText("Gem");
-        pnlInfo.add(btnSave);
-        btnSave.setBounds(360, 80, 110, 40);
-
         lblLogo.setFont(new java.awt.Font("Calibri", 0, 72)); // NOI18N
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -670,83 +584,72 @@ public class GUIFireman extends javax.swing.JFrame {
         pnlIncident.add(cmbIncident);
         cmbIncident.setBounds(20, 30, 450, 40);
 
+        btnCreate.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        btnCreate.setText("Opret");
+        pnlIncident.add(btnCreate);
+        btnCreate.setBounds(360, 90, 110, 40);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlIncident, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(pnlManPower, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(pnlAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(931, 931, 931)
-                        .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(pnlIncident, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(pnlManPower, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(pnlAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(930, 930, 930)
+                .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlIncident, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(pnlIncident, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlManPower, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBM;
     private javax.swing.JButton btnCH;
+    private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnError;
     private javax.swing.JButton btnHL;
     private javax.swing.JButton btnST;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnTeamLeader;
     private javax.swing.JComboBox cmbIncident;
-    private javax.swing.JComboBox cmbIncidentType;
     private javax.swing.JComboBox cmbVehicle;
-    private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblTime;
     private javax.swing.JList lstManpower;
     private javax.swing.JPanel pnlAttendance;
     private javax.swing.JPanel pnlFunctions;
     private javax.swing.JPanel pnlIncident;
-    private javax.swing.JPanel pnlInfo;
     private javax.swing.JPanel pnlManPower;
     private javax.swing.JPanel pnlMyContribution;
     private javax.swing.JTable tblRoleTime;
-    private javax.swing.JTextField txtIncidentName;
-    private javax.swing.JTextField txtIncidentTime;
     private javax.swing.JTextField txtManHours;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@ import BE.BEError;
 import BE.BEVehicle;
 import BLL.BLLError;
 import BLL.BLLFireman;
+import BLL.BLLRead;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,7 +59,7 @@ public class GUIError extends javax.swing.JFrame {
      */
     private void fillCmbVehicle() {
         cmbVehicle.addItem(MessageDialog.getInstance().firemanComboVehicle());
-        for (BEVehicle beVehicle : BLLFireman.getInstance().readAllVehicles()) {
+        for (BEVehicle beVehicle : BLLRead.getInstance().readAllVehicles()) {
             cmbVehicle.addItem(beVehicle);
         }
 

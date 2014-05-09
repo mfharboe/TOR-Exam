@@ -1,15 +1,15 @@
 package GUI;
 
 import BE.BEAlarm;
-import BE.BEEmergency;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BEIncidentVehicle;
 import BE.BEMaterial;
 import BE.BEUsage;
-import BE.BEVehicle;
-import BLL.BLLFireman;
+import BLL.BLLCreate;
+import BLL.BLLRead;
 import BLL.BLLTeamLeader;
+import BLL.BLLUpdate;
 import GUI.TableModel.TableModelForces;
 import GUI.TableModel.TableModelUsage;
 import java.awt.Color;
@@ -26,9 +26,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
     TableRowSorter<TableModelUsage> usageSorter;
     TableRowSorter<TableModelForces> forcesSorter;
     private TableModelUsage usageModel;
-    private TableModelForces forcesModel;
     private ArrayList<BEUsage> usageList;
-    private ArrayList<BEIncidentVehicle> forcesList;
     private BEIncident m_incident;
 
     /**
@@ -36,10 +34,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private GUITeamLeader() {
         initComponents();
-        this.setTitle(MessageDialog.getInstance().TeamLeaderTitle());
+        addListeners();
+        fillBoxes();
+        clearMaterials();
         initializeSettings();
         addColors();
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -57,19 +56,13 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * Sets the initial settings for this class.
      */
     private void initializeSettings() {
-        addListeners();
-        fillBoxes();
-        clearMaterials();
+        this.setTitle(MessageDialog.getInstance().TeamLeaderTitle());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         usageList = new ArrayList<>();
-        forcesList = new ArrayList<>();
         usageModel = new TableModelUsage(usageList);
-        forcesModel = new TableModelForces(forcesList);
         tblUsage.setModel(usageModel);
-        tblForces.setModel(forcesModel);
         usageSorter = new TableRowSorter<>(usageModel);
-        forcesSorter = new TableRowSorter<>(forcesModel);
         tblUsage.setRowSorter(usageSorter);
-        tblForces.setRowSorter(forcesSorter);
 
     }
 
@@ -78,7 +71,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private void addColors() {
         this.getContentPane().setBackground(Color.WHITE);
-        pnlForces.setBackground(Color.WHITE);
         pnlUsage.setBackground(Color.WHITE);
         pnlInjured.setBackground(Color.WHITE);
         pnlAlarm.setBackground(Color.WHITE);
@@ -115,7 +107,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private void fillAlarmCombo() {
         cmbAlarmType.addItem(MessageDialog.getInstance().teamLeaderComboReport());
-        for (BEAlarm bealarm : BLLTeamLeader.getInstance().readAlarms()) {
+        for (BEAlarm bealarm : BLLRead.getInstance().readAlarms()) {
             cmbAlarmType.addItem(bealarm);
         }
 
@@ -126,7 +118,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private void fillMaterialCombo() {
         cmbMaterial.addItem(MessageDialog.getInstance().teamLeaderComboMaterial());
-        for (BEMaterial bematerial : BLLTeamLeader.getInstance().readMaterials()) {
+        for (BEMaterial bematerial : BLLRead.getInstance().readMaterials()) {
             cmbMaterial.addItem(bematerial);
         }
     }
@@ -152,7 +144,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private void clearMaterials() {
         cmbMaterial.setSelectedIndex(0);
-        txtAmountMaterial.setText(MessageDialog.getInstance().teamLeaderTextAmountMaterials());
+        txtAmountMaterial.setText(MessageDialog.getInstance().txtAmountMaterial());
     }
 
     /**
@@ -162,7 +154,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     public void setIncident(BEIncident incident) {
         m_incident = incident;
-        forcesModel.setForceList(BLLTeamLeader.getInstance().incidentToIncidentVehicle(m_incident));
         usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
         BEIncidentDetails details = BLLTeamLeader.getInstance().incidentToIncidentDetails(m_incident);
         if (details == null) {
@@ -201,7 +192,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private void onClickAddMaterial() {
         if (isUsageFilled()) {
-            BLLTeamLeader.getInstance().createUsage(getMyMaterials());
+            BLLCreate.getInstance().createUsage(getMyMaterials());
             usageModel.setUsageList(BLLTeamLeader.getInstance().incidentToUsage(m_incident));
             clearMaterials();
         }
@@ -217,7 +208,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
             MessageDialog.getInstance().addMaterialsDialog();
             return false;
         }
-        if (txtAmountMaterial.getText().isEmpty() || txtAmountMaterial.getText().equals(MessageDialog.getInstance().teamLeaderTextAmountMaterials())) {
+        if (txtAmountMaterial.getText().isEmpty() || txtAmountMaterial.getText().equals(MessageDialog.getInstance().txtAmountMaterial())) {
             MessageDialog.getInstance().addMaterialsDialog();
             return false;
         }
@@ -251,7 +242,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * Invoke this method when the Save button is pressed.
      */
     private void onClickSaveDetails() {
-        BLLTeamLeader.getInstance().updateIncidentDetails(getMyDetails());
+        BLLUpdate.getInstance().updateIncidentDetails(getMyDetails());
         this.dispose();
     }
 
@@ -279,7 +270,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
         @Override
         public void focusGained(FocusEvent e) {
-        
+
             if (e.getSource().equals(txtAmountMaterial)) {
                 txtAmountMaterial.setText(MessageDialog.getInstance().EMPTY_TEXT());
             }
@@ -288,9 +279,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         @Override
         public void focusLost(FocusEvent e) {
             if (txtAmountMaterial.getText().isEmpty()) {
-                txtAmountMaterial.setText(MessageDialog.getInstance().teamLeaderTextAmountMaterials());
+                txtAmountMaterial.setText(MessageDialog.getInstance().txtAmountMaterial());
             }
-        
+
         }
 
     }
@@ -304,9 +295,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlForces = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblForces = new javax.swing.JTable();
         pnlUsage = new javax.swing.JPanel();
         cmbMaterial = new javax.swing.JComboBox();
         txtAmountMaterial = new javax.swing.JTextField();
@@ -341,26 +329,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtMessage = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pnlForces.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Oversigt", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
-        pnlForces.setLayout(null);
-
-        tblForces.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        tblForces.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(tblForces);
-
-        pnlForces.add(jScrollPane2);
-        jScrollPane2.setBounds(10, 30, 930, 150);
 
         pnlUsage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forbrug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlUsage.setLayout(null);
@@ -518,15 +486,14 @@ public class GUITeamLeader extends javax.swing.JFrame {
                         .addComponent(pnlTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(pnlInjured, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlForces, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
+                        .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(471, 471, 471)
+                                .addGap(470, 470, 470)
                                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         layout.setVerticalGroup(
@@ -536,14 +503,13 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlInjured, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(pnlForces, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(10, 10, 10)
                 .addComponent(pnlUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(10, 10, 10)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -566,15 +532,12 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel pnlAlarm;
-    private javax.swing.JPanel pnlForces;
     private javax.swing.JPanel pnlInjured;
     private javax.swing.JPanel pnlRemark;
     private javax.swing.JPanel pnlTeamLeader;
     private javax.swing.JPanel pnlUsage;
-    private javax.swing.JTable tblForces;
     private javax.swing.JTable tblUsage;
     private javax.swing.JTextField txtAmountMaterial;
     private javax.swing.JTextField txtDetectorNumber;

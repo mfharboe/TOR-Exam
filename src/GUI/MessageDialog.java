@@ -22,7 +22,8 @@ public class MessageDialog {
     }
 
     //FIREMAN MESSAGES----------------------------------------------------------
-   public void ErrorCarSeatsFilled(){
+   
+    public void ErrorCarSeatsFilled(){
         JOptionPane.showMessageDialog(null, "Bilen er allerede fyldt op");
     
     }
@@ -31,7 +32,7 @@ public class MessageDialog {
         JOptionPane.showMessageDialog(null, "Dine ændringer blev registreret");
     }
 
-    public void saveDialog() {
+    public void FillAllInformation() {
         JOptionPane.showMessageDialog(null, "Udfyld venligst alle informationer");
     }
 
@@ -55,7 +56,7 @@ public class MessageDialog {
         return "Vælg et køretøj..";
     }
 
-    public String firemanComboIncidentType() {
+    public String cmbIncidentType() {
         return "Vælg type..";
     }
 
@@ -63,15 +64,15 @@ public class MessageDialog {
         return "Skriv timer..";
     }
 
-    public String firemanTextIncident() {
+    public String txtIncidentName() {
         return "Skriv et navnet på indsatsen..";
     }
 
-    public String firemanTextDate() {
+    public String txtDate() {
         return "YYYY-MM-DD";
     }
 
-    public String firemanTextClock() {
+    public String txtIncidentTime() {
         return "TT:MM";
     }
 
@@ -112,7 +113,7 @@ public class MessageDialog {
         return "Vælg materiel..";
     }
 
-    public String teamLeaderTextAmountMaterials() {
+    public String txtAmountMaterial() {
         return "Forbrug..";
     }
 
