@@ -28,12 +28,12 @@ import javax.swing.table.TableRowSorter;
 public class GUIFireman extends javax.swing.JFrame {
 
     private static GUIFireman m_instance;
-    
+
     DefaultListModel<BEFireman> firemanListModel;
     TableRowSorter<TableModelRoleTime> roleTimeSorter;
     private TableModelRoleTime roleTimeModel;
     private final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
-    
+
     ImageIcon image;
     ImageIcon imageLogo;
 
@@ -50,6 +50,7 @@ public class GUIFireman extends javax.swing.JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
         initialSettings();
+
     }
 
     /**
@@ -66,23 +67,22 @@ public class GUIFireman extends javax.swing.JFrame {
      * THe initial settings for this class.
      */
     private void initialSettings() {
-        addListeners();
         addColors();
-        fillBoxes();
         setManpowerEnabled(false);
         setMyContributionEnabled(false);
         setAllFunctionsEnabled(false);
+        addListeners();
         btnTeamLeader.setEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().txtHours());
-        
+
         firemanListModel = new DefaultListModel<>();
         lstManpower.setModel(firemanListModel);
-        
-       
+
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
         tblRoleTime.setModel(roleTimeModel);
         roleTimeSorter = new TableRowSorter<>(roleTimeModel);
         tblRoleTime.setRowSorter(roleTimeSorter);
+        fillBoxes();
     }
 
     /**
