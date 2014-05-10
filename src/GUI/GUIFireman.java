@@ -2,15 +2,14 @@ package GUI;
 
 import BE.BEFireman;
 import BE.BEIncident;
+import BE.BEIncidentDetails;
 import BE.BERoleTime;
 import BE.BEVehicle;
 import BLL.BLLAdapter;
 import BLL.BLLCreate;
-import BLL.BLLFireman;
 import BLL.BLLRead;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.Color;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
@@ -37,6 +35,8 @@ public class GUIFireman extends javax.swing.JFrame {
     private TableModelRoleTime roleTimeModel;
     private final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
 
+    private BEIncidentDetails m_incidentDetails;
+    
     ImageIcon image;
     ImageIcon imageLogo;
 

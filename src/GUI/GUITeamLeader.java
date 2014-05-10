@@ -3,15 +3,12 @@ package GUI;
 import BE.BEAlarm;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
-import BE.BEIncidentVehicle;
 import BE.BEMaterial;
 import BE.BEUsage;
 import BLL.BLLAdapter;
 import BLL.BLLCreate;
 import BLL.BLLRead;
-import BLL.BLLTeamLeader;
 import BLL.BLLUpdate;
-import GUI.TableModel.TableModelForces;
 import GUI.TableModel.TableModelUsage;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -25,10 +22,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     private static GUITeamLeader m_instance;
     TableRowSorter<TableModelUsage> usageSorter;
-    TableRowSorter<TableModelForces> forcesSorter;
     private TableModelUsage usageModel;
     private ArrayList<BEUsage> usageList;
     private BEIncident m_incident;
+    private BEIncidentDetails m_incidentDetails;
 
     /**
      * Creates new form GUITeamLeader.
@@ -156,24 +153,20 @@ public class GUITeamLeader extends javax.swing.JFrame {
     public void setIncident(BEIncident incident) {
         m_incident = incident;
         usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
-        BEIncidentDetails details = BLLAdapter.getInstance().incidentToIncidentDetails(m_incident);
-        if (details == null) {
-            clearIncidentDetails();
-        } else {
-            txtIncidentLeader.setText(details.getM_incidentLeader());
-            txtMessage.setText(details.getM_message());
-            txtEvaNumber.setText(details.getM_evaNumber());
-            txtFireReportNumber.setText(details.getM_fireReport());
-            txtInvolvedName.setText(details.getM_involvedName());
-            txtInvolvedAddress.setText(details.getM_involvedAddress());
-            txtRemarks.setText(details.getM_remark());
-            cmbAlarmType.setSelectedItem(details.getM_alarm());
-            if (details.getM_alarm() == null) {
-                cmbAlarmType.setSelectedIndex(0);
-            }
-            txtDetectorNumber.setText(details.getM_detectorNumber());
-            txtGroupNumber.setText(details.getM_groupNumber());
+        m_incidentDetails = BLLAdapter.getInstance().incidentToIncidentDetails(m_incident);
+        txtIncidentLeader.setText(m_incidentDetails.getM_incidentLeader());
+        txtMessage.setText(m_incidentDetails.getM_message());
+        txtEvaNumber.setText(m_incidentDetails.getM_evaNumber());
+        txtFireReportNumber.setText(m_incidentDetails.getM_fireReport());
+        txtInvolvedName.setText(m_incidentDetails.getM_involvedName());
+        txtInvolvedAddress.setText(m_incidentDetails.getM_involvedAddress());
+        txtRemarks.setText(m_incidentDetails.getM_remark());
+        cmbAlarmType.setSelectedItem(m_incidentDetails.getM_alarm());
+        if (m_incidentDetails.getM_alarm() == null) {
+            cmbAlarmType.setSelectedIndex(0);
         }
+        txtDetectorNumber.setText(m_incidentDetails.getM_detectorNumber());
+        txtGroupNumber.setText(m_incidentDetails.getM_groupNumber());
     }
 
     /**
@@ -222,21 +215,21 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * @return BEIncidentDetails
      */
     private BEIncidentDetails getMyDetails() {
-        String leader = txtIncidentLeader.getText();
-        String evaNr = txtEvaNumber.getText();
-        String fireNr = txtFireReportNumber.getText();
-        String message = txtMessage.getText();
-        String involvedName = txtInvolvedName.getText();
-        String involvedAddress = txtInvolvedAddress.getText();
-        String remarks = txtRemarks.getText();
+        m_incidentDetails.setM_incidentLeader(txtIncidentLeader.getText());
+        m_incidentDetails.setM_evaNumber(txtEvaNumber.getText());
+        m_incidentDetails.setM_fireReport(txtFireReportNumber.getText());
+        m_incidentDetails.setM_message(txtMessage.getText());
+        m_incidentDetails.setM_involvedName(txtInvolvedName.getText());
+        m_incidentDetails.setM_involvedAddress(txtInvolvedAddress.getText());
+        m_incidentDetails.setM_remark(txtRemarks.getText());
+        m_incidentDetails.setM_detectorNumber(txtDetectorNumber.getText());
+        m_incidentDetails.setM_groupNumber(txtGroupNumber.getText());
         BEAlarm alarm = null;
         if (cmbAlarmType.getSelectedIndex() != 0) {
             alarm = (BEAlarm) cmbAlarmType.getSelectedItem();
         }
-        String detectorNr = txtDetectorNumber.getText();
-        String groupNr = txtGroupNumber.getText();
-        BEIncidentDetails bedetails = new BEIncidentDetails(leader, evaNr, fireNr, message, m_incident, involvedName, involvedAddress, remarks, alarm, detectorNr, groupNr);
-        return bedetails;
+        m_incidentDetails.setM_alarm(alarm);
+        return m_incidentDetails;
     }
 
     /**

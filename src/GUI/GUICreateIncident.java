@@ -3,7 +3,6 @@ package GUI;
 import BE.BEIncident;
 import BE.BEIncidentType;
 import BLL.BLLCreate;
-import BLL.BLLFireman;
 import BLL.BLLRead;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -20,7 +19,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
      * Creates new form GUICreateIncident
      */
     private GUICreateIncident() {
-        this.setTitle("set title");
+        this.setTitle(MessageDialog.getInstance().createIncidentTitle());
         initComponents();
         initialSettings();
         addColors();
@@ -110,6 +109,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
         if(isInformationFilled()){
             BEIncident tmpIncident = getMyInformation();
             if(BLLCreate.getInstance().createIncident(tmpIncident)){
+                BLLCreate.getInstance().createInitialIncidentDetails(tmpIncident);
                 GUIFireman.getInstance().addToIncidentCombo(tmpIncident);
                 onClickCancel();
             }

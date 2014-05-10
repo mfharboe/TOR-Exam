@@ -3,7 +3,6 @@ package GUI;
 import BE.BEError;
 import BE.BEVehicle;
 import BLL.BLLError;
-import BLL.BLLFireman;
 import BLL.BLLRead;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
