@@ -4,7 +4,6 @@ import BE.BEError;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BEIncidentType;
-import BE.BEIncidentVehicle;
 import BE.BERoleTime;
 import BE.BEUsage;
 import java.sql.Connection;
@@ -81,24 +80,6 @@ public class DALCreate {
         }
         ps.setInt(6, roletime.getM_hours());
         ps.executeUpdate();
-    }
-
-    /**
-     * Creates a new IncidentVehicle row in the DB
-     *
-     * @param incidentVehicle
-     * @throws SQLException
-     */
-    public void createIncidentVehicle(BEIncidentVehicle incidentVehicle) throws SQLException {
-        String sql = " insert into [Incident/Vehicle] values (?,?,?,?,?)";
-        PreparedStatement ps = m_connection.prepareStatement(sql);
-        ps.setInt(1, incidentVehicle.getM_incident().getM_id());
-        ps.setInt(2, incidentVehicle.getM_vehicle().getM_odinNumber());
-        ps.setInt(3, 1);
-        ps.setInt(4, incidentVehicle.getM_amountCrew());
-        ps.setBoolean(5, incidentVehicle.isM_isDiverged());
-        ps.executeUpdate();
-
     }
 
     /**

@@ -1,15 +1,14 @@
 package DAL;
 
 import BE.BEAlarm;
-import BE.BEEmergency;
 import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BEIncidentType;
-import BE.BEIncidentVehicle;
 import BE.BEMaterial;
 import BE.BERole;
 import BE.BERoleTime;
+import BE.BESalary;
 import BE.BEUsage;
 import BE.BEVehicle;
 import BE.BEZipcode;
@@ -28,6 +27,7 @@ public class DALRead {
 
     ArrayList<BEIncidentType> resIncidentType;
     ArrayList<BEAlarm> resAlarms;
+    ArrayList<BESalary> resSalary;
 
     private DALRead() {
         m_connection = DB_Connection.getInstance().getConnection();
@@ -265,7 +265,12 @@ public class DALRead {
             }
 
             int hours = result.getInt("hours");
-            BERoleTime be = new BERoleTime(refIncident, refFireman, isOnStation, refRole, refVehicle, hours);
+            BERoleTime be = new BERoleTime(refIncident,
+                    refFireman,
+                    isOnStation,
+                    refRole,
+                    refVehicle,
+                    hours);
             res.add(be);
         }
         return res;
@@ -326,74 +331,6 @@ public class DALRead {
             String description = result.getString("description");
             BEMaterial be = new BEMaterial(id, description);
             res.add(be);
-        }
-        return res;
-
-    }
-
-    /**
-     * Creates an ArrayList of Emergencies
-     *
-     * @return ArrayList of Emergencies
-     * @throws SQLException
-     */
-    public ArrayList<BEEmergency> readEmergencies() throws SQLException {
-        ArrayList<BEEmergency> res = new ArrayList<>();
-        Statement stm = m_connection.createStatement();
-        stm.execute("select * from Emergency");
-        ResultSet result = stm.getResultSet();
-        while (result.next()) {
-            int id = result.getInt("id");
-            String description = result.getString("emergencyDescription");
-
-            BEEmergency be = new BEEmergency(id, description);
-            res.add(be);
-        }
-        return res;
-    }
-
-    /**
-     * Creates an ArrayList of IncidentVehicle
-     *
-     * @return ArrayList of IncidentVehicle
-     * @throws SQLException
-     */
-    public ArrayList<BEIncidentVehicle> readIncidentVehicle() throws SQLException {
-        ArrayList<BEIncidentVehicle> res = new ArrayList<>();
-        Statement stm = m_connection.createStatement();
-        stm.execute("Select [Incident/Vehicle].incidentId, [Incident/Vehicle].odinNumber,"
-                + " [Incident/Vehicle].emergencyId, [Incident/Vehicle].amountCrew, "
-                + "[Incident/Vehicle].isDiverged from [Incident/Vehicle] "
-                + "inner join Incident on incidentId = incident.id where incident.isDone = 0");
-        ResultSet result = stm.getResultSet();
-        while (result.next()) {
-            int incidentId = result.getInt("incidentId");
-            BEIncident refIncident = null;
-            for (BEIncident be : readIncidents()) {
-                if (be.getM_id() == incidentId) {
-                    refIncident = be;
-                }
-            }
-            int odinNumber = result.getInt("odinNumber");
-            BEVehicle refVehicle = null;
-            for (BEVehicle be : readVehicles()) {
-                if (be.getM_odinNumber() == odinNumber) {
-                    refVehicle = be;
-                }
-            }
-            int emegencyId = result.getInt("emergencyId");
-            BEEmergency refEEmergency = null;
-            for (BEEmergency be : readEmergencies()) {
-                if (be.getM_id() == emegencyId) {
-                    refEEmergency = be;
-                }
-            }
-            int amountCrew = result.getInt("amountCrew");
-            boolean isDiverged = result.getBoolean("isDiverged");
-
-            BEIncidentVehicle be = new BEIncidentVehicle(refIncident, refVehicle, refEEmergency, amountCrew, isDiverged);
-            res.add(be);
-
         }
         return res;
 
@@ -461,12 +398,24 @@ public class DALRead {
                     refAlarm,
                     detectorNumber,
                     groupNumber);
-
             res.add(be);
         }
-
         return res;
-
     }
 
+    public ArrayList<BESalary> readSalary() throws SQLException {
+        if (resSalary == null) {
+            resSalary = new ArrayList<>();
+            Statement stm = m_connection.createStatement();
+            stm.execute("Select * From Salary");
+            ResultSet result = stm.getResultSet();
+            while (result.next()) {
+                int id = result.getInt("id");
+                String description = result.getString("description");
+                BESalary be = new BESalary(id, description);
+                resSalary.add(be);
+            }
+        }
+        return resSalary;
+    }
 }

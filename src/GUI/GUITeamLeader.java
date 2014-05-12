@@ -31,9 +31,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
      * Creates new form GUITeamLeader.
      */
     private GUITeamLeader() {
+        initComponents();
         this.setTitle(MessageDialog.getInstance().teamLeaderTitle());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        initComponents();
         initialSettings();
     }
 
@@ -72,7 +72,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlUsage.setBackground(Color.WHITE);
         pnlInjured.setBackground(Color.WHITE);
         pnlAlarm.setBackground(Color.WHITE);
-        jPanel5.setBackground(Color.WHITE);
+        pnlABAAlarm.setBackground(Color.WHITE);
         pnlRemark.setBackground(Color.WHITE);
         pnlTeamLeader.setBackground(Color.WHITE);
         cmbAlarmType.setBackground(Color.WHITE);
@@ -119,22 +119,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         for (BEMaterial bematerial : BLLRead.getInstance().readMaterials()) {
             cmbMaterial.addItem(bematerial);
         }
-    }
-
-    /**
-     * Sets all IncidentDetail fields to empty.
-     */
-    private void clearIncidentDetails() {
-        txtIncidentLeader.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtMessage.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtEvaNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtFireReportNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtInvolvedName.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtInvolvedAddress.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtRemarks.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtDetectorNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        txtGroupNumber.setText(MessageDialog.getInstance().EMPTY_TEXT());
-        cmbAlarmType.setSelectedIndex(0);
     }
 
     /**
@@ -195,7 +179,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
     /**
      * Checks if all Usage fields are filled
      *
-     * @return boolean
+     * @return true / false if usage is filled
      */
     private boolean isUsageFilled() {
         if (cmbMaterial.getSelectedIndex() == 0) {
@@ -292,33 +276,33 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlUsage = new javax.swing.JPanel();
         cmbMaterial = new javax.swing.JComboBox();
         txtAmountMaterial = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblUsageAmountDesc = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsage = new javax.swing.JTable();
         btnAddMateriel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         pnlInjured = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lblInjuredName = new javax.swing.JLabel();
+        lblInjuredAddress = new javax.swing.JLabel();
         txtInvolvedName = new javax.swing.JTextField();
         txtInvolvedAddress = new javax.swing.JTextField();
         pnlAlarm = new javax.swing.JPanel();
         cmbAlarmType = new javax.swing.JComboBox();
-        jPanel5 = new javax.swing.JPanel();
+        pnlABAAlarm = new javax.swing.JPanel();
         txtGroupNumber = new javax.swing.JTextField();
         txtDetectorNumber = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblDetector = new javax.swing.JLabel();
+        lblGroupNumber = new javax.swing.JLabel();
         pnlRemark = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtRemarks = new javax.swing.JTextArea();
         pnlTeamLeader = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblEvaNumber = new javax.swing.JLabel();
         txtEvaNumber = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblIncidentLeader = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
         txtIncidentLeader = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        lblFireReportNumber = new javax.swing.JLabel();
         txtFireReportNumber = new javax.swing.JTextField();
         txtMessage = new javax.swing.JTextField();
 
@@ -337,10 +321,10 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlUsage.add(txtAmountMaterial);
         txtAmountMaterial.setBounds(20, 80, 140, 40);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel3.setText("liter/stk/kg");
-        pnlUsage.add(jLabel3);
-        jLabel3.setBounds(180, 90, 100, 20);
+        lblUsageAmountDesc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblUsageAmountDesc.setText("liter/stk/kg");
+        pnlUsage.add(lblUsageAmountDesc);
+        lblUsageAmountDesc.setBounds(180, 90, 100, 20);
 
         tblUsage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblUsage.setModel(new javax.swing.table.DefaultTableModel(
@@ -370,15 +354,15 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlInjured.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Skadeslidte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlInjured.setLayout(null);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel8.setText("Navn");
-        pnlInjured.add(jLabel8);
-        jLabel8.setBounds(10, 40, 120, 19);
+        lblInjuredName.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblInjuredName.setText("Navn");
+        pnlInjured.add(lblInjuredName);
+        lblInjuredName.setBounds(10, 40, 120, 19);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel9.setText("Adresse");
-        pnlInjured.add(jLabel9);
-        jLabel9.setBounds(10, 70, 120, 22);
+        lblInjuredAddress.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblInjuredAddress.setText("Adresse");
+        pnlInjured.add(lblInjuredAddress);
+        lblInjuredAddress.setBounds(10, 70, 120, 22);
 
         txtInvolvedName.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         pnlInjured.add(txtInvolvedName);
@@ -395,29 +379,29 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlAlarm.add(cmbAlarmType);
         cmbAlarmType.setBounds(20, 30, 300, 40);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ved ABA Alarm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 15))); // NOI18N
-        jPanel5.setLayout(null);
+        pnlABAAlarm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ved ABA Alarm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 15))); // NOI18N
+        pnlABAAlarm.setLayout(null);
 
         txtGroupNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel5.add(txtGroupNumber);
+        pnlABAAlarm.add(txtGroupNumber);
         txtGroupNumber.setBounds(100, 60, 190, 30);
 
         txtDetectorNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jPanel5.add(txtDetectorNumber);
+        pnlABAAlarm.add(txtDetectorNumber);
         txtDetectorNumber.setBounds(100, 30, 190, 30);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel2.setText("Detektor nr.");
-        jPanel5.add(jLabel2);
-        jLabel2.setBounds(10, 40, 90, 19);
+        lblDetector.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblDetector.setText("Detektor nr.");
+        pnlABAAlarm.add(lblDetector);
+        lblDetector.setBounds(10, 40, 90, 19);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel4.setText("Gruppe nr.");
-        jPanel5.add(jLabel4);
-        jLabel4.setBounds(10, 70, 70, 19);
+        lblGroupNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblGroupNumber.setText("Gruppe nr.");
+        pnlABAAlarm.add(lblGroupNumber);
+        lblGroupNumber.setBounds(10, 70, 70, 19);
 
-        pnlAlarm.add(jPanel5);
-        jPanel5.setBounds(20, 80, 300, 110);
+        pnlAlarm.add(pnlABAAlarm);
+        pnlABAAlarm.setBounds(20, 80, 300, 110);
 
         pnlRemark.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bemærkninger", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlRemark.setLayout(null);
@@ -433,33 +417,33 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlTeamLeader.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Holdleder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlTeamLeader.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel1.setText("Evarapport nr.");
-        pnlTeamLeader.add(jLabel1);
-        jLabel1.setBounds(360, 40, 94, 19);
+        lblEvaNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblEvaNumber.setText("Evarapport nr.");
+        pnlTeamLeader.add(lblEvaNumber);
+        lblEvaNumber.setBounds(360, 40, 94, 19);
 
         txtEvaNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         pnlTeamLeader.add(txtEvaNumber);
         txtEvaNumber.setBounds(500, 30, 130, 30);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel6.setText("Indsatsleder");
-        pnlTeamLeader.add(jLabel6);
-        jLabel6.setBounds(10, 70, 120, 19);
+        lblIncidentLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblIncidentLeader.setText("Indsatsleder");
+        pnlTeamLeader.add(lblIncidentLeader);
+        lblIncidentLeader.setBounds(10, 70, 120, 19);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel7.setText("Melding lød");
-        pnlTeamLeader.add(jLabel7);
-        jLabel7.setBounds(10, 40, 120, 22);
+        lblMessage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblMessage.setText("Melding lød");
+        pnlTeamLeader.add(lblMessage);
+        lblMessage.setBounds(10, 40, 120, 22);
 
         txtIncidentLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         pnlTeamLeader.add(txtIncidentLeader);
         txtIncidentLeader.setBounds(120, 60, 200, 30);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel5.setText("Brandrapport nr.");
-        pnlTeamLeader.add(jLabel5);
-        jLabel5.setBounds(360, 70, 150, 19);
+        lblFireReportNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        lblFireReportNumber.setText("Brandrapport nr.");
+        pnlTeamLeader.add(lblFireReportNumber);
+        lblFireReportNumber.setBounds(360, 70, 150, 19);
 
         txtFireReportNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         pnlTeamLeader.add(txtFireReportNumber);
@@ -515,18 +499,18 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbAlarmType;
     private javax.swing.JComboBox cmbMaterial;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblDetector;
+    private javax.swing.JLabel lblEvaNumber;
+    private javax.swing.JLabel lblFireReportNumber;
+    private javax.swing.JLabel lblGroupNumber;
+    private javax.swing.JLabel lblIncidentLeader;
+    private javax.swing.JLabel lblInjuredAddress;
+    private javax.swing.JLabel lblInjuredName;
+    private javax.swing.JLabel lblMessage;
+    private javax.swing.JLabel lblUsageAmountDesc;
+    private javax.swing.JPanel pnlABAAlarm;
     private javax.swing.JPanel pnlAlarm;
     private javax.swing.JPanel pnlInjured;
     private javax.swing.JPanel pnlRemark;

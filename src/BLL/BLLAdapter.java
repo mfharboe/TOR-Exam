@@ -1,24 +1,29 @@
 package BLL;
 
+import BE.BEAlarm;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BERoleTime;
+import BE.BESalary;
 import BE.BEUsage;
 import java.util.ArrayList;
 
 public class BLLAdapter {
 
     private static BLLAdapter m_instance;
-    
-    private BLLAdapter(){}
-    
-    public static BLLAdapter getInstance(){
-        if(m_instance == null)
+
+    private BLLAdapter() {
+
+    }
+
+    public static BLLAdapter getInstance() {
+        if (m_instance == null) {
             m_instance = new BLLAdapter();
+        }
         return m_instance;
     }
-    
-     /**
+
+    /**
      * Sets the RoleTime for an Incident
      *
      * @param incident
@@ -34,8 +39,8 @@ public class BLLAdapter {
         }
         return beroletime;
     }
-    
-      /**
+
+    /**
      * Checks and adds Usage for a given Incident
      *
      * @param incident
@@ -50,8 +55,7 @@ public class BLLAdapter {
         }
         return beusage;
     }
-    
-    
+
     /**
      * Checks for IncidentDetails for a given Incident
      *
@@ -66,4 +70,6 @@ public class BLLAdapter {
         }
         return null;
     }
+
+ 
 }

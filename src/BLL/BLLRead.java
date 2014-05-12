@@ -1,21 +1,22 @@
 package BLL;
 
 import BE.BEAlarm;
-import BE.BEEmergency;
 import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BEIncidentType;
-import BE.BEIncidentVehicle;
 import BE.BEMaterial;
 import BE.BERole;
 import BE.BERoleTime;
+import BE.BESalary;
 import BE.BEUsage;
 import BE.BEVehicle;
 import DAL.DALRead;
 import GUI.MessageDialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BLLRead {
 
@@ -29,11 +30,10 @@ public class BLLRead {
     ArrayList<BERoleTime> roletimes;
     ArrayList<BEUsage> usages;
     ArrayList<BEMaterial> materials;
-    ArrayList<BEIncidentVehicle> incidentVehicles;
-    ArrayList<BEEmergency> emergencies;
     ArrayList<BEAlarm> alarms;
     ArrayList<BEIncidentDetails> incidentDetails;
-
+    ArrayList<BESalary> salary;
+    
     private BLLRead() {
     }
 
@@ -191,23 +191,6 @@ public class BLLRead {
 
     /**
      *
-     * @return ArrayList of Emergencies
-     */
-    public ArrayList<BEEmergency> readEmergencies() {
-        if (emergencies == null) {
-            try {
-                emergencies = DALRead.getInstance().readEmergencies();
-            } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-                return null;
-            }
-        }
-        return emergencies;
-    }
-
-    /**
-     *
      * @return ArrayList of Alarms
      */
     public ArrayList<BEAlarm> readAlarms() {
@@ -243,5 +226,15 @@ public class BLLRead {
     
     public void addToIncidentDetails(BEIncidentDetails incidentdetail){
         incidentDetails.add(incidentdetail);
+    }
+    
+    public ArrayList<BESalary> readSalary(){
+        if(salary == null)
+            try {
+                salary = DALRead.getInstance().readSalary();
+        } catch (SQLException ex) {
+            Logger.getLogger(BLLRead.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return salary;
     }
 }

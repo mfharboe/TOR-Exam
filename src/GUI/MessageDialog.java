@@ -180,11 +180,26 @@ public class MessageDialog {
         JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats");
     }
 
+    public void dialogChooseClothesOrVehicle(){
+        JOptionPane.showMessageDialog(null, "Du skal enten vælge et køretøj eller sende en branddragt til vask");
+    }
     /**
      * Dialog if an action is completed
      */
     public void dialogInformationSaved() {
         JOptionPane.showMessageDialog(null, "Oplysningerne blev gemt");
+    }
+    
+    /**
+     * 
+     * @return the selected option 
+     */
+    public boolean dialogChooseAlarm(){
+        int option = JOptionPane.showConfirmDialog(null, "Kørte du med sirener?");
+        if(option == JOptionPane.YES_OPTION)
+            return true;
+        else 
+            return false;
     }
 
     /**

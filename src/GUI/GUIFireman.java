@@ -49,9 +49,9 @@ public class GUIFireman extends javax.swing.JFrame {
      * Creates new form GUIFireman.
      */
     private GUIFireman() {
+        initComponents();
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        initComponents();
         initialSettings();
 
     }
@@ -351,7 +351,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Starts the ErrorReport GUI.
      */
     private void onClickErrorReport() {
-        JFrame guierror = new GUIError();
+        JFrame guierror = GUIError.getInstance();
         guierror.setVisible(true);
     }
 
@@ -394,6 +394,7 @@ public class GUIFireman extends javax.swing.JFrame {
                 for(BEFireman selectedMen : tmpFiremen){
                     if(!selectedMen.isM_isTeamLeader())
                         isHL = false;
+                   
                 }
                 setHLFunctionEnabled(isHL);
             }

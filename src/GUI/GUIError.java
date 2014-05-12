@@ -2,19 +2,31 @@ package GUI;
 
 import BE.BEError;
 import BE.BEVehicle;
+import BLL.BLLCreate;
 import BLL.BLLError;
 import BLL.BLLRead;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JTextField;
 
 public class GUIError extends javax.swing.JFrame {
 
-    public GUIError() {
+    private static GUIError m_instance;
+    
+    private GUIError() {
+        initComponents();
         this.setTitle(MessageDialog.getInstance().errorTitle());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        initComponents();
         initialSettings();
+    }
+    
+    public static GUIError getInstance(){
+        if(m_instance == null)
+            m_instance = new GUIError();
+        return m_instance;
     }
 
     /**
@@ -24,6 +36,7 @@ public class GUIError extends javax.swing.JFrame {
         addListeners();
         fillCmbVehicle();
         addColors();
+        clearGUI();
     }
 
     /**
@@ -31,8 +44,10 @@ public class GUIError extends javax.swing.JFrame {
      */
     private void addListeners() {
         btnAction btn = new btnAction();
+        wndAction wnd = new wndAction();
         btnCancel.addActionListener(btn);
         btnOK.addActionListener(btn);
+        this.addWindowListener(wnd);
     }
 
     /**
@@ -64,33 +79,64 @@ public class GUIError extends javax.swing.JFrame {
 
     }
 
+    private void clearGUI() {
+        txtCause.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtErrorDescription.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        txtFilledBy.setText(MessageDialog.getInstance().EMPTY_TEXT());
+        ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText(MessageDialog.getInstance().txtDate());
+        chkFireSuit.setSelected(false);
+        chkOutOfOrder.setSelected(false);
+        chkUrgent.setSelected(false);
+        cmbVehicle.setSelectedIndex(0);
+
+    }
+
+    private boolean isInformationFilled() {
+        if (txtFilledBy.getText().isEmpty()) {
+            MessageDialog.getInstance().dialogFillAllInformation();
+            return false;
+        }
+        if (cmbVehicle.getSelectedIndex() == 0 || !chkFireSuit.isSelected()) {
+            MessageDialog.getInstance().dialogChooseClothesOrVehicle();
+            return false;
+        }
+        if (((JTextField) dateChooser.getDateEditor().getUiComponent()).getText().equals(MessageDialog.getInstance().txtDate())) {
+            MessageDialog.getInstance().dialogFillAllInformation();
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Invokes this method when the OK button is pressed.
      */
     private void onClickOk() {
-        BEVehicle vehicleOdinNumner;
-        if (cmbVehicle.getSelectedIndex() != 0) {
-            vehicleOdinNumner = (BEVehicle) cmbVehicle.getSelectedItem();
-        } else {
-            vehicleOdinNumner = null;
-        }
-        String filledBy = txtFilledBy.getText();
-        java.util.Date utilDate = dateChooser.getDate();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        Boolean outOfOrder = chkOutOfOrder.isSelected();
-        boolean urgent = chkUrgent.isSelected();
-        String description = txtErrorDescription.getText();
-        String cause = txtCause.getText();
-        boolean suitWash = chkFireSuit.isSelected();
-        BEError be = new BEError(vehicleOdinNumner, filledBy, sqlDate, outOfOrder, urgent, description, cause, suitWash);
-        BLLError.getInstance().createErrorReport(be);
-        dispose();
+        if (isInformationFilled()) {
+            BEVehicle vehicleOdinNumner;
+            if (cmbVehicle.getSelectedIndex() != 0) {
+                vehicleOdinNumner = (BEVehicle) cmbVehicle.getSelectedItem();
+            } else {
+                vehicleOdinNumner = null;
+            }
+            String filledBy = txtFilledBy.getText();
+            java.util.Date utilDate = dateChooser.getDate();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            Boolean outOfOrder = chkOutOfOrder.isSelected();
+            boolean urgent = chkUrgent.isSelected();
+            String description = txtErrorDescription.getText();
+            String cause = txtCause.getText();
+            boolean suitWash = chkFireSuit.isSelected();
+            BEError be = new BEError(vehicleOdinNumner, filledBy, sqlDate, outOfOrder, urgent, description, cause, suitWash);
+            BLLCreate.getInstance().createErrorReport(be);
+            onClickClose();
+        } 
     }
 
     /**
      * Invokes this method when the Cancel button is pressed.
      */
-    private void onClickCancel() {
+    private void onClickClose() {
+        clearGUI();
         dispose();
     }
 
@@ -105,8 +151,17 @@ public class GUIError extends javax.swing.JFrame {
                 onClickOk();
             }
             if (e.getSource().equals(btnCancel)) {
-                onClickCancel();
+                onClickClose();
+
             }
+        }
+    }
+
+    private class wndAction extends WindowAdapter {
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            onClickClose();
         }
     }
 
@@ -170,7 +225,7 @@ public class GUIError extends javax.swing.JFrame {
         pnlError.add(cmbVehicle);
         cmbVehicle.setBounds(20, 100, 220, 40);
 
-        pnlFilledBy.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Udfyld af", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
+        pnlFilledBy.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Udfyldt af", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 18))); // NOI18N
         pnlFilledBy.setLayout(null);
         pnlFilledBy.add(txtFilledBy);
         txtFilledBy.setBounds(10, 30, 220, 40);
@@ -200,7 +255,7 @@ public class GUIError extends javax.swing.JFrame {
         pnlStatus.add(jLabel2);
         jLabel2.setBounds(20, 50, 87, 23);
         pnlStatus.add(chkOutOfOrder);
-        chkOutOfOrder.setBounds(130, 50, 30, 25);
+        chkOutOfOrder.setBounds(130, 50, 30, 21);
 
         pnlError.add(pnlStatus);
         pnlStatus.setBounds(250, 90, 200, 80);

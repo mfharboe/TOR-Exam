@@ -1,5 +1,6 @@
 package BLL;
 
+import BE.BEError;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BERole;
@@ -9,6 +10,8 @@ import DAL.DALCreate;
 import GUI.MessageDialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BLLCreate {
 
@@ -84,7 +87,7 @@ public class BLLCreate {
                     try {
                         DALCreate.getInstance().createRoleTime(tmpRoleTimes);
                     } catch (SQLException ex) {
-                        //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+                        //Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
                         tmpRoleTimes.setM_role(tmpPrevRole);
                         MessageDialog.getInstance().dialogFunction(); //MÅ IKKE VÆRE HER
                         return;
@@ -129,6 +132,22 @@ public class BLLCreate {
             return;
         }
         BLLRead.getInstance().addToIncidentDetails(details);
+    }
+    
+      /**
+     * Creates an ErrorReport
+     *
+     * @param error
+     */
+    public void createErrorReport(BEError error) {
+        try {
+            DALCreate.getInstance().createErrorReport(error);
+        } catch (SQLException ex) {
+            //Logger.getLogger(BLLError.class.getName()).log(Level.SEVERE, null, ex);
+            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            return;
+        }
+        MessageDialog.getInstance().dialogInformationSaved(); //MÅ IKKE VÆRE HER
     }
 
 }

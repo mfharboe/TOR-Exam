@@ -8,6 +8,7 @@ public class BERoleTime {
     private BERole m_role;
     private BEVehicle m_vehicle;
     private int m_hours;
+    
 
     /**
      * Read and Create RoleTime
@@ -26,7 +27,6 @@ public class BERoleTime {
         m_role = role;
         m_vehicle = vehicle;
         m_hours = hours;
-
     }
 
     /**
@@ -86,7 +86,7 @@ public class BERoleTime {
     }
 
     /**
-     * @return the m_hours
+     * @r eturn the m_hours
      */
     public int getM_hours() {
         return m_hours;
@@ -112,4 +112,6 @@ public class BERoleTime {
     public void setM_isOnStation(boolean m_isOnStation) {
         this.m_isOnStation = m_isOnStation;
     }
+
+  
 }
