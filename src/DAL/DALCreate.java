@@ -66,7 +66,7 @@ public class DALCreate {
      * @throws SQLException
      */
     public void createRoleTime(BERoleTime roletime) throws SQLException {
-        String sql = "insert into [Role/Time] values (?,?,?,?,?,?)";
+        String sql = "insert into [Role/Time] values (?,?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setInt(1, roletime.getM_incident().getM_id());
         ps.setInt(2, roletime.getM_fireman().getM_id());
@@ -79,6 +79,7 @@ public class DALCreate {
             ps.setInt(5, roletime.getM_vehicle().getM_odinNumber());
         }
         ps.setInt(6, roletime.getM_hours());
+        ps.setInt(7, roletime.getM_Salary().getM_salaryCode());
         ps.executeUpdate();
     }
 

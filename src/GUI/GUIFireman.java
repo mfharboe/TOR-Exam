@@ -300,7 +300,7 @@ public class GUIFireman extends javax.swing.JFrame {
         }
         int time = Integer.parseInt(txtManHours.getText());
         for(BEFireman selectedMen : fireman){
-            BERoleTime roletime = new BERoleTime(incident, selectedMen, isOnStaion, null, vehicle, time);
+            BERoleTime roletime = new BERoleTime(incident, selectedMen, isOnStaion, null, vehicle, time, null);
             tmpRoleTimes.add(roletime);
         }
         return tmpRoleTimes;

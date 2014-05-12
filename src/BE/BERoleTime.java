@@ -8,6 +8,7 @@ public class BERoleTime {
     private BERole m_role;
     private BEVehicle m_vehicle;
     private int m_hours;
+    private BESalary m_Salary;
     
 
     /**
@@ -20,13 +21,14 @@ public class BERoleTime {
      * @param vehicle
      * @param hours
      */
-    public BERoleTime(BEIncident incident, BEFireman fireman, boolean isOnStation, BERole role, BEVehicle vehicle, int hours) {
+    public BERoleTime(BEIncident incident, BEFireman fireman, boolean isOnStation, BERole role, BEVehicle vehicle, int hours, BESalary salary) {
         m_fireman = fireman;
         m_incident = incident;
         m_isOnStation = isOnStation;
         m_role = role;
         m_vehicle = vehicle;
         m_hours = hours;
+        m_Salary = salary;
     }
 
     /**
@@ -111,6 +113,20 @@ public class BERoleTime {
      */
     public void setM_isOnStation(boolean m_isOnStation) {
         this.m_isOnStation = m_isOnStation;
+    }
+
+    /**
+     * @return the m_Salary
+     */
+    public BESalary getM_Salary() {
+        return m_Salary;
+    }
+
+    /**
+     * @param m_Salary the m_Salary to set
+     */
+    public void setM_Salary(BESalary m_Salary) {
+        this.m_Salary = m_Salary;
     }
 
   

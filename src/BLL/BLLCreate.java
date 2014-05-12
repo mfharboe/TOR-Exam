@@ -50,33 +50,6 @@ public class BLLCreate {
      * @param roleTime
      * @param roleNumber
      */
-    public void createRoleOnIncident(BERoleTime roleTime, int roleNumber) {
-        BERole tmpPrevRole = null;
-
-        for (BERole role : BLLRead.getInstance().readAllRoles()) {
-            tmpPrevRole = roleTime.getM_role();
-            if (role.getM_id() == roleNumber) {
-                roleTime.setM_role(role);
-                try {
-                    DALCreate.getInstance().createRoleTime(roleTime);
-                } catch (SQLException ex) {
-                    //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                    roleTime.setM_role(tmpPrevRole);
-                    MessageDialog.getInstance().dialogFunction(); //MÅ IKKE VÆRE HER
-                    return;
-                }
-                BLLRead.getInstance().addToRoleTime(roleTime);
-                return;
-            }
-        }
-    }
-
-    /**
-     * Creates the RoleTime in the DB with the given role
-     *
-     * @param roleTime
-     * @param roleNumber
-     */
     public void createRoleOnIncident(ArrayList<BERoleTime> roleTime, int roleNumber) {
         BERole tmpPrevRole = null;
         for (BERoleTime tmpRoleTimes : roleTime) {
@@ -84,6 +57,7 @@ public class BLLCreate {
                 tmpPrevRole = tmpRoleTimes.getM_role();
                 if (role.getM_id() == roleNumber) {
                     tmpRoleTimes.setM_role(role);
+                    tmpRoleTimes.setM_Salary(BLLAdapter.getInstance().roleTimeToSalary(tmpRoleTimes));
                     try {
                         DALCreate.getInstance().createRoleTime(tmpRoleTimes);
                     } catch (SQLException ex) {

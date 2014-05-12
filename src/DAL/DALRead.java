@@ -265,12 +265,21 @@ public class DALRead {
             }
 
             int hours = result.getInt("hours");
+            
+            int salaryId = result.getInt("salaryId");
+            BESalary refSalary = null;
+            for(BESalary be : readSalary()){
+                if(be.getM_salaryCode() == salaryId){
+                    refSalary = be;
+                }
+            }
             BERoleTime be = new BERoleTime(refIncident,
                     refFireman,
                     isOnStation,
                     refRole,
                     refVehicle,
-                    hours);
+                    hours,
+                    refSalary);
             res.add(be);
         }
         return res;
