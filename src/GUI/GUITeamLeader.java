@@ -188,7 +188,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         }  
         int[] rows = tblUsage.getSelectedRows();
         for (int i = 0; i < rows.length; i++) {
-            System.out.println(rows[i]);
             BEUsage usage = usageModel.getUsageByRow(rows[i]);
             BLLDelete.getInstance().deleteMaterialFromUsage(usage);
         }

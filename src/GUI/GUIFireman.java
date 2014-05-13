@@ -7,6 +7,7 @@ import BE.BERoleTime;
 import BE.BEVehicle;
 import BLL.BLLAdapter;
 import BLL.BLLCreate;
+import BLL.BLLDelete;
 import BLL.BLLRead;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.Color;
@@ -34,8 +35,6 @@ public class GUIFireman extends javax.swing.JFrame {
     TableRowSorter<TableModelRoleTime> roleTimeSorter;
     private TableModelRoleTime roleTimeModel;
     private final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
-    
-    private BEIncidentDetails m_incidentDetails;
     
     ImageIcon image;
     ImageIcon imageLogo;
@@ -77,6 +76,8 @@ public class GUIFireman extends javax.swing.JFrame {
         addListeners();
         setTable();
         fillBoxes();
+      
+        
     }
 
     /**
@@ -199,8 +200,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private void setMyContributionEnabled(boolean enable) {
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
-        tblRoleTime.setEnabled(enable);
-    }
+        }
 
     /**
      * Enables or disables the BM and CH button
@@ -362,7 +362,16 @@ public class GUIFireman extends javax.swing.JFrame {
     }
     
     private void onClickRemove(){
-    
+        if(tblRoleTime.getSelectedRow() == -1){
+            MessageDialog.getInstance().dialogChooseFireman();
+            return;
+        }
+        int[] rows = tblRoleTime.getSelectedRows();
+        for(int i = 0; i < rows.length; i++){
+            BERoleTime roleTime = roleTimeModel.getRoleTimeByRow(rows[i]);
+            BLLDelete.getInstance().deleteFiremanFromRoleTime(roleTime);
+        }
+        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**

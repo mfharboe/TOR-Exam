@@ -147,10 +147,20 @@ public class BLLRead {
         return roletimes;
     }
 
+    /**
+     * Adds the given roleTime to the arrayList
+     * @param roleTime 
+     */
     public void addToRoleTime(BERoleTime roleTime) {
         roletimes.add(roleTime);
     }
-
+    /**
+     * Removes the given roleTime from the arrayList
+     * @param roleTime 
+     */
+    public void removeFromRoleTime(BERoleTime roleTime){
+        roletimes.remove(roleTime);
+    }
     /**
      *
      * @return ArrayList of Usage
