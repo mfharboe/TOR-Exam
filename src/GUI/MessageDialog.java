@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Component;
 import javax.swing.JOptionPane;
 
 public class MessageDialog {
@@ -57,96 +58,102 @@ public class MessageDialog {
     }
 
     /**
-     * @return text for the incidentType comboboxes 
+     * @return text for the incidentType comboboxes
      */
     public String cmbIncidentType() {
         return "Vælg type..";
     }
-    
+
     /**
-     * @return text for the vehicle comboboxes 
+     * @return text for the vehicle comboboxes
      */
     public String cmbVehicle() {
         return "Vælg et køretøj..";
     }
 
     /**
-     * @return text for the materials comboboxes 
+     * @return text for the materials comboboxes
      */
     public String cmbMaterials() {
         return "Vælg materiel..";
     }
 
     /**
-     * @return text for the report comboboxes 
+     * @return text for the report comboboxes
      */
     public String cmbReport() {
         return "Vælg beretning..";
     }
 
     /**
-     * @return text for the hours textFields 
+     * @return text for the hours textFields
      */
     public String txtHours() {
         return "Skriv timer..";
     }
 
     /**
-     * @return text for the incidentName textFields 
+     * @return text for the incidentName textFields
      */
     public String txtIncidentName() {
         return "Skriv et navnet på indsatsen..";
     }
 
     /**
-     * @return text for the date textFields 
+     * @return text for the date textFields
      */
     public String txtDate() {
         return "YYYY-MM-DD";
     }
 
     /**
-     * @return text for the time textFields 
+     * @return text for the time textFields
      */
     public String txtIncidentTime() {
         return "TT:MM";
     }
 
     /**
-     * @return text for the usage textFields 
+     * @return text for the usage textFields
      */
     public String txtUsage() {
         return "Forbrug..";
     }
+
     /**
-     * @return text for the create/update buttons 
+     * @return text for the create/update buttons
      */
-    public String txtCreate(){
+    public String txtCreate() {
         return "Opret";
     }
-    
+
     /**
-     * @return text for the create/update buttons 
+     * @return text for the create/update buttons
      */
-    public String txtUpdate(){
+    public String txtUpdate() {
         return "Opdatér";
     }
+
     /**
-     * @return text for the HL title 
+     * @return text for the HL title
      */
     public String txtHL() {
         return "(HL) ";
     }
 
     /**
-     * @return text for the BM title 
+     * @return text for the BM title
      */
     public String txtBM() {
         return "(BM) ";
     }
 
+    public String txtIntChecker() {
+        return "[0-9]+";
+    }
+
     /**
-     * @return an empty String 
+     * @return an empty String
      */
     public String EMPTY_TEXT() {
         return "";
@@ -174,32 +181,36 @@ public class MessageDialog {
     }
 
     /**
-     * Dialog if the fireman already has a function as either BM, HL or CH 
+     * Dialog if the fireman already has a function as either BM, HL or CH
      */
     public void dialogFunction() {
         JOptionPane.showMessageDialog(null, "Du har allerede en funktion (BM/HL/CH) på denne indsats");
     }
 
-    public void dialogChooseClothesOrVehicle(){
+    public void dialogChooseClothesOrVehicle() {
         JOptionPane.showMessageDialog(null, "Du skal enten vælge et køretøj eller sende en branddragt til vask");
     }
+
     /**
      * Dialog if an action is completed
      */
     public void dialogInformationSaved() {
         JOptionPane.showMessageDialog(null, "Oplysningerne blev gemt");
     }
-    
+
     /**
-     * 
-     * @return the selected option 
+     * Dialog if the user input is not an integer
      */
-    public boolean dialogChooseAlarm(){
-        int option = JOptionPane.showConfirmDialog(null, "Kørte du med sirener?");
-        if(option == JOptionPane.YES_OPTION)
-            return true;
-        else 
-            return false;
+    public void dialogIntegerError() {
+        JOptionPane.showMessageDialog(null, "Du skal skrive tal (0-9) i dette felt");
+    }
+
+    public void dialogChooseMaterial() {
+        JOptionPane.showMessageDialog(null, "Du skal skrive vælge et materiale at fjerne");
+    }
+    
+    public void dialogChooseFireman(){
+        JOptionPane.showMessageDialog(null, "Du skal vælge en brandmand at fjerne");
     }
 
     /**

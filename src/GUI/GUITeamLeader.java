@@ -7,6 +7,7 @@ import BE.BEMaterial;
 import BE.BEUsage;
 import BLL.BLLAdapter;
 import BLL.BLLCreate;
+import BLL.BLLDelete;
 import BLL.BLLRead;
 import BLL.BLLUpdate;
 import GUI.TableModel.TableModelUsage;
@@ -15,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
 
@@ -59,8 +62,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         usageList = new ArrayList<>();
         usageModel = new TableModelUsage(usageList);
         tblUsage.setModel(usageModel);
-        usageSorter = new TableRowSorter<>(usageModel);
-        tblUsage.setRowSorter(usageSorter);
 
     }
 
@@ -85,11 +86,12 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void addListeners() {
         btnAction btn = new btnAction();
         txtFocus txtFc = new txtFocus();
-
-        txtAmountMaterial.addFocusListener(txtFc);
-
+        txtAction txt = new txtAction();
         btnAddMateriel.addActionListener(btn);
         btnSave.addActionListener(btn);
+        btnRemoveMateriel.addActionListener(btn);
+        txtAmountMaterial.addFocusListener(txtFc);
+        txtAmountMaterial.addKeyListener(txt);
     }
 
     /**
@@ -177,6 +179,24 @@ public class GUITeamLeader extends javax.swing.JFrame {
     }
 
     /**
+     * Invoke this method when the removeMaterial button is pressed
+     */
+    private void onClickRemoveMaterial() {
+        if (tblUsage.getSelectedRow() == -1) {
+            MessageDialog.getInstance().dialogChooseMaterial();
+            return;
+        }  
+        int[] rows = tblUsage.getSelectedRows();
+        for (int i = 0; i < rows.length; i++) {
+            System.out.println(rows[i]);
+            BEUsage usage = usageModel.getUsageByRow(rows[i]);
+            BLLDelete.getInstance().deleteMaterialFromUsage(usage);
+        }
+        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
+
+    }
+
+    /**
      * Checks if all Usage fields are filled
      *
      * @return true / false if usage is filled
@@ -225,6 +245,27 @@ public class GUITeamLeader extends javax.swing.JFrame {
     }
 
     /**
+     * Invoke this method when a key
+     */
+    private void onKeyPress() {
+        if (!(txtAmountMaterial.getText().isEmpty() || txtAmountMaterial.getText().equals(MessageDialog.getInstance().txtUsage()))) {
+            if (!checkForIntegers(txtAmountMaterial.getText())) {
+                txtAmountMaterial.setText(MessageDialog.getInstance().EMPTY_TEXT());
+                MessageDialog.getInstance().dialogIntegerError();
+            }
+        }
+    }
+
+    /**
+     * Checks if the txt input contains integers
+     *
+     * @return true if the txtfield contains integers, false if it doesn't
+     */
+    private boolean checkForIntegers(String input) {
+        return input.matches(MessageDialog.getInstance().txtIntChecker());
+    }
+
+    /**
      * Listeners for the buttons.
      */
     private class btnAction implements ActionListener {
@@ -236,6 +277,8 @@ public class GUITeamLeader extends javax.swing.JFrame {
                 onClickAddMaterial();
             } else if (e.getSource().equals(btnSave)) {
                 onClickSaveDetails();
+            } else if (e.getSource().equals(btnRemoveMateriel)) {
+                onClickRemoveMaterial();
             }
 
         }
@@ -264,6 +307,15 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     }
 
+    private class txtAction extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            onKeyPress();
+
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -280,6 +332,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsage = new javax.swing.JTable();
         btnAddMateriel = new javax.swing.JButton();
+        btnRemoveMateriel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         pnlInjured = new javax.swing.JPanel();
         lblInjuredName = new javax.swing.JLabel();
@@ -319,12 +372,12 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtAmountMaterial.setToolTipText("");
         txtAmountMaterial.setAutoscrolls(false);
         pnlUsage.add(txtAmountMaterial);
-        txtAmountMaterial.setBounds(20, 80, 140, 40);
+        txtAmountMaterial.setBounds(20, 80, 90, 40);
 
         lblUsageAmountDesc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblUsageAmountDesc.setText("liter/stk/kg");
         pnlUsage.add(lblUsageAmountDesc);
-        lblUsageAmountDesc.setBounds(180, 90, 100, 20);
+        lblUsageAmountDesc.setBounds(120, 90, 100, 20);
 
         tblUsage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblUsage.setModel(new javax.swing.table.DefaultTableModel(
@@ -341,12 +394,17 @@ public class GUITeamLeader extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblUsage);
 
         pnlUsage.add(jScrollPane1);
-        jScrollPane1.setBounds(360, 30, 580, 150);
+        jScrollPane1.setBounds(370, 30, 570, 140);
 
         btnAddMateriel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnAddMateriel.setText("Tilføj");
         pnlUsage.add(btnAddMateriel);
-        btnAddMateriel.setBounds(230, 140, 90, 40);
+        btnAddMateriel.setBounds(230, 80, 90, 40);
+
+        btnRemoveMateriel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        btnRemoveMateriel.setText("Fjern");
+        pnlUsage.add(btnRemoveMateriel);
+        btnRemoveMateriel.setBounds(230, 130, 90, 40);
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnSave.setText("Gem");
@@ -466,13 +524,12 @@ public class GUITeamLeader extends javax.swing.JFrame {
                         .addComponent(pnlInjured, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
                         .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(470, 470, 470)
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,12 +540,16 @@ public class GUITeamLeader extends javax.swing.JFrame {
                     .addComponent(pnlInjured, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(pnlUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlRemark, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(pnlRemark, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlAlarm, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -496,6 +557,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMateriel;
+    private javax.swing.JButton btnRemoveMateriel;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbAlarmType;
     private javax.swing.JComboBox cmbMaterial;

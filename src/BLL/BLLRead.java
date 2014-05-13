@@ -168,8 +168,20 @@ public class BLLRead {
         return usages;
     }
 
+    /**
+     * Adds a new BEUsage to the arrayList
+     * @param usage 
+     */
     public void addToUsage(BEUsage usage) {
         usages.add(usage);
+    }
+    
+    /**
+     * Removes the given BEUsage from the arrayList
+     * @param usage 
+     */
+    public void removeFromUsage(BEUsage usage){
+        usages.remove(usage);
     }
 
     /**

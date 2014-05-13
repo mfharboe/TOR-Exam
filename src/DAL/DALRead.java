@@ -412,6 +412,11 @@ public class DALRead {
         return res;
     }
 
+    /**
+     * 
+     * @return
+     * @throws SQLException 
+     */
     public ArrayList<BESalary> readSalary() throws SQLException {
         if (resSalary == null) {
             resSalary = new ArrayList<>();

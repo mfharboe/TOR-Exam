@@ -1,6 +1,5 @@
 package BLL;
 
-import BE.BEAlarm;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BERoleTime;

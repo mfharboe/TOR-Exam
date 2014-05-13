@@ -29,7 +29,7 @@ public class RSSThread implements Runnable {
 
     private void printRSS() {
         for (BERSS feed : currentFeed) {
-            System.out.println(feed.getM_id());
+            System.out.println(feed.getM_message() + " " + feed.getM_date());
         }
     }
 

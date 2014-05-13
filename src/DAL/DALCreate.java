@@ -96,6 +96,14 @@ public class DALCreate {
         ps.setInt(2, usage.getM_amount());
         ps.setInt(3, usage.getM_incident().getM_id());
         ps.executeUpdate();
+
+        String sql2 = "Select * from Usage where Usage.id = (Select MAX(id) from Usage);";
+        Statement stm = m_connection.createStatement();
+        stm.execute(sql2);
+        ResultSet result = stm.getResultSet();
+        while (result.next()) {
+            usage.setM_id(result.getInt("id"));
+        }
     }
 
     /**
