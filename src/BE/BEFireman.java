@@ -1,10 +1,12 @@
 package BE;
 
 import GUI.MessageDialog;
+import java.sql.Date;
 
 public class BEFireman {
 
     private int m_id;
+    private Date m_recruited;
     private String m_firstName;
     private String m_lastName;
     private String m_address;
@@ -13,12 +15,12 @@ public class BEFireman {
     private int m_paymentNumber;
     private boolean m_isTeamLeader;
     private String m_photoPath;
-    private String m_cpr;
 
     /**
      * Read Fireman
      *
      * @param id
+     * @param recruted
      * @param firstname
      * @param lastname
      * @param address
@@ -27,12 +29,12 @@ public class BEFireman {
      * @param paymentnumber
      * @param isteamleader
      * @param photopath
-     * @param cpr
      */
-    public BEFireman(int id, String firstname, String lastname, String address, BEZipcode zipcode,
-            int phone, int paymentnumber, boolean isteamleader, String photopath, String cpr) {
+    public BEFireman(int id, Date recruted, String firstname, String lastname, String address, BEZipcode zipcode,
+            int phone, int paymentnumber, boolean isteamleader, String photopath) {
 
         m_id = id;
+        m_recruited = recruted;
         m_firstName = firstname;
         m_lastName = lastname;
         m_address = address;
@@ -41,8 +43,6 @@ public class BEFireman {
         m_paymentNumber = paymentnumber;
         m_isTeamLeader = isteamleader;
         m_photoPath = photopath;
-        m_cpr = cpr;
-
     }
 
     /**
@@ -171,19 +171,7 @@ public class BEFireman {
         this.m_zipCode = m_zipCode;
     }
 
-    /**
-     * @return the m_cpr
-     */
-    public String getM_cpr() {
-        return m_cpr;
-    }
 
-    /**
-     * @param m_cpr the m_cpr to set
-     */
-    public void setM_cpr(String m_cpr) {
-        this.m_cpr = m_cpr;
-    }
 
     @Override
     public String toString() {
@@ -194,6 +182,20 @@ public class BEFireman {
             tmp = MessageDialog.getInstance().txtBM() + tmp;
         }
         return tmp;
+    }
+
+    /**
+     * @return the m_recruited
+     */
+    public Date getM_recruited() {
+        return m_recruited;
+    }
+
+    /**
+     * @param m_recruited the m_recruited to set
+     */
+    public void setM_recruited(Date m_recruited) {
+        this.m_recruited = m_recruited;
     }
 
 }

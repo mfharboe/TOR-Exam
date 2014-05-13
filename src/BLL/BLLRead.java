@@ -37,6 +37,10 @@ public class BLLRead {
     private BLLRead() {
     }
 
+    /**
+     * Creates or returns the current instance of BLLRead
+     * @return m_instance of BLLRead
+     */
     public static BLLRead getInstance() {
         if (m_instance == null) {
             m_instance = new BLLRead();
@@ -45,6 +49,7 @@ public class BLLRead {
     }
 
     /**
+     * Invokes the method in DAL that reads Firemen
      * @return ArrayList of Firemen
      */
     public ArrayList<BEFireman> readAllFiremen() {
@@ -62,6 +67,7 @@ public class BLLRead {
     }
 
     /**
+     * Invokes the method in DAL that reads Vehicles
      * @return ArrayList of Vehicles
      */
     public ArrayList<BEVehicle> readAllVehicles() {
@@ -78,6 +84,7 @@ public class BLLRead {
     }
 
     /**
+     * Invokes the method in DAL that reads IncidentTypes
      * @return ArrayList of IncidentTypes
      */
     public ArrayList<BEIncidentType> readAllIncidentTypes() {
@@ -94,6 +101,7 @@ public class BLLRead {
     }
 
     /**
+     * Invokes the method in DAL that reads Incidents
      * @return ArrayList of Incidents
      */
     public ArrayList<BEIncident> readAllIncidents() {
@@ -109,12 +117,16 @@ public class BLLRead {
         return incidents;
     }
 
+    /**
+     * Adds the given incident to the arrayList
+     * @param incident 
+     */
     public void addToIncident(BEIncident incident) {
         incidents.add(incident);
     }
 
     /**
-     *
+     * Invokes the method in DAL that reads Roles
      * @return ArrayList of Roles
      */
     public ArrayList<BERole> readAllRoles() {
@@ -131,7 +143,7 @@ public class BLLRead {
     }
 
     /**
-     *
+     * Invokes the method in DAL that reads RoleTimes
      * @return ArrayList of RoleTimes
      */
     public ArrayList<BERoleTime> readAllRoleTimes() {
@@ -162,7 +174,7 @@ public class BLLRead {
         roletimes.remove(roleTime);
     }
     /**
-     *
+     * Invokes the method in DAL that reads Usage
      * @return ArrayList of Usage
      */
     public ArrayList<BEUsage> readUsages() {
@@ -195,7 +207,7 @@ public class BLLRead {
     }
 
     /**
-     *
+     * Invokes the method in DAL that reads Materials
      * @return ArrayList of Materials
      */
     public ArrayList<BEMaterial> readMaterials() {
@@ -212,7 +224,7 @@ public class BLLRead {
     }
 
     /**
-     *
+     * Read Alarms from the DB
      * @return ArrayList of Alarms
      */
     public ArrayList<BEAlarm> readAlarms() {
@@ -230,7 +242,7 @@ public class BLLRead {
     }
 
     /**
-     *
+     * Invokes the method in DAL that reads IncidentDetails
      * @return ArrayList of IncidentDetails
      */
     public ArrayList<BEIncidentDetails> readIncidentDetails() {
@@ -250,6 +262,10 @@ public class BLLRead {
         incidentDetails.add(incidentdetail);
     }
     
+    /**
+     * Invokes the method in DAL that reads Salaries
+     * @return ArrayList of salary
+     */
     public ArrayList<BESalary> readSalary(){
         if(salary == null)
             try {

@@ -79,6 +79,9 @@ public class GUIError extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Clears the GUI
+     */
     private void clearGUI() {
         txtCause.setText(MessageDialog.getInstance().EMPTY_TEXT());
         txtErrorDescription.setText(MessageDialog.getInstance().EMPTY_TEXT());
@@ -91,12 +94,16 @@ public class GUIError extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Checks whether or not all necessary information has been filled out
+     * @return true/false 
+     */
     private boolean isInformationFilled() {
         if (txtFilledBy.getText().isEmpty()) {
             MessageDialog.getInstance().dialogFillAllInformation();
             return false;
         }
-        if (cmbVehicle.getSelectedIndex() == 0 || !chkFireSuit.isSelected()) {
+        if (cmbVehicle.getSelectedIndex() == 0 && !chkFireSuit.isSelected()) {
             MessageDialog.getInstance().dialogChooseClothesOrVehicle();
             return false;
         }
@@ -157,6 +164,9 @@ public class GUIError extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * WindowListener for this window
+     */
     private class wndAction extends WindowAdapter {
 
         @Override

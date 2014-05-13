@@ -37,7 +37,7 @@ public class BLLCreate {
         try {
             DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
-            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BLLRead.class.getName()).log(Level.SEVERE, null, ex);
             MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return false;
         }
@@ -61,7 +61,7 @@ public class BLLCreate {
                     try {
                         DALCreate.getInstance().createRoleTime(tmpRoleTimes);
                     } catch (SQLException ex) {
-                        //Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
                         tmpRoleTimes.setM_role(tmpPrevRole);
                         MessageDialog.getInstance().dialogFunction(); //MÅ IKKE VÆRE HER
                         return;

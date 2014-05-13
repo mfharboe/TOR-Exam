@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Time;
 import javax.swing.JTextField;
 
@@ -19,8 +21,9 @@ public class GUICreateIncident extends javax.swing.JFrame {
      * Creates new form GUICreateIncident
      */
     private GUICreateIncident() {
-        this.setTitle(MessageDialog.getInstance().createIncidentTitle());
         initComponents();
+        this.setTitle(MessageDialog.getInstance().createIncidentTitle());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initialSettings();
         addColors();
     }
@@ -45,10 +48,12 @@ public class GUICreateIncident extends javax.swing.JFrame {
     private void addListeners(){
         btnAction btn = new btnAction();
         txtFocus txtFc = new txtFocus();
+        wndAction wnd = new wndAction();
         btnCancel.addActionListener(btn);
         btnCreate.addActionListener(btn);
         txtIncidentName.addFocusListener(txtFc);
         txtIncidentTime.addFocusListener(txtFc);
+        this.addWindowListener(wnd);
     }
     
     private void fillIncidentTypeCombo(){
@@ -101,8 +106,8 @@ public class GUICreateIncident extends javax.swing.JFrame {
         BEIncident incident = new BEIncident(incidentName, sqlDate, time, incidentType, isdone);
         return incident;
     }
-    private void onClickCancel(){
-        clearMyInformation();
+    private void onClickClose(){
+        clearMyInformation(); 
         this.dispose();
     }
     private void onClickCreate(){
@@ -111,7 +116,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
             if(BLLCreate.getInstance().createIncident(tmpIncident)){
                 BLLCreate.getInstance().createInitialIncidentDetails(tmpIncident);
                 GUIFireman.getInstance().addToIncidentCombo(tmpIncident);
-                onClickCancel();
+                onClickClose();
             }
         }
         else
@@ -123,7 +128,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource().equals(btnCancel)){
-                onClickCancel();
+                onClickClose();
             } else if(e.getSource().equals(btnCreate)){
                 onClickCreate();
             }
@@ -147,6 +152,14 @@ public class GUICreateIncident extends javax.swing.JFrame {
                 resetIncidentName();
             if(txtIncidentTime.getText().isEmpty())
                 resetIncidentTime();
+        }
+    }
+    
+      private class wndAction extends WindowAdapter {
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            onClickClose();
         }
     }
     /**

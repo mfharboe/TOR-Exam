@@ -57,7 +57,7 @@ public class DALRead {
             ResultSet result = stm.getResultSet();
             while (result.next()) {
                 int id = result.getInt("id");
-                String description = result.getString("description");
+                String description = result.getString("incidentTypeDescription");
                 BEIncidentType be = new BEIncidentType(id, description);
                 resIncidentType.add(be);
             }
@@ -79,7 +79,7 @@ public class DALRead {
             ResultSet result = stm.getResultSet();
             while (result.next()) {
                 int id = result.getInt("id");
-                String description = result.getString("description");
+                String description = result.getString("alarmDescription");
                 BEAlarm be = new BEAlarm(id, description);
                 resAlarms.add(be);
             }
@@ -133,7 +133,7 @@ public class DALRead {
             String registrationNumber = result.getString("registrationNumber");
             String brand = result.getString("brand");
             String model = result.getString("model");
-            String description = result.getString("description");
+            String description = result.getString("vehicleDescription");
             boolean isReady = result.getBoolean("isReady");
             int seats = result.getInt("seats");
             BEVehicle be = new BEVehicle(odinNumber, registrationNumber, brand, model, description, isReady, seats);
@@ -155,6 +155,7 @@ public class DALRead {
         ResultSet result = stm.getResultSet();
         while (result.next()) {
             int id = result.getInt("id");
+            Date recruitDate = result.getDate("recruited");
             String firstName = result.getString("firstName");
             String lastName = result.getString("lastName");
             String address = result.getString("address");
@@ -169,8 +170,7 @@ public class DALRead {
             int paymentNumber = result.getInt("paymentNumber");
             boolean isTeamLeader = result.getBoolean("isTeamLeader");
             String photoPath = result.getString("photoPath");
-            String cpr = result.getString("cpr");
-            BEFireman be = new BEFireman(id, firstName, lastName, address, refZipCode, phone, paymentNumber, isTeamLeader, photoPath, cpr);
+            BEFireman be = new BEFireman(id, recruitDate, firstName, lastName, address, refZipCode, phone, paymentNumber, isTeamLeader, photoPath);
             res.add(be);
         }
         return res;
@@ -209,7 +209,7 @@ public class DALRead {
         ResultSet result = stm.getResultSet();
         while (result.next()) {
             int id = result.getInt("id");
-            String description = result.getString("description");
+            String description = result.getString("roleDescription");
             BERole be = new BERole(id, description);
             res.add(be);
         }
@@ -333,11 +333,11 @@ public class DALRead {
     public ArrayList<BEMaterial> readMaterial() throws SQLException {
         ArrayList<BEMaterial> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
-        stm.execute("select * from Material order by description");
+        stm.execute("select * from Material order by materialDescription");
         ResultSet result = stm.getResultSet();
         while (result.next()) {
             int id = result.getInt("id");
-            String description = result.getString("description");
+            String description = result.getString("materialDescription");
             BEMaterial be = new BEMaterial(id, description);
             res.add(be);
         }
@@ -425,7 +425,7 @@ public class DALRead {
             ResultSet result = stm.getResultSet();
             while (result.next()) {
                 int id = result.getInt("id");
-                String description = result.getString("description");
+                String description = result.getString("salaryDescription");
                 BESalary be = new BESalary(id, description);
                 resSalary.add(be);
             }

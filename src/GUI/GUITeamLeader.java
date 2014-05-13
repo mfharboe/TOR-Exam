@@ -306,6 +306,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
 
     }
 
+    /**
+     * KeyListener for txtAmountMaterial
+     */
     private class txtAction extends KeyAdapter {
 
         @Override
