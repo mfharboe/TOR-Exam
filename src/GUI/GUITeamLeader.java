@@ -141,7 +141,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
         m_incidentDetails = BLLAdapter.getInstance().incidentToIncidentDetails(m_incident);
         txtIncidentLeader.setText(m_incidentDetails.getM_incidentLeader());
-        txtMessage.setText(m_incidentDetails.getM_message());
         txtEvaNumber.setText(m_incidentDetails.getM_evaNumber());
         txtFireReportNumber.setText(m_incidentDetails.getM_fireReport());
         txtInvolvedName.setText(m_incidentDetails.getM_involvedName());
@@ -221,7 +220,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         m_incidentDetails.setM_incidentLeader(txtIncidentLeader.getText());
         m_incidentDetails.setM_evaNumber(txtEvaNumber.getText());
         m_incidentDetails.setM_fireReport(txtFireReportNumber.getText());
-        m_incidentDetails.setM_message(txtMessage.getText());
         m_incidentDetails.setM_involvedName(txtInvolvedName.getText());
         m_incidentDetails.setM_involvedAddress(txtInvolvedAddress.getText());
         m_incidentDetails.setM_remark(txtRemarks.getText());
@@ -355,11 +353,9 @@ public class GUITeamLeader extends javax.swing.JFrame {
         lblEvaNumber = new javax.swing.JLabel();
         txtEvaNumber = new javax.swing.JTextField();
         lblIncidentLeader = new javax.swing.JLabel();
-        lblMessage = new javax.swing.JLabel();
         txtIncidentLeader = new javax.swing.JTextField();
         lblFireReportNumber = new javax.swing.JLabel();
         txtFireReportNumber = new javax.swing.JTextField();
-        txtMessage = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -491,11 +487,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         pnlTeamLeader.add(lblIncidentLeader);
         lblIncidentLeader.setBounds(10, 70, 120, 19);
 
-        lblMessage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lblMessage.setText("Melding lød");
-        pnlTeamLeader.add(lblMessage);
-        lblMessage.setBounds(10, 40, 120, 22);
-
         txtIncidentLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         pnlTeamLeader.add(txtIncidentLeader);
         txtIncidentLeader.setBounds(120, 60, 200, 30);
@@ -508,10 +499,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
         txtFireReportNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         pnlTeamLeader.add(txtFireReportNumber);
         txtFireReportNumber.setBounds(500, 60, 130, 30);
-
-        txtMessage.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        pnlTeamLeader.add(txtMessage);
-        txtMessage.setBounds(120, 30, 200, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -572,7 +559,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JLabel lblIncidentLeader;
     private javax.swing.JLabel lblInjuredAddress;
     private javax.swing.JLabel lblInjuredName;
-    private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel lblUsageAmountDesc;
     private javax.swing.JPanel pnlABAAlarm;
     private javax.swing.JPanel pnlAlarm;
@@ -589,7 +575,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private javax.swing.JTextField txtIncidentLeader;
     private javax.swing.JTextField txtInvolvedAddress;
     private javax.swing.JTextField txtInvolvedName;
-    private javax.swing.JTextField txtMessage;
     private javax.swing.JTextArea txtRemarks;
     // End of variables declaration//GEN-END:variables
 }

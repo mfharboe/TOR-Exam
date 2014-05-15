@@ -66,7 +66,7 @@ public class DALCreate {
      * @throws SQLException
      */
     public void createRoleTime(BERoleTime roletime) throws SQLException {
-        String sql = "insert into [Role/Time] values (?,?,?,?,?,?,?)";
+        String sql = "insert into [Role/Time] values (?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setInt(1, roletime.getM_incident().getM_id());
         ps.setInt(2, roletime.getM_fireman().getM_id());
@@ -79,7 +79,6 @@ public class DALCreate {
             ps.setInt(5, roletime.getM_vehicle().getM_odinNumber());
         }
         ps.setInt(6, roletime.getM_hours());
-        ps.setInt(7, roletime.getM_Salary().getM_salaryCode());
         ps.executeUpdate();
     }
 
@@ -138,19 +137,18 @@ public class DALCreate {
      * @throws SQLException
      */
     public void createInitialIncidentDetails(BEIncidentDetails initialIncidentDetails) throws SQLException {
-        String sql = "insert into IncidentDetails values (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into IncidentDetails values (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setString(1, null);
         ps.setString(2, null);
         ps.setString(3, null);
-        ps.setString(4, null);
-        ps.setInt(5, initialIncidentDetails.getM_incident().getM_id());
+        ps.setInt(4, initialIncidentDetails.getM_incident().getM_id());
+        ps.setString(5, null);
         ps.setString(6, null);
         ps.setString(7, null);
         ps.setString(8, null);
         ps.setString(9, null);
         ps.setString(10, null);
-        ps.setString(11, null);
         ps.executeUpdate();
     }
 }

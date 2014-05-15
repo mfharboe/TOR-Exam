@@ -8,7 +8,6 @@ import BE.BEIncidentType;
 import BE.BEMaterial;
 import BE.BERole;
 import BE.BERoleTime;
-import BE.BESalary;
 import BE.BEUsage;
 import BE.BEVehicle;
 import BE.BEZipcode;
@@ -27,7 +26,7 @@ public class DALRead {
 
     ArrayList<BEIncidentType> resIncidentType;
     ArrayList<BEAlarm> resAlarms;
-    ArrayList<BESalary> resSalary;
+
 
     private DALRead() {
         m_connection = DB_Connection.getInstance().getConnection();
@@ -134,9 +133,7 @@ public class DALRead {
             String brand = result.getString("brand");
             String model = result.getString("model");
             String description = result.getString("vehicleDescription");
-            boolean isReady = result.getBoolean("isReady");
-            int seats = result.getInt("seats");
-            BEVehicle be = new BEVehicle(odinNumber, registrationNumber, brand, model, description, isReady, seats);
+             BEVehicle be = new BEVehicle(odinNumber, registrationNumber, brand, model, description);
             res.add(be);
         }
         return res;
@@ -266,20 +263,13 @@ public class DALRead {
 
             int hours = result.getInt("hours");
             
-            int salaryId = result.getInt("salaryId");
-            BESalary refSalary = null;
-            for(BESalary be : readSalary()){
-                if(be.getM_salaryCode() == salaryId){
-                    refSalary = be;
-                }
-            }
+   
             BERoleTime be = new BERoleTime(refIncident,
                     refFireman,
                     isOnStation,
                     refRole,
                     refVehicle,
-                    hours,
-                    refSalary);
+                    hours);
             res.add(be);
         }
         return res;
@@ -357,7 +347,6 @@ public class DALRead {
         stm.execute("Select IncidentDetails.incidentLeader, "
                 + "IncidentDetails.evaNumber, "
                 + "IncidentDetails.fireReport, "
-                + "IncidentDetails.[message], "
                 + "IncidentDetails.incidentid, "
                 + "IncidentDetails.involvedName, "
                 + "IncidentDetails.involvedAddress, "
@@ -373,7 +362,6 @@ public class DALRead {
             String incidentLeader = result.getString("incidentLeader");
             String evaNumber = result.getString("evaNumber");
             String fireReport = result.getString("fireReport");
-            String message = result.getString("message");
             int incidentId = result.getInt("incidentId");
             BEIncident refIncident = null;
             for (BEIncident be : readIncidents()) {
@@ -397,39 +385,17 @@ public class DALRead {
             String groupNumber = result.getString("groupNumber");
 
             BEIncidentDetails be = new BEIncidentDetails(incidentLeader,
-                    evaNumber,
+                    evaNumber, 
                     fireReport,
-                    message,
-                    refIncident,
-                    involvedName,
-                    involvedAddress,
-                    remark,
-                    refAlarm,
+                    refIncident, 
+                    involvedName, 
+                    involvedAddress, 
+                    remark, 
+                    refAlarm, 
                     detectorNumber,
                     groupNumber);
             res.add(be);
         }
         return res;
-    }
-
-    /**
-     * 
-     * @return
-     * @throws SQLException 
-     */
-    public ArrayList<BESalary> readSalary() throws SQLException {
-        if (resSalary == null) {
-            resSalary = new ArrayList<>();
-            Statement stm = m_connection.createStatement();
-            stm.execute("Select * From Salary");
-            ResultSet result = stm.getResultSet();
-            while (result.next()) {
-                int id = result.getInt("id");
-                String description = result.getString("salaryDescription");
-                BESalary be = new BESalary(id, description);
-                resSalary.add(be);
-            }
-        }
-        return resSalary;
     }
 }

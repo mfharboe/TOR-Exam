@@ -62,7 +62,6 @@ public class BLLUpdate {
                 details.setM_incidentLeader(incidentDetails.getM_incidentLeader());
                 details.setM_involvedAddress(incidentDetails.getM_involvedAddress());
                 details.setM_involvedName(incidentDetails.getM_involvedName());
-                details.setM_message(incidentDetails.getM_message());
                 details.setM_remark(incidentDetails.getM_remark());
                 break;
             }

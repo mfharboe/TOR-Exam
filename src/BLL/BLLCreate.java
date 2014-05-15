@@ -37,7 +37,7 @@ public class BLLCreate {
         try {
             DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLRead.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
             MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return false;
         }
@@ -57,7 +57,6 @@ public class BLLCreate {
                 tmpPrevRole = tmpRoleTimes.getM_role();
                 if (role.getM_id() == roleNumber) {
                     tmpRoleTimes.setM_role(role);
-                    tmpRoleTimes.setM_Salary(BLLAdapter.getInstance().roleTimeToSalary(tmpRoleTimes));
                     try {
                         DALCreate.getInstance().createRoleTime(tmpRoleTimes);
                     } catch (SQLException ex) {
@@ -82,7 +81,7 @@ public class BLLCreate {
         try {
             DALCreate.getInstance().createUsage(usage);
         } catch (SQLException ex) {
-            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
             MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return;
         }
@@ -96,12 +95,12 @@ public class BLLCreate {
      * @param incident
      */
     public void createInitialIncidentDetails(BEIncident incident) {
-        BEIncidentDetails details = new BEIncidentDetails(null, null, null, null, incident, null, null, null, null, null, null);
+        BEIncidentDetails details = new BEIncidentDetails(null, null, null, incident, null, null, null, null, null, null);
         try {
             BLLRead.getInstance().readIncidentDetails();
             DALCreate.getInstance().createInitialIncidentDetails(details);
         } catch (SQLException ex) {
-            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
             MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
             return;
         }

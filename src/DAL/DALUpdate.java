@@ -61,7 +61,6 @@ public class DALUpdate {
         String sql = "Update IncidentDetails set incidentLeader = ?, "
                 + "evaNumber = ?, "
                 + "fireReport = ?, "
-                + "message = ?, "
                 + "involvedName = ?, "
                 + "involvedAddress = ?, "
                 + "remark = ?, "
@@ -73,18 +72,17 @@ public class DALUpdate {
         ps.setString(1, incidentDetails.getM_incidentLeader());
         ps.setString(2, incidentDetails.getM_evaNumber());
         ps.setString(3, incidentDetails.getM_fireReport());
-        ps.setString(4, incidentDetails.getM_message());
-        ps.setString(5, incidentDetails.getM_involvedName());
-        ps.setString(6, incidentDetails.getM_involvedAddress());
-        ps.setString(7, incidentDetails.getM_remark());
+        ps.setString(4, incidentDetails.getM_involvedName());
+        ps.setString(5, incidentDetails.getM_involvedAddress());
+        ps.setString(6, incidentDetails.getM_remark());
         if (incidentDetails.getM_alarm() == null) {
-            ps.setString(8, null);
+            ps.setString(7, null);
         } else {
-            ps.setInt(8, incidentDetails.getM_alarm().getM_id());
+            ps.setInt(7, incidentDetails.getM_alarm().getM_id());
         }
-        ps.setString(9, incidentDetails.getM_detectorNumber());
-        ps.setString(10, incidentDetails.getM_groupNumber());
-        ps.setInt(11, incidentDetails.getM_incident().getM_id());
+        ps.setString(8, incidentDetails.getM_detectorNumber());
+        ps.setString(9, incidentDetails.getM_groupNumber());
+        ps.setInt(10, incidentDetails.getM_incident().getM_id());
         ps.executeUpdate();
 
     }

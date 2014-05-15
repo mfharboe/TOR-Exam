@@ -8,7 +8,6 @@ import BE.BEIncidentType;
 import BE.BEMaterial;
 import BE.BERole;
 import BE.BERoleTime;
-import BE.BESalary;
 import BE.BEUsage;
 import BE.BEVehicle;
 import DAL.DALRead;
@@ -32,7 +31,6 @@ public class BLLRead {
     ArrayList<BEMaterial> materials;
     ArrayList<BEAlarm> alarms;
     ArrayList<BEIncidentDetails> incidentDetails;
-    ArrayList<BESalary> salary;
     
     private BLLRead() {
     }
@@ -262,17 +260,5 @@ public class BLLRead {
         incidentDetails.add(incidentdetail);
     }
     
-    /**
-     * Invokes the method in DAL that reads Salaries
-     * @return ArrayList of salary
-     */
-    public ArrayList<BESalary> readSalary(){
-        if(salary == null)
-            try {
-                salary = DALRead.getInstance().readSalary();
-        } catch (SQLException ex) {
-            Logger.getLogger(BLLRead.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return salary;
-    }
+
 }

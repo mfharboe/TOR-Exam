@@ -3,6 +3,7 @@ package GUI;
 import BE.BEFireman;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
+import BE.BERole;
 import BE.BERoleTime;
 import BE.BEVehicle;
 import BLL.BLLAdapter;
@@ -293,6 +294,7 @@ public class GUIFireman extends javax.swing.JFrame {
         ArrayList<BERoleTime> tmpRoleTimes = new ArrayList<>();
         BEIncident incident = (BEIncident) cmbIncident.getSelectedItem();
         ArrayList<BEFireman> fireman = (ArrayList<BEFireman>) lstManpower.getSelectedValuesList();
+        BERole role = null;
         boolean isOnStaion = station;
         BEVehicle vehicle = null;
         if (cmbVehicle.getSelectedIndex() != 0 && station == false) {
@@ -300,7 +302,7 @@ public class GUIFireman extends javax.swing.JFrame {
         }
         int time = Integer.parseInt(txtManHours.getText());
         for (BEFireman selectedMen : fireman) {
-            BERoleTime roletime = new BERoleTime(incident, selectedMen, isOnStaion, null, vehicle, time, null);
+            BERoleTime roletime = new BERoleTime(incident, selectedMen, isOnStaion, role, vehicle, time);
             tmpRoleTimes.add(roletime);
         }
         return tmpRoleTimes;
