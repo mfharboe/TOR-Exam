@@ -2,9 +2,16 @@ package BLL;
 
 import BE.BEIncident;
 import BE.BEIncidentDetails;
+import BE.BEIncidentType;
+import BE.BERSS;
 import BE.BERoleTime;
 import BE.BEUsage;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class BLLAdapter {
 
@@ -67,5 +74,38 @@ public class BLLAdapter {
             }
         }
         return null;
+    }
+
+    public BEIncident RSStoIncident(BERSS feed) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+
+        String incidentName = feed.getM_message();
+        String incidentDate = feed.getM_date();
+        incidentDate = incidentDate.substring(6, 16);
+        java.sql.Date sqlDate = null;
+        
+        try {
+            Date utilDate = null;
+            utilDate = formatter.parse(incidentDate);
+            sqlDate = new java.sql.Date(utilDate.getTime());
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        String incidentTime = feed.getM_date();
+        incidentTime = incidentTime.substring(18, 25);
+        Time time = java.sql.Time.valueOf(incidentTime);
+        boolean isDone = false;
+        BEIncidentType incidentType = null;
+        final int INCIDENT_TYPE = 1; 
+        for(BEIncidentType type : BLLRead.getInstance().readAllIncidentTypes()){
+            if(type.getM_id() == INCIDENT_TYPE){
+                incidentType = type;
+                break;
+            }
+        }
+        BEIncident incident = new BEIncident(incidentName, sqlDate, time, incidentType, isDone);
+        return incident;
+
     }
 }

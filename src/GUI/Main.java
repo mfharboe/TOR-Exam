@@ -17,6 +17,6 @@ public class Main {
     public static void main(String[] args) {
         JFrame main = GUIFireman.getInstance();
         main.setVisible(true);
-       // new Thread(new RSSThread()).start();
+         new Thread(new RSSThread()).start();
     }
 }
