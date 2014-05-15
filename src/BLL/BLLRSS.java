@@ -6,10 +6,13 @@ import DAL.RSS_Reader;
 import DAL.RSS_Reader1;
 import GUI.GUIFireman;
 import GUI.MessageError;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 public class BLLRSS {
 
@@ -54,9 +57,11 @@ public class BLLRSS {
         try {
             feed = RSS_Reader1.getInstance().readRSS();
         } catch (MalformedURLException ex) {
-            Logger.getLogger(BLLRSS.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(BLLRSS.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+            return null;
+        } catch (IOException | ParserConfigurationException | SAXException ex) {
+            System.out.println("No connection");
+            return null;
         }
         if(!feeds.contains(feed)){
             feeds.add(feed);
