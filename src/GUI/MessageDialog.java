@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.Component;
 import javax.swing.JOptionPane;
 
 public class MessageDialog {
@@ -13,7 +12,7 @@ public class MessageDialog {
 
     /**
      *
-     * @return m_instance of MessageDialog
+     * @return current m_instance of MessageDialog
      */
     public static MessageDialog getInstance() {
         if (m_instance == null) {
@@ -159,12 +158,6 @@ public class MessageDialog {
         return "";
     }
 
-    /**
-     * Dialog if the car is filled
-     */
-    public void dialogCarSeatsFilled() {
-        JOptionPane.showMessageDialog(null, "Bilen er allerede fyldt op");
-    }
 
     /**
      * Dialog if not all required information is filled
@@ -173,13 +166,7 @@ public class MessageDialog {
         JOptionPane.showMessageDialog(null, "Udfyld venligst alle informationer");
     }
 
-    /**
-     * Dialog if the fireman is already on the station
-     */
-    public void dialogStation() {
-        JOptionPane.showMessageDialog(null, "Du er allerede stationsvagt på denne indsats");
-    }
-
+ 
     /**
      * Dialog if the fireman already has a function as either BM, HL or CH
      */

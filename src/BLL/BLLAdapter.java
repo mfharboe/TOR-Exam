@@ -89,7 +89,7 @@ public class BLLAdapter {
             utilDate = formatter.parse(incidentDate);
             sqlDate = new java.sql.Date(utilDate.getTime());
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            BLLError.getInstance().dbError();
         }
 
         String incidentTime = feed.getM_date();

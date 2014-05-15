@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 public class GUICreateIncident extends javax.swing.JFrame {
 
     private static GUICreateIncident m_instance;
+
     /**
      * Creates new form GUICreateIncident
      */
@@ -27,25 +28,29 @@ public class GUICreateIncident extends javax.swing.JFrame {
         initialSettings();
         addColors();
     }
-    
+
     /**
-     * @return m_instance of GUICreateIncident 
+     * @return m_instance of GUICreateIncident
      */
-    public static GUICreateIncident getInstance(){
-        if(m_instance == null)
+    public static GUICreateIncident getInstance() {
+        if (m_instance == null) {
             m_instance = new GUICreateIncident();
+        }
         return m_instance;
     }
-    private void initialSettings(){
+
+    private void initialSettings() {
         addListeners();
         fillIncidentTypeCombo();
         clearMyInformation();
     }
-    private void addColors(){
+
+    private void addColors() {
         this.getContentPane().setBackground(Color.WHITE);
         cmbIncidentType.setBackground(Color.WHITE);
     }
-    private void addListeners(){
+
+    private void addListeners() {
         btnAction btn = new btnAction();
         txtFocus txtFc = new txtFocus();
         wndAction wnd = new wndAction();
@@ -55,48 +60,58 @@ public class GUICreateIncident extends javax.swing.JFrame {
         txtIncidentTime.addFocusListener(txtFc);
         this.addWindowListener(wnd);
     }
-    
-    private void fillIncidentTypeCombo(){
+
+    private void fillIncidentTypeCombo() {
         cmbIncidentType.addItem(MessageDialog.getInstance().cmbIncidentType());
         for (BEIncidentType beincidenttype : BLLRead.getInstance().readAllIncidentTypes()) {
             cmbIncidentType.addItem(beincidenttype);
         }
+        MessageError.getInstance().printError();
     }
-    private void clearMyInformation(){
+
+    private void clearMyInformation() {
         cmbIncidentType.setSelectedIndex(0);
-       ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText(MessageDialog.getInstance().txtDate());
-       resetIncidentName();
-       resetIncidentTime();
+        ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText(MessageDialog.getInstance().txtDate());
+        resetIncidentName();
+        resetIncidentTime();
     }
-    
-    private void resetIncidentName(){
+
+    private void resetIncidentName() {
         txtIncidentName.setText(MessageDialog.getInstance().txtIncidentName());
     }
-    private void resetIncidentTime(){
+
+    private void resetIncidentTime() {
         txtIncidentTime.setText(MessageDialog.getInstance().txtIncidentTime());
     }
-    private void clearIncidentName(){
+
+    private void clearIncidentName() {
         txtIncidentName.setText(MessageDialog.getInstance().EMPTY_TEXT());
     }
-    private void clearIncidentTime(){
+
+    private void clearIncidentTime() {
         txtIncidentTime.setText(MessageDialog.getInstance().EMPTY_TEXT());
     }
-    
-    
-    private boolean isInformationFilled(){
-        if(txtIncidentName.getText().isEmpty() || txtIncidentName.getText().equals(MessageDialog.getInstance().txtIncidentName()))
+
+    private boolean isInformationFilled() {
+        if (txtIncidentName.getText().isEmpty() || txtIncidentName.getText().equals(MessageDialog.getInstance().txtIncidentName())) {
             return false;
-        if(txtIncidentTime.getText().isEmpty() || txtIncidentTime.getText().equals(MessageDialog.getInstance().txtIncidentTime()))
+        }
+        if (txtIncidentTime.getText().isEmpty() || txtIncidentTime.getText().equals(MessageDialog.getInstance().txtIncidentTime())) {
             return false;
-        if(cmbIncidentType.getSelectedIndex() == 0)
+        }
+        if (cmbIncidentType.getSelectedIndex() == 0) {
             return false;
-        if(((JTextField) dateChooser.getDateEditor().getUiComponent()).getText().isEmpty())
+        }
+        if (((JTextField) dateChooser.getDateEditor().getUiComponent()).getText().isEmpty()) {
             return false;
-        if(((JTextField) dateChooser.getDateEditor().getUiComponent()).getText().equals(MessageDialog.getInstance().txtDate()))
+        }
+        if (((JTextField) dateChooser.getDateEditor().getUiComponent()).getText().equals(MessageDialog.getInstance().txtDate())) {
             return false;
+        }
         return true;
     }
-    private BEIncident getMyInformation(){
+
+    private BEIncident getMyInformation() {
         BEIncidentType incidentType = (BEIncidentType) cmbIncidentType.getSelectedItem();
         java.util.Date utilDate = dateChooser.getDate();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -106,62 +121,75 @@ public class GUICreateIncident extends javax.swing.JFrame {
         BEIncident incident = new BEIncident(incidentName, sqlDate, time, incidentType, isdone);
         return incident;
     }
-    private void onClickClose(){
-        clearMyInformation(); 
+
+    private void onClickClose() {
+        clearMyInformation();
         this.dispose();
     }
-    private void onClickCreate(){
-        if(isInformationFilled()){
+
+    private void onClickCreate() {
+        if (isInformationFilled()) {
             BEIncident tmpIncident = getMyInformation();
-            if(BLLCreate.getInstance().createIncident(tmpIncident)){
+            if (BLLCreate.getInstance().createIncident(tmpIncident)) {
+
                 BLLCreate.getInstance().createInitialIncidentDetails(tmpIncident);
+                MessageError.getInstance().printError();
+
                 GUIFireman.getInstance().addToIncidentCombo(tmpIncident);
+                MessageError.getInstance().printError();
+
                 onClickClose();
             }
-        }
-        else
+            MessageError.getInstance().printError();
+        } else {
             MessageDialog.getInstance().dialogFillAllInformation();
+        }
     }
-    
-    private class btnAction implements ActionListener{
+
+    private class btnAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource().equals(btnCancel)){
+            if (e.getSource().equals(btnCancel)) {
                 onClickClose();
-            } else if(e.getSource().equals(btnCreate)){
+            } else if (e.getSource().equals(btnCreate)) {
                 onClickCreate();
             }
         }
     }
-    
-    private class txtFocus extends FocusAdapter{
+
+    private class txtFocus extends FocusAdapter {
+
         @Override
-        public void focusGained(FocusEvent e){
-            if(e.getSource().equals(txtIncidentName)){
-                    clearIncidentName();
+        public void focusGained(FocusEvent e) {
+            if (e.getSource().equals(txtIncidentName)) {
+                clearIncidentName();
             }
-            
-            if(e.getSource().equals(txtIncidentTime))
+
+            if (e.getSource().equals(txtIncidentTime)) {
                 clearIncidentTime();
+            }
         }
-        
+
         @Override
-        public void focusLost(FocusEvent e){
-            if(txtIncidentName.getText().isEmpty())
+        public void focusLost(FocusEvent e) {
+            if (txtIncidentName.getText().isEmpty()) {
                 resetIncidentName();
-            if(txtIncidentTime.getText().isEmpty())
+            }
+            if (txtIncidentTime.getText().isEmpty()) {
                 resetIncidentTime();
+            }
         }
     }
-    
-      private class wndAction extends WindowAdapter {
+
+    private class wndAction extends WindowAdapter {
 
         @Override
         public void windowClosing(WindowEvent e) {
             onClickClose();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

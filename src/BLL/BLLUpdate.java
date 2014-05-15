@@ -1,9 +1,7 @@
 package BLL;
 
-import BE.BEIncident;
 import BE.BEIncidentDetails;
 import DAL.DALUpdate;
-import GUI.MessageDialog;
 import java.sql.SQLException;
 
 public class BLLUpdate {
@@ -13,6 +11,10 @@ public class BLLUpdate {
     private BLLUpdate() {
     }
 
+    /**
+     * 
+     * @return current m_instance of BLLUpdate 
+     */
     public static BLLUpdate getInstance() {
         if (m_instance == null) {
             m_instance = new BLLUpdate();
@@ -21,35 +23,16 @@ public class BLLUpdate {
     }
 
     /**
-     * Updates an Incident
-     *
-     * @param incident
-     */
-    public void updateIncident(BEIncident incident) {
-        try {
-            DALUpdate.getInstance().updateIncident(incident);
-        } catch (SQLException ex) {
-            //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
-            return;
-        }
-        MessageDialog.getInstance().dialogInformationSaved(); //MÅ IKKE VÆRE HER
-    }
-
-    /**
      * Updates IncidentDetails for an Incident and sets new values in
      * BEIncidentDetails
      *
      * @param incidentDetails
      */
-
-    // OPDATERER BE FRA STARTEN I STEDET FOR AT LAVE NYYY
     public void updateIncidentDetails(BEIncidentDetails incidentDetails) {
         try {
             DALUpdate.getInstance().updateIncidentDetails(incidentDetails);
         } catch (SQLException ex) {
-            //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            BLLError.getInstance().updateIncidentDetailsError();
             return;
         }
         for (BEIncidentDetails details : BLLRead.getInstance().readIncidentDetails()) {
@@ -66,6 +49,5 @@ public class BLLUpdate {
                 break;
             }
         }
-        MessageDialog.getInstance().dialogInformationSaved(); //MÅ IKKE VÆRE HER
     }
 }

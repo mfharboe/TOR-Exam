@@ -15,17 +15,18 @@ import javax.swing.JTextField;
 public class GUIError extends javax.swing.JFrame {
 
     private static GUIError m_instance;
-    
+
     private GUIError() {
         initComponents();
         this.setTitle(MessageDialog.getInstance().errorTitle());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initialSettings();
     }
-    
-    public static GUIError getInstance(){
-        if(m_instance == null)
+
+    public static GUIError getInstance() {
+        if (m_instance == null) {
             m_instance = new GUIError();
+        }
         return m_instance;
     }
 
@@ -76,6 +77,7 @@ public class GUIError extends javax.swing.JFrame {
         for (BEVehicle beVehicle : BLLRead.getInstance().readAllVehicles()) {
             cmbVehicle.addItem(beVehicle);
         }
+        MessageError.getInstance().printError();
 
     }
 
@@ -96,7 +98,8 @@ public class GUIError extends javax.swing.JFrame {
 
     /**
      * Checks whether or not all necessary information has been filled out
-     * @return true/false 
+     *
+     * @return true/false
      */
     private boolean isInformationFilled() {
         if (txtFilledBy.getText().isEmpty()) {
@@ -135,8 +138,9 @@ public class GUIError extends javax.swing.JFrame {
             boolean suitWash = chkFireSuit.isSelected();
             BEError be = new BEError(vehicleOdinNumner, filledBy, sqlDate, outOfOrder, urgent, description, cause, suitWash);
             BLLCreate.getInstance().createErrorReport(be);
+            MessageError.getInstance().printError();
             onClickClose();
-        } 
+        }
     }
 
     /**

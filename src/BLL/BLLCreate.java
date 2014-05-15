@@ -7,7 +7,6 @@ import BE.BERole;
 import BE.BERoleTime;
 import BE.BEUsage;
 import DAL.DALCreate;
-import GUI.MessageDialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,6 +19,10 @@ public class BLLCreate {
     private BLLCreate() {
     }
 
+    /**
+     * 
+     * @return current m_instance of BLLCreate
+     */
     public static BLLCreate getInstance() {
         if (m_instance == null) {
             m_instance = new BLLCreate();
@@ -37,8 +40,7 @@ public class BLLCreate {
         try {
             DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            BLLError.getInstance().createIncidentError();
             return false;
         }
         return true;
@@ -60,9 +62,8 @@ public class BLLCreate {
                     try {
                         DALCreate.getInstance().createRoleTime(tmpRoleTimes);
                     } catch (SQLException ex) {
-                        Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
                         tmpRoleTimes.setM_role(tmpPrevRole);
-                        MessageDialog.getInstance().dialogFunction(); //MÅ IKKE VÆRE HER
+                        BLLError.getInstance().functionError();
                         return;
                     }
                     BLLRead.getInstance().addToRoleTime(tmpRoleTimes);
@@ -81,8 +82,7 @@ public class BLLCreate {
         try {
             DALCreate.getInstance().createUsage(usage);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            BLLError.getInstance().createUsageError();
             return;
         }
         BLLRead.getInstance().addToUsage(usage);
@@ -100,14 +100,14 @@ public class BLLCreate {
             BLLRead.getInstance().readIncidentDetails();
             DALCreate.getInstance().createInitialIncidentDetails(details);
         } catch (SQLException ex) {
-           Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
+            BLLError.getInstance().dbError();
             return;
         }
         BLLRead.getInstance().addToIncidentDetails(details);
     }
-    
-      /**
+
+    /**
      * Creates an ErrorReport
      *
      * @param error
@@ -116,11 +116,9 @@ public class BLLCreate {
         try {
             DALCreate.getInstance().createErrorReport(error);
         } catch (SQLException ex) {
-            //Logger.getLogger(BLLError.class.getName()).log(Level.SEVERE, null, ex);
-            MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+            BLLError.getInstance().createErrorReportError();
             return;
         }
-        MessageDialog.getInstance().dialogInformationSaved(); //MÅ IKKE VÆRE HER
     }
 
 }

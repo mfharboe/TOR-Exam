@@ -2,7 +2,6 @@ package GUI;
 
 import BE.BEFireman;
 import BE.BEIncident;
-import BE.BEIncidentDetails;
 import BE.BERole;
 import BE.BERoleTime;
 import BE.BEVehicle;
@@ -29,17 +28,17 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 
 public class GUIFireman extends javax.swing.JFrame {
-    
+
     private static GUIFireman m_instance;
-    
+
     DefaultListModel<BEFireman> firemanListModel;
     TableRowSorter<TableModelRoleTime> roleTimeSorter;
     private TableModelRoleTime roleTimeModel;
     private final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
-    
+
     ImageIcon image;
     ImageIcon imageLogo;
-    
+
     private final int BM = 1;
     private final int CH = 2;
     private final int HL = 3;
@@ -53,7 +52,7 @@ public class GUIFireman extends javax.swing.JFrame {
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         initialSettings();
-        
+
     }
 
     /**
@@ -77,8 +76,7 @@ public class GUIFireman extends javax.swing.JFrame {
         addListeners();
         setTable();
         fillBoxes();
-      
-        
+
     }
 
     /**
@@ -120,7 +118,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnRemove.addActionListener(btn);
         cmbIncident.addItemListener(cmb);
         cmbVehicle.addItemListener(cmb);
-        
+
     }
 
     /**
@@ -138,14 +136,13 @@ public class GUIFireman extends javax.swing.JFrame {
     private void setTable() {
         btnTeamLeader.setEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().txtHours());
-        
+
         firemanListModel = new DefaultListModel<>();
         lstManpower.setModel(firemanListModel);
-        
+
         roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
         tblRoleTime.setModel(roleTimeModel);
-      
-        
+
     }
 
     /**
@@ -156,11 +153,13 @@ public class GUIFireman extends javax.swing.JFrame {
             if (befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
+            MessageError.getInstance().printError();
         }
         for (BEFireman befireman : BLLRead.getInstance().readAllFiremen()) {
             if (!befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
+            MessageError.getInstance().printError();
         }
     }
 
@@ -182,6 +181,7 @@ public class GUIFireman extends javax.swing.JFrame {
         for (BEIncident beincident : BLLRead.getInstance().readAllIncidents()) {
             cmbIncident.addItem(beincident);
         }
+        MessageError.getInstance().printError();
     }
 
     /**
@@ -201,7 +201,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private void setMyContributionEnabled(boolean enable) {
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
-        }
+    }
 
     /**
      * Enables or disables the BM and CH button
@@ -241,7 +241,7 @@ public class GUIFireman extends javax.swing.JFrame {
         setSTFunctionEnabled(enable);
         setHLFunctionEnabled(enable);
     }
-    
+
     public void addToIncidentCombo(BEIncident incident) {
         cmbIncident.addItem(incident);
         BLLRead.getInstance().addToIncident(incident);
@@ -281,6 +281,7 @@ public class GUIFireman extends javax.swing.JFrame {
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
             roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime(selected));
+            
             clearMyContribution();
         } else {
             clearInfoBox();
@@ -313,6 +314,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickST() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(true), ST);
+        MessageError.getInstance().printError();
         roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -321,6 +323,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickBM() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), BM);
+        MessageError.getInstance().printError();
         roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -329,6 +332,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickCH() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), CH);
+        MessageError.getInstance().printError();
         roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -337,6 +341,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickHL() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), HL);
+        MessageError.getInstance().printError();
         roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -347,7 +352,7 @@ public class GUIFireman extends javax.swing.JFrame {
         JFrame guiteamleader = GUITeamLeader.getInstance();
         GUITeamLeader.getInstance().setIncident((BEIncident) cmbIncident.getSelectedItem());
         guiteamleader.setVisible(true);
-        
+
     }
 
     /**
@@ -357,22 +362,23 @@ public class GUIFireman extends javax.swing.JFrame {
         JFrame guierror = GUIError.getInstance();
         guierror.setVisible(true);
     }
-    
+
     private void onClickCreate() {
         JFrame guicreateincident = GUICreateIncident.getInstance();
         guicreateincident.setVisible(true);
     }
-    
-    private void onClickRemove(){
-        if(tblRoleTime.getSelectedRow() == -1){
+
+    private void onClickRemove() {
+        if (tblRoleTime.getSelectedRow() == -1) {
             MessageDialog.getInstance().dialogChooseFireman();
             return;
         }
         int[] rows = tblRoleTime.getSelectedRows();
-        for(int i = 0; i < rows.length; i++){
+        for (int i = 0; i < rows.length; i++) {
             BERoleTime roleTime = roleTimeModel.getRoleTimeByRow(rows[i]);
             BLLDelete.getInstance().deleteFiremanFromRoleTime(roleTime);
         }
+        MessageError.getInstance().printError();
         roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
@@ -382,7 +388,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onListChange() {
         if (!lstManpower.isSelectionEmpty()) {
             setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
-            
+
             if (((BEFireman) lstManpower.getSelectedValue()).getM_photoPath() == null) {
                 lblImage.setIcon(null);
             } else {
@@ -418,7 +424,7 @@ public class GUIFireman extends javax.swing.JFrame {
             setBM_CHFunctionEnabled(false);
             setHLFunctionEnabled(false);
         }
-        
+
     }
 
     /**
@@ -438,7 +444,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private boolean checkForIntegers(String input) {
         return input.matches(MessageDialog.getInstance().txtIntChecker());
     }
-    
+
     private void onKeyClick() {
         if (isTextFieldReady()) {
             if (!checkForIntegers(txtManHours.getText())) {
@@ -453,7 +459,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Listener for the Incident ComboBox.
      */
     private class cmbAction implements ItemListener {
-        
+
         @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getSource().equals(cmbIncident)) {
@@ -468,7 +474,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Listener for the buttons.
      */
     private class btnAction implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btnST)) {
@@ -485,7 +491,7 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickErrorReport();
             } else if (e.getSource().equals(btnCreate)) {
                 onClickCreate();
-            } else if(e.getSource().equals(btnRemove)){
+            } else if (e.getSource().equals(btnRemove)) {
                 onClickRemove();
             }
         }
@@ -495,7 +501,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Listener for the ManPower List.
      */
     private class lstAction implements ListSelectionListener {
-        
+
         @Override
         public void valueChanged(ListSelectionEvent e) {
             onListChange();
@@ -506,7 +512,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Listener for the hours Textfield.
      */
     private class txtAction extends KeyAdapter {
-        
+
         @Override
         public void keyReleased(KeyEvent e) {
             onKeyClick();
@@ -517,14 +523,14 @@ public class GUIFireman extends javax.swing.JFrame {
      * focusListener for the Textfield.
      */
     private class txtFocus extends FocusAdapter {
-        
+
         @Override
         public void focusGained(FocusEvent e) {
             txtManHours.setText(MessageDialog.getInstance().EMPTY_TEXT());
             CheckHoursAndVehicles();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -14,8 +14,6 @@ import DAL.DALRead;
 import GUI.MessageDialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class BLLRead {
 
@@ -31,13 +29,14 @@ public class BLLRead {
     ArrayList<BEMaterial> materials;
     ArrayList<BEAlarm> alarms;
     ArrayList<BEIncidentDetails> incidentDetails;
-    
+
     private BLLRead() {
     }
 
     /**
      * Creates or returns the current instance of BLLRead
-     * @return m_instance of BLLRead
+     *
+     * @return current m_instance of BLLRead
      */
     public static BLLRead getInstance() {
         if (m_instance == null) {
@@ -48,6 +47,7 @@ public class BLLRead {
 
     /**
      * Invokes the method in DAL that reads Firemen
+     *
      * @return ArrayList of Firemen
      */
     public ArrayList<BEFireman> readAllFiremen() {
@@ -55,8 +55,7 @@ public class BLLRead {
             try {
                 firemen = DALRead.getInstance().readFiremen();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readFiremanError();
                 return null;
             }
         }
@@ -66,6 +65,7 @@ public class BLLRead {
 
     /**
      * Invokes the method in DAL that reads Vehicles
+     *
      * @return ArrayList of Vehicles
      */
     public ArrayList<BEVehicle> readAllVehicles() {
@@ -73,8 +73,7 @@ public class BLLRead {
             try {
                 vehicles = DALRead.getInstance().readVehicles();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readVehicleError();
                 return null;
             }
         }
@@ -83,6 +82,7 @@ public class BLLRead {
 
     /**
      * Invokes the method in DAL that reads IncidentTypes
+     *
      * @return ArrayList of IncidentTypes
      */
     public ArrayList<BEIncidentType> readAllIncidentTypes() {
@@ -90,8 +90,7 @@ public class BLLRead {
             try {
                 incidentTypes = DALRead.getInstance().readIncidentTypes();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readIncidentTypesError();
                 return null;
             }
         }
@@ -100,6 +99,7 @@ public class BLLRead {
 
     /**
      * Invokes the method in DAL that reads Incidents
+     *
      * @return ArrayList of Incidents
      */
     public ArrayList<BEIncident> readAllIncidents() {
@@ -107,8 +107,7 @@ public class BLLRead {
             try {
                 incidents = DALRead.getInstance().readIncidents();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readIncidentError();
                 return null;
             }
         }
@@ -117,7 +116,8 @@ public class BLLRead {
 
     /**
      * Adds the given incident to the arrayList
-     * @param incident 
+     *
+     * @param incident
      */
     public void addToIncident(BEIncident incident) {
         incidents.add(incident);
@@ -125,6 +125,7 @@ public class BLLRead {
 
     /**
      * Invokes the method in DAL that reads Roles
+     *
      * @return ArrayList of Roles
      */
     public ArrayList<BERole> readAllRoles() {
@@ -132,8 +133,7 @@ public class BLLRead {
             try {
                 roles = DALRead.getInstance().readRoles();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readRoleError();
                 return null;
             }
         }
@@ -142,6 +142,7 @@ public class BLLRead {
 
     /**
      * Invokes the method in DAL that reads RoleTimes
+     *
      * @return ArrayList of RoleTimes
      */
     public ArrayList<BERoleTime> readAllRoleTimes() {
@@ -149,8 +150,7 @@ public class BLLRead {
             try {
                 roletimes = DALRead.getInstance().readRoleTime();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readRoleTimeError();
                 return null;
             }
         }
@@ -159,20 +159,25 @@ public class BLLRead {
 
     /**
      * Adds the given roleTime to the arrayList
-     * @param roleTime 
+     *
+     * @param roleTime
      */
     public void addToRoleTime(BERoleTime roleTime) {
         roletimes.add(roleTime);
     }
+
     /**
      * Removes the given roleTime from the arrayList
-     * @param roleTime 
+     *
+     * @param roleTime
      */
-    public void removeFromRoleTime(BERoleTime roleTime){
+    public void removeFromRoleTime(BERoleTime roleTime) {
         roletimes.remove(roleTime);
     }
+
     /**
      * Invokes the method in DAL that reads Usage
+     *
      * @return ArrayList of Usage
      */
     public ArrayList<BEUsage> readUsages() {
@@ -180,8 +185,7 @@ public class BLLRead {
             try {
                 usages = DALRead.getInstance().readUsage();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLFireman.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readUsageError();
                 return null;
             }
         }
@@ -190,22 +194,25 @@ public class BLLRead {
 
     /**
      * Adds a new BEUsage to the arrayList
-     * @param usage 
+     *
+     * @param usage
      */
     public void addToUsage(BEUsage usage) {
         usages.add(usage);
     }
-    
+
     /**
      * Removes the given BEUsage from the arrayList
-     * @param usage 
+     *
+     * @param usage
      */
-    public void removeFromUsage(BEUsage usage){
+    public void removeFromUsage(BEUsage usage) {
         usages.remove(usage);
     }
 
     /**
      * Invokes the method in DAL that reads Materials
+     *
      * @return ArrayList of Materials
      */
     public ArrayList<BEMaterial> readMaterials() {
@@ -213,8 +220,7 @@ public class BLLRead {
             try {
                 materials = DALRead.getInstance().readMaterial();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readMaterialError();
                 return null;
             }
         }
@@ -223,6 +229,7 @@ public class BLLRead {
 
     /**
      * Read Alarms from the DB
+     *
      * @return ArrayList of Alarms
      */
     public ArrayList<BEAlarm> readAlarms() {
@@ -230,8 +237,7 @@ public class BLLRead {
             try {
                 alarms = DALRead.getInstance().readAlarms();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+               BLLError.getInstance().readAlarmError();
                 return null;
             }
         }
@@ -241,6 +247,7 @@ public class BLLRead {
 
     /**
      * Invokes the method in DAL that reads IncidentDetails
+     *
      * @return ArrayList of IncidentDetails
      */
     public ArrayList<BEIncidentDetails> readIncidentDetails() {
@@ -248,17 +255,15 @@ public class BLLRead {
             try {
                 incidentDetails = DALRead.getInstance().readIncidentDetails();
             } catch (SQLException ex) {
-                //Logger.getLogger(BLLTeamLeader.class.getName()).log(Level.SEVERE, null, ex);
-                MessageDialog.getInstance().DataBaseError(); //MÅ IKKE VÆRE HER
+                BLLError.getInstance().readIncidentDetailsError();
                 return null;
             }
         }
         return incidentDetails;
     }
-    
-    public void addToIncidentDetails(BEIncidentDetails incidentdetail){
+
+    public void addToIncidentDetails(BEIncidentDetails incidentdetail) {
         incidentDetails.add(incidentdetail);
     }
-    
 
 }
