@@ -117,7 +117,6 @@ public class BLLCreate {
             DALCreate.getInstance().createErrorReport(error);
         } catch (SQLException ex) {
             BLLError.getInstance().createErrorReportError();
-            return;
         }
     }
 

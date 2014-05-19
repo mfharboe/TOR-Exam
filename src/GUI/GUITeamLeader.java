@@ -11,6 +11,7 @@ import BLL.BLLDelete;
 import BLL.BLLRead;
 import BLL.BLLUpdate;
 import GUI.TableModel.TableModelUsage;
+import ObserverPattern.IObserver;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
 
-public class GUITeamLeader extends javax.swing.JFrame {
+public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
 
     private static GUITeamLeader m_instance;
     TableRowSorter<TableModelUsage> usageSorter;
@@ -35,6 +36,7 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private GUITeamLeader() {
         initComponents();
+        BLLRead.getInstance().register(this);
         this.setTitle(MessageDialog.getInstance().teamLeaderTitle());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initialSettings();
@@ -172,7 +174,6 @@ public class GUITeamLeader extends javax.swing.JFrame {
     private void onClickAddMaterial() {
         if (isUsageFilled()) {
             BLLCreate.getInstance().createUsage(getMyMaterials());
-            usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
             clearMaterials();
         }
     }
@@ -184,13 +185,13 @@ public class GUITeamLeader extends javax.swing.JFrame {
         if (tblUsage.getSelectedRow() == -1) {
             MessageDialog.getInstance().dialogChooseMaterial();
             return;
-        }  
+        }
         int[] rows = tblUsage.getSelectedRows();
         for (int i = 0; i < rows.length; i++) {
             BEUsage usage = usageModel.getUsageByRow(rows[i]);
             BLLDelete.getInstance().deleteMaterialFromUsage(usage);
         }
-        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
+        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident)); 
 
     }
 
@@ -260,6 +261,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
      */
     private boolean checkForIntegers(String input) {
         return input.matches(MessageDialog.getInstance().txtIntChecker());
+    }
+
+    @Override
+    public void update() {
+        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
     }
 
     /**

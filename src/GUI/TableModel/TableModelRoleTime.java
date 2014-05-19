@@ -2,6 +2,8 @@ package GUI.TableModel;
 
 import BE.BERoleTime;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.table.AbstractTableModel;
 
 public class TableModelRoleTime extends AbstractTableModel {
@@ -121,4 +123,5 @@ public class TableModelRoleTime extends AbstractTableModel {
     public BERoleTime getRoleTimeByRow(int row) {
         return roleTime.get(row);
     }
+
 }

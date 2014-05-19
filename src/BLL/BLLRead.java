@@ -11,13 +11,15 @@ import BE.BERoleTime;
 import BE.BEUsage;
 import BE.BEVehicle;
 import DAL.DALRead;
-import GUI.MessageDialog;
+import ObserverPattern.IObserver;
+import ObserverPattern.ISubject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BLLRead {
+public class BLLRead implements ISubject {
 
     private static BLLRead m_instance;
+    private ArrayList<IObserver> observers;
     ArrayList<BEIncidentType> incidentTypes;
     ArrayList<BEIncident> incidents;
     ArrayList<BEIncident> incompleteIncidents;
@@ -31,6 +33,7 @@ public class BLLRead {
     ArrayList<BEIncidentDetails> incidentDetails;
 
     private BLLRead() {
+        observers = new ArrayList<>();
     }
 
     /**
@@ -164,6 +167,7 @@ public class BLLRead {
      */
     public void addToRoleTime(BERoleTime roleTime) {
         roletimes.add(roleTime);
+        notifyObservers();
     }
 
     /**
@@ -173,6 +177,7 @@ public class BLLRead {
      */
     public void removeFromRoleTime(BERoleTime roleTime) {
         roletimes.remove(roleTime);
+        //notifyObservers();
     }
 
     /**
@@ -199,6 +204,7 @@ public class BLLRead {
      */
     public void addToUsage(BEUsage usage) {
         usages.add(usage);
+        notifyObservers();
     }
 
     /**
@@ -208,6 +214,7 @@ public class BLLRead {
      */
     public void removeFromUsage(BEUsage usage) {
         usages.remove(usage);
+        //notifyObservers();
     }
 
     /**
@@ -237,7 +244,7 @@ public class BLLRead {
             try {
                 alarms = DALRead.getInstance().readAlarms();
             } catch (SQLException ex) {
-               BLLError.getInstance().readAlarmError();
+                BLLError.getInstance().readAlarmError();
                 return null;
             }
         }
@@ -264,6 +271,22 @@ public class BLLRead {
 
     public void addToIncidentDetails(BEIncidentDetails incidentdetail) {
         incidentDetails.add(incidentdetail);
+    }
+
+    @Override
+    public void register(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void unregister(IObserver o) {
+        observers.remove(o);
+    }
+    @Override
+    public void notifyObservers() {
+        for(IObserver observer : observers){
+            observer.update();
+        }
     }
 
 }

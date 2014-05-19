@@ -9,8 +9,6 @@ import GUI.MessageError;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -57,10 +55,10 @@ public class BLLRSS {
         try {
             feed = RSS_Reader1.getInstance().readRSS();
         } catch (MalformedURLException ex) {
-            System.out.println(ex);
+            BLLError.getInstance().dbError();
             return null;
         } catch (IOException | ParserConfigurationException | SAXException ex) {
-            System.out.println("No connection");
+            BLLError.getInstance().dbError();
             return null;
         }
         if(!feeds.contains(feed)){

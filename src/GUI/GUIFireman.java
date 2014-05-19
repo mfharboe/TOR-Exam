@@ -10,6 +10,7 @@ import BLL.BLLCreate;
 import BLL.BLLDelete;
 import BLL.BLLRead;
 import GUI.TableModel.TableModelRoleTime;
+import ObserverPattern.IObserver;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +28,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 
-public class GUIFireman extends javax.swing.JFrame {
+public class GUIFireman extends javax.swing.JFrame implements IObserver {
 
     private static GUIFireman m_instance;
 
@@ -49,6 +50,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private GUIFireman() {
         initComponents();
+        BLLRead.getInstance().register(this);
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         initialSettings();
@@ -281,7 +283,7 @@ public class GUIFireman extends javax.swing.JFrame {
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
             roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime(selected));
-            
+
             clearMyContribution();
         } else {
             clearInfoBox();
@@ -315,7 +317,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickST() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(true), ST);
         MessageError.getInstance().printError();
-        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -324,7 +326,8 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickBM() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), BM);
         MessageError.getInstance().printError();
-        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+
     }
 
     /**
@@ -333,7 +336,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickCH() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), CH);
         MessageError.getInstance().printError();
-        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -342,7 +345,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickHL() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), HL);
         MessageError.getInstance().printError();
-        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -378,8 +381,8 @@ public class GUIFireman extends javax.swing.JFrame {
             BERoleTime roleTime = roleTimeModel.getRoleTimeByRow(rows[i]);
             BLLDelete.getInstance().deleteFiremanFromRoleTime(roleTime);
         }
+       roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
         MessageError.getInstance().printError();
-        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -453,6 +456,11 @@ public class GUIFireman extends javax.swing.JFrame {
             }
         }
         CheckHoursAndVehicles();
+    }
+
+    @Override
+    public void update() {
+        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
