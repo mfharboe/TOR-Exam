@@ -5,7 +5,6 @@ import BE.BERSS;
 import DAL.RSS_ReaderAllFeed;
 import DAL.RSS_ReaderNewFeed;
 import GUI.GUIFireman;
-import GUI.MessageError;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;

@@ -1,15 +1,14 @@
 package BLL;
 
-import ObserverPattern.IObserver;
-import ObserverPattern.ISubject;
+import ObserverPattern.IErrorObserver;
+import ObserverPattern.IErrorSubject;
 import java.util.ArrayList;
 
-public class BLLError implements ISubject {
+public class BLLError implements IErrorSubject {
 
-    private final ArrayList<IObserver> observers;
+    private final ArrayList<IErrorObserver> observers;
     private static BLLError m_instance;
-    private final String ERROR_SYMBOL = "¤";
-    private String error = ERROR_SYMBOL;
+    private String error = "";
 
     private BLLError() {
         observers = new ArrayList<>();
@@ -116,40 +115,22 @@ public class BLLError implements ISubject {
         notifyObservers();
     }
     
-    /**
-     * @return true if there is an error, false if there is no error
-     */
-    public boolean isError() {
-        return !error.equals(ERROR_SYMBOL);
-    }
-
-    /**
-     * Resets the error String
-     */
-    public void resetError() {
-        error = ERROR_SYMBOL;
-    }
-
-    /**
-     * @return the current error message
-     */
-    public String getError() {
-        return error;
-    }
-
     @Override
-    public void register(IObserver o) {
+    public void register(IErrorObserver o) {
         observers.add(o);
     }
 
     @Override
-    public void unregister(IObserver o) {
+    public void unregister(IErrorObserver o) {
         observers.remove(o);
     }
 
     @Override
     public void notifyObservers() {
-        for(IObserver observer : observers)
-            observer.update();
+        for(IErrorObserver observer : observers)
+            observer.update(error);
+        
     }
+
+    
 }

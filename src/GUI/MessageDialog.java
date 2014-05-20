@@ -1,8 +1,9 @@
 package GUI;
 
+import ObserverPattern.IErrorObserver;
 import javax.swing.JOptionPane;
 
-public class MessageDialog {
+public class MessageDialog implements IErrorObserver{
 
     private static MessageDialog m_instance;
 
@@ -200,10 +201,8 @@ public class MessageDialog {
         JOptionPane.showMessageDialog(null, "Du skal vælge en brandmand at fjerne");
     }
 
-    /**
-     * Dialog if an error happened with the connection
-     */
-    public void DataBaseError() {
-        JOptionPane.showMessageDialog(null, "Der er sket en fejl, handlingen afsluttes");
+    @Override
+    public void update(String error) {
+         JOptionPane.showMessageDialog(null, error);
     }
 }

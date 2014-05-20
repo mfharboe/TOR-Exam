@@ -15,7 +15,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        BLLError.getInstance().register(MessageError.getInstance());
+        BLLError.getInstance().register(MessageDialog.getInstance());
         JFrame main = GUIFireman.getInstance();
         main.setVisible(true);
         //new Thread(new RSSThread()).start();
