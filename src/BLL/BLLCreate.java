@@ -38,6 +38,12 @@ public class BLLCreate {
      */
     public boolean createIncident(BEIncident incident) {
         try {
+            int x = Integer.parseInt("s");
+        } catch (NumberFormatException e) {
+            BLLError.getInstance().dbError();
+        }
+        
+        try {
             DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
             BLLError.getInstance().createIncidentError();

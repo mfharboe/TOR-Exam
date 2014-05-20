@@ -153,13 +153,11 @@ public class GUIFireman extends javax.swing.JFrame {
             if (befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
-            MessageError.getInstance().printError();
         }
         for (BEFireman befireman : BLLRead.getInstance().readAllFiremen()) {
             if (!befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
-            MessageError.getInstance().printError();
         }
     }
 
@@ -181,7 +179,6 @@ public class GUIFireman extends javax.swing.JFrame {
         for (BEIncident beincident : BLLRead.getInstance().readAllIncidents()) {
             cmbIncident.addItem(beincident);
         }
-        MessageError.getInstance().printError();
     }
 
     /**
@@ -317,7 +314,6 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickST() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(true), ST);
         BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
-        MessageError.getInstance().printError();
     }
 
     /**
@@ -326,8 +322,6 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickBM() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), BM);
         BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
-        MessageError.getInstance().printError(); //Observer
-
     }
 
     /**
@@ -336,7 +330,6 @@ public class GUIFireman extends javax.swing.JFrame {
     private void onClickCH() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), CH);
         BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
-        MessageError.getInstance().printError();
     }
 
     /**
@@ -344,7 +337,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onClickHL() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), HL);
-        MessageError.getInstance().printError();
+        BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
     }
 
     /**
@@ -381,9 +374,7 @@ public class GUIFireman extends javax.swing.JFrame {
             BERoleTime roleTime = roleTimeModel.getRoleTimeByRow(rows[i]);
             BLLDelete.getInstance().deleteFiremanFromRoleTime(roleTime);
         }
-        //roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
         BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
-        MessageError.getInstance().printError();
     }
 
     /**

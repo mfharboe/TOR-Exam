@@ -66,7 +66,6 @@ public class GUICreateIncident extends javax.swing.JFrame {
         for (BEIncidentType beincidenttype : BLLRead.getInstance().readAllIncidentTypes()) {
             cmbIncidentType.addItem(beincidenttype);
         }
-        MessageError.getInstance().printError();
     }
 
     private void clearMyInformation() {
@@ -133,14 +132,11 @@ public class GUICreateIncident extends javax.swing.JFrame {
             if (BLLCreate.getInstance().createIncident(tmpIncident)) {
 
                 BLLCreate.getInstance().createInitialIncidentDetails(tmpIncident);
-                MessageError.getInstance().printError();
 
                 GUIFireman.getInstance().addToIncidentCombo(tmpIncident);
-                MessageError.getInstance().printError();
 
                 onClickClose();
             }
-            MessageError.getInstance().printError();
         } else {
             MessageDialog.getInstance().dialogFillAllInformation();
         }

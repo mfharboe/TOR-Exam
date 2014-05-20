@@ -77,7 +77,6 @@ public class GUIError extends javax.swing.JFrame {
         for (BEVehicle beVehicle : BLLRead.getInstance().readAllVehicles()) {
             cmbVehicle.addItem(beVehicle);
         }
-        MessageError.getInstance().printError();
 
     }
 
@@ -138,7 +137,6 @@ public class GUIError extends javax.swing.JFrame {
             boolean suitWash = chkFireSuit.isSelected();
             BEError be = new BEError(vehicleOdinNumner, filledBy, sqlDate, outOfOrder, urgent, description, cause, suitWash);
             BLLCreate.getInstance().createErrorReport(be);
-            MessageError.getInstance().printError();
             onClickClose();
         }
     }
