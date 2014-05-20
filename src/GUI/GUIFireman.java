@@ -10,7 +10,6 @@ import BLL.BLLCreate;
 import BLL.BLLDelete;
 import BLL.BLLRead;
 import GUI.TableModel.TableModelRoleTime;
-import ObserverPattern.IObserver;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,14 +27,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 
-public class GUIFireman extends javax.swing.JFrame implements IObserver {
+public class GUIFireman extends javax.swing.JFrame {
 
     private static GUIFireman m_instance;
 
     DefaultListModel<BEFireman> firemanListModel;
     TableRowSorter<TableModelRoleTime> roleTimeSorter;
     private TableModelRoleTime roleTimeModel;
-    private final ArrayList<BERoleTime> EMPTY_ARRAY_LIST = new ArrayList<>();
 
     ImageIcon image;
     ImageIcon imageLogo;
@@ -50,11 +48,9 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
      */
     private GUIFireman() {
         initComponents();
-        BLLRead.getInstance().register(this);
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         initialSettings();
-
     }
 
     /**
@@ -123,14 +119,6 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
 
     }
 
-    /**
-     * Fills all Comboboxes and Lists.
-     */
-    private void fillBoxes() {
-        fillFiremanList();
-        fillVehicleCombo();
-        fillIncidentCombo();
-    }
 
     /**
      * Sets the table with the initial settings
@@ -142,9 +130,19 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
         firemanListModel = new DefaultListModel<>();
         lstManpower.setModel(firemanListModel);
 
-        roleTimeModel = new TableModelRoleTime(EMPTY_ARRAY_LIST);
+        roleTimeModel = new TableModelRoleTime(BLLAdapter.getInstance().getEmptyIncidentRoleTime());
         tblRoleTime.setModel(roleTimeModel);
+        BLLAdapter.getInstance().register(roleTimeModel);
 
+    }
+    
+    /**
+     * Fills all Comboboxes and Lists.
+     */
+    private void fillBoxes() {
+        fillFiremanList();
+        fillVehicleCombo();
+        fillIncidentCombo();
     }
 
     /**
@@ -244,17 +242,20 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
         setHLFunctionEnabled(enable);
     }
 
+    /**
+     * Adds the given incident to the combobox of incidents
+     * @param incident 
+     */
     public void addToIncidentCombo(BEIncident incident) {
         cmbIncident.addItem(incident);
         BLLRead.getInstance().addToIncident(incident);
-        cmbIncident.setSelectedItem(incident);
     }
 
     /**
      * Clears the Info panel.
      */
     private void clearInfoBox() {
-        roleTimeModel.setRoleTimeList(EMPTY_ARRAY_LIST);
+        BLLAdapter.getInstance().getEmptyIncidentRoleTime();
         clearMyContribution();
     }
 
@@ -282,8 +283,7 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
         lblImage.setIcon(null);
         if (cmbIncident.getSelectedIndex() != 0) {
             BEIncident selected = (BEIncident) cmbIncident.getSelectedItem();
-            roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime(selected));
-
+            BLLAdapter.getInstance().incidentToRoleTime(selected);
             clearMyContribution();
         } else {
             clearInfoBox();
@@ -316,8 +316,8 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
      */
     private void onClickST() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(true), ST);
+        BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
         MessageError.getInstance().printError();
-        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -325,8 +325,8 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
      */
     private void onClickBM() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), BM);
-        MessageError.getInstance().printError();
-        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
+        MessageError.getInstance().printError(); //Observer
 
     }
 
@@ -335,8 +335,8 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
      */
     private void onClickCH() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), CH);
+        BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
         MessageError.getInstance().printError();
-        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -345,7 +345,6 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
     private void onClickHL() {
         BLLCreate.getInstance().createRoleOnIncident(myContribution(false), HL);
         MessageError.getInstance().printError();
-        // roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -377,11 +376,13 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
             return;
         }
         int[] rows = tblRoleTime.getSelectedRows();
+
         for (int i = 0; i < rows.length; i++) {
             BERoleTime roleTime = roleTimeModel.getRoleTimeByRow(rows[i]);
             BLLDelete.getInstance().deleteFiremanFromRoleTime(roleTime);
         }
-       roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        //roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
+        BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem());
         MessageError.getInstance().printError();
     }
 
@@ -456,11 +457,6 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
             }
         }
         CheckHoursAndVehicles();
-    }
-
-    @Override
-    public void update() {
-        roleTimeModel.setRoleTimeList(BLLAdapter.getInstance().incidentToRoleTime((BEIncident) cmbIncident.getSelectedItem()));
     }
 
     /**
@@ -713,7 +709,6 @@ public class GUIFireman extends javax.swing.JFrame implements IObserver {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBM;
     private javax.swing.JButton btnCH;

@@ -70,6 +70,7 @@ public class BLLRSS {
             BLLCreate.getInstance().createInitialIncidentDetails(incident);
             MessageError.getInstance().printError();
             GUIFireman.getInstance().addToIncidentCombo(incident);
+            
         }
         return feed;
     }

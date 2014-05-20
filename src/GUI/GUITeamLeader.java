@@ -11,7 +11,6 @@ import BLL.BLLDelete;
 import BLL.BLLRead;
 import BLL.BLLUpdate;
 import GUI.TableModel.TableModelUsage;
-import ObserverPattern.IObserver;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,12 +21,11 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.TableRowSorter;
 
-public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
+public class GUITeamLeader extends javax.swing.JFrame {
 
     private static GUITeamLeader m_instance;
     TableRowSorter<TableModelUsage> usageSorter;
     private TableModelUsage usageModel;
-    private ArrayList<BEUsage> usageList;
     private BEIncident m_incident;
     private BEIncidentDetails m_incidentDetails;
 
@@ -36,7 +34,6 @@ public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
      */
     private GUITeamLeader() {
         initComponents();
-        BLLRead.getInstance().register(this);
         this.setTitle(MessageDialog.getInstance().teamLeaderTitle());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initialSettings();
@@ -61,10 +58,7 @@ public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
         fillBoxes();
         clearMaterials();
         addColors();
-        usageList = new ArrayList<>();
-        usageModel = new TableModelUsage(usageList);
-        tblUsage.setModel(usageModel);
-
+        setTable();
     }
 
     /**
@@ -94,6 +88,15 @@ public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
         btnRemoveMateriel.addActionListener(btn);
         txtAmountMaterial.addFocusListener(txtFc);
         txtAmountMaterial.addKeyListener(txt);
+    }
+
+    /**
+     * Sets the table with the initial settings
+     */
+    private void setTable() {
+        usageModel = new TableModelUsage(BLLAdapter.getInstance().getEmptyUsage());
+        tblUsage.setModel(usageModel);
+        BLLAdapter.getInstance().register(usageModel);
     }
 
     /**
@@ -140,7 +143,7 @@ public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
      */
     public void setIncident(BEIncident incident) {
         m_incident = incident;
-        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
+        BLLAdapter.getInstance().incidentToUsage(m_incident);
         m_incidentDetails = BLLAdapter.getInstance().incidentToIncidentDetails(m_incident);
         txtIncidentLeader.setText(m_incidentDetails.getM_incidentLeader());
         txtEvaNumber.setText(m_incidentDetails.getM_evaNumber());
@@ -174,6 +177,7 @@ public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
     private void onClickAddMaterial() {
         if (isUsageFilled()) {
             BLLCreate.getInstance().createUsage(getMyMaterials());
+            BLLAdapter.getInstance().incidentToUsage(m_incident);
             clearMaterials();
         }
     }
@@ -191,8 +195,7 @@ public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
             BEUsage usage = usageModel.getUsageByRow(rows[i]);
             BLLDelete.getInstance().deleteMaterialFromUsage(usage);
         }
-        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident)); 
-
+        BLLAdapter.getInstance().incidentToUsage(m_incident);
     }
 
     /**
@@ -261,11 +264,6 @@ public class GUITeamLeader extends javax.swing.JFrame implements IObserver {
      */
     private boolean checkForIntegers(String input) {
         return input.matches(MessageDialog.getInstance().txtIntChecker());
-    }
-
-    @Override
-    public void update() {
-        usageModel.setUsageList(BLLAdapter.getInstance().incidentToUsage(m_incident));
     }
 
     /**

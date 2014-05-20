@@ -11,15 +11,12 @@ import BE.BERoleTime;
 import BE.BEUsage;
 import BE.BEVehicle;
 import DAL.DALRead;
-import ObserverPattern.IObserver;
-import ObserverPattern.ISubject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BLLRead implements ISubject {
+public class BLLRead {
 
     private static BLLRead m_instance;
-    private ArrayList<IObserver> observers;
     ArrayList<BEIncidentType> incidentTypes;
     ArrayList<BEIncident> incidents;
     ArrayList<BEIncident> incompleteIncidents;
@@ -33,7 +30,6 @@ public class BLLRead implements ISubject {
     ArrayList<BEIncidentDetails> incidentDetails;
 
     private BLLRead() {
-        observers = new ArrayList<>();
     }
 
     /**
@@ -167,7 +163,6 @@ public class BLLRead implements ISubject {
      */
     public void addToRoleTime(BERoleTime roleTime) {
         roletimes.add(roleTime);
-        notifyObservers();
     }
 
     /**
@@ -204,7 +199,6 @@ public class BLLRead implements ISubject {
      */
     public void addToUsage(BEUsage usage) {
         usages.add(usage);
-        notifyObservers();
     }
 
     /**
@@ -214,7 +208,6 @@ public class BLLRead implements ISubject {
      */
     public void removeFromUsage(BEUsage usage) {
         usages.remove(usage);
-        //notifyObservers();
     }
 
     /**
@@ -271,22 +264,6 @@ public class BLLRead implements ISubject {
 
     public void addToIncidentDetails(BEIncidentDetails incidentdetail) {
         incidentDetails.add(incidentdetail);
-    }
-
-    @Override
-    public void register(IObserver o) {
-        observers.add(o);
-    }
-
-    @Override
-    public void unregister(IObserver o) {
-        observers.remove(o);
-    }
-    @Override
-    public void notifyObservers() {
-        for(IObserver observer : observers){
-            observer.update();
-        }
     }
 
 }

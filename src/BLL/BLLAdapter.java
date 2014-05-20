@@ -6,6 +6,8 @@ import BE.BEIncidentType;
 import BE.BERSS;
 import BE.BERoleTime;
 import BE.BEUsage;
+import ObserverPattern.IObserver;
+import ObserverPattern.ISubject;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,12 +15,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class BLLAdapter {
+public class BLLAdapter implements ISubject{
 
     private static BLLAdapter m_instance;
-
+    private final ArrayList<IObserver> observers;
+    private final ArrayList<BERoleTime> roletimes;
+    private final ArrayList<BEUsage> usages;
+    
     private BLLAdapter() {
-
+        observers = new ArrayList<>();
+        roletimes = new ArrayList<>();
+        usages = new ArrayList<>();
     }
 
     public static BLLAdapter getInstance() {
@@ -32,33 +39,42 @@ public class BLLAdapter {
      * Sets the RoleTime for an Incident
      *
      * @param incident
-     * @return ArrayList of RoleTime
      */
-    public ArrayList<BERoleTime> incidentToRoleTime(BEIncident incident) {
-        ArrayList<BERoleTime> beroletime = new ArrayList<>();
-
+    public void incidentToRoleTime(BEIncident incident) {
+        roletimes.clear();
         for (BERoleTime be : BLLRead.getInstance().readAllRoleTimes()) {
             if (be.getM_incident().getM_id() == incident.getM_id()) {
-                beroletime.add(be);
+                roletimes.add(be);
             }
         }
-        return beroletime;
+        notifyObservers();
+    }
+    
+    public ArrayList<BERoleTime> getEmptyIncidentRoleTime(){
+        roletimes.clear();
+        notifyObservers();
+        return roletimes;
     }
 
     /**
      * Checks and adds Usage for a given Incident
      *
      * @param incident
-     * @return ArrayList of BEUsage
      */
-    public ArrayList<BEUsage> incidentToUsage(BEIncident incident) {
-        ArrayList<BEUsage> beusage = new ArrayList<>();
+    public void incidentToUsage(BEIncident incident) {
+        usages.clear();
         for (BEUsage be : BLLRead.getInstance().readUsages()) {
             if (be.getM_incident().getM_id() == incident.getM_id()) {
-                beusage.add(be);
+                usages.add(be);
             }
         }
-        return beusage;
+        notifyObservers();
+    }
+    
+    public ArrayList<BEUsage> getEmptyUsage(){
+        usages.clear();
+        notifyObservers();
+        return usages;
     }
 
     /**
@@ -107,5 +123,21 @@ public class BLLAdapter {
         BEIncident incident = new BEIncident(incidentName, sqlDate, time, incidentType, isDone);
         return incident;
 
+    }
+
+    @Override
+    public void register(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void unregister(IObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(IObserver observer : observers)
+            observer.update();
     }
 }

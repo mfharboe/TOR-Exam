@@ -1,10 +1,11 @@
 package GUI.TableModel;
 
 import BE.BEUsage;
+import ObserverPattern.IObserver;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-public class TableModelUsage extends AbstractTableModel {
+public class TableModelUsage extends AbstractTableModel implements IObserver {
 
     private ArrayList<BEUsage> usage;
 
@@ -102,6 +103,11 @@ public class TableModelUsage extends AbstractTableModel {
      */
     public BEUsage getUsageByRow(int row) {
         return usage.get(row);
+    }
+
+    @Override
+    public void update() {
+        fireTableDataChanged();
     }
     
 }
