@@ -2,8 +2,8 @@ package BLL;
 
 import BE.BEIncident;
 import BE.BERSS;
-import DAL.RSS_Reader;
-import DAL.RSS_Reader1;
+import DAL.RSS_ReaderAllFeed;
+import DAL.RSS_ReaderNewFeed;
 import GUI.GUIFireman;
 import GUI.MessageError;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class BLLRSS {
      * @throws Exception 
      */
     public ArrayList<BERSS> readFeed() throws MalformedURLException, Exception {
-        return RSS_Reader.getInstance().readRSS();
+        return RSS_ReaderAllFeed.getInstance().readRSS();
     }
 
     /**
@@ -53,7 +53,7 @@ public class BLLRSS {
     public BERSS getNewFeed() {
         BERSS feed = null;
         try {
-            feed = RSS_Reader1.getInstance().readRSS();
+            feed = RSS_ReaderNewFeed.getInstance().readRSS();
         } catch (MalformedURLException ex) {
             BLLError.getInstance().dbError();
             return null;

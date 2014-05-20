@@ -1,11 +1,12 @@
 package DAL;
 
+import DAL.Intefaces.IDALDelete;
 import BE.BERoleTime;
 import BE.BEUsage;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DALDelete {
+public class DALDelete implements IDALDelete {
 
     private static DALDelete m_instance;
 
@@ -24,7 +25,8 @@ public class DALDelete {
      * @param usage
      * @throws SQLException 
      */
-    public void deleteMaterialFromUsage(BEUsage usage) throws SQLException {
+    @Override
+        public void deleteMaterialFromUsage(BEUsage usage) throws SQLException {
         String sql = "Delete from [Usage] where [usage].id = ?";
         PreparedStatement ps = DB_Connection.getInstance().getConnection().prepareStatement(sql);
         ps.setInt(1, usage.getM_id());
@@ -36,7 +38,8 @@ public class DALDelete {
      * @param roleTime
      * @throws SQLException 
      */
-    public void deleteFiremanFromRoleTime(BERoleTime roleTime) throws SQLException {
+    @Override
+        public void deleteFiremanFromRoleTime(BERoleTime roleTime) throws SQLException {
         String sql = "Delete from [Role/Time] where firemanId = ? and incidentId= ?";
         PreparedStatement ps = DB_Connection.getInstance().getConnection().prepareStatement(sql);
         ps.setInt(1, roleTime.getM_fireman().getM_id());

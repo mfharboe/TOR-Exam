@@ -1,5 +1,6 @@
 package DAL;
 
+import DAL.Intefaces.IDALUpdate;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
 import BE.BEIncidentType;
@@ -8,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DALUpdate {
+public class DALUpdate implements IDALUpdate {
 
     Connection m_connection;
     private static DALUpdate m_instance;
@@ -34,6 +35,7 @@ public class DALUpdate {
      * @param incident
      * @throws SQLException
      */
+    @Override
     public void updateIncident(BEIncident incident) throws SQLException {
         String sql = "Update Incident set incidentName = ?, "
                 + "Incident.[date] = ?, "
@@ -57,6 +59,7 @@ public class DALUpdate {
      * @param incidentDetails
      * @throws SQLException
      */
+    @Override
     public void updateIncidentDetails(BEIncidentDetails incidentDetails) throws SQLException {
         String sql = "Update IncidentDetails set incidentLeader = ?, "
                 + "evaNumber = ?, "

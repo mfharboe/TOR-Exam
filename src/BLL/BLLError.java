@@ -111,6 +111,11 @@ public class BLLError implements ISubject {
         notifyObservers();
     }
     
+    public void RSSError(){
+        error = "Der skete en uventet fejl ved indlæsning fra ODIN. Genstart programmet.";
+        notifyObservers();
+    }
+    
     /**
      * @return true if there is an error, false if there is no error
      */

@@ -1,5 +1,6 @@
 package DAL;
-
+ 
+import DAL.Intefaces.IDALCreate;
 import BE.BEError;
 import BE.BEIncident;
 import BE.BEIncidentDetails;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DALCreate {
+public class DALCreate implements IDALCreate{
 
     Connection m_connection;
     private static DALCreate m_instance;
@@ -39,7 +40,8 @@ public class DALCreate {
      * @param incident
      * @throws SQLException
      */
-    public void createIncident(BEIncident incident) throws SQLException {
+    @Override
+        public void createIncident(BEIncident incident) throws SQLException {
         String sql = "insert into Incident values (?,?,?,?,?); ";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setString(1, incident.getM_incidentName());
@@ -65,7 +67,8 @@ public class DALCreate {
      * @param roletime
      * @throws SQLException
      */
-    public void createRoleTime(BERoleTime roletime) throws SQLException {
+    @Override
+        public void createRoleTime(BERoleTime roletime) throws SQLException {
         String sql = "insert into [Role/Time] values (?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setInt(1, roletime.getM_incident().getM_id());
@@ -88,7 +91,8 @@ public class DALCreate {
      * @param usage
      * @throws SQLException
      */
-    public void createUsage(BEUsage usage) throws SQLException {
+    @Override
+        public void createUsage(BEUsage usage) throws SQLException {
         String sql = "insert into Usage values (?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setInt(1, usage.getM_material().getM_id());
@@ -111,7 +115,8 @@ public class DALCreate {
      * @param errorReport
      * @throws SQLException
      */
-    public void createErrorReport(BEError errorReport) throws SQLException {
+    @Override
+        public void createErrorReport(BEError errorReport) throws SQLException {
         String sql = " insert into Error values (?,?,?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         if (errorReport.getM_vehicleOdinNumber() == null) {
@@ -136,7 +141,8 @@ public class DALCreate {
      * @param initialIncidentDetails
      * @throws SQLException
      */
-    public void createInitialIncidentDetails(BEIncidentDetails initialIncidentDetails) throws SQLException {
+    @Override
+        public void createInitialIncidentDetails(BEIncidentDetails initialIncidentDetails) throws SQLException {
         String sql = "insert into IncidentDetails values (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = m_connection.prepareStatement(sql);
         ps.setString(1, null);

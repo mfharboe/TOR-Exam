@@ -1,5 +1,6 @@
 package DAL;
 
+import DAL.Intefaces.IDALRead;
 import BE.BEAlarm;
 import BE.BEFireman;
 import BE.BEIncident;
@@ -19,7 +20,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
 
-public class DALRead {
+public class DALRead implements IDALRead {
 
     Connection m_connection;
     private static DALRead m_instance;
@@ -48,6 +49,7 @@ public class DALRead {
      * @return ArrayList of Incident Types
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEIncidentType> readIncidentTypes() throws SQLException {
         if (resIncidentType == null) {
             resIncidentType = new ArrayList<>();
@@ -70,6 +72,7 @@ public class DALRead {
      * @return ArrayList of Alarms
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEAlarm> readAlarms() throws SQLException {
         if (resAlarms == null) {
             resAlarms = new ArrayList<>();
@@ -92,6 +95,7 @@ public class DALRead {
      * @return ArrayList of Incidents
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEIncident> readIncidents() throws SQLException {
         ArrayList<BEIncident> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -122,6 +126,7 @@ public class DALRead {
      * @return an ArrayList of Vehicles
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEVehicle> readVehicles() throws SQLException {
         ArrayList<BEVehicle> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -145,6 +150,7 @@ public class DALRead {
      * @return ArrayList of Firemen
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEFireman> readFiremen() throws SQLException {
         ArrayList<BEFireman> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -179,6 +185,7 @@ public class DALRead {
      * @return ArrayList of Zipcodes
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEZipcode> readZipcodes() throws SQLException {
         ArrayList<BEZipcode> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -199,6 +206,7 @@ public class DALRead {
      * @return ArrayList of Roles
      * @throws SQLException
      */
+    @Override
     public ArrayList<BERole> readRoles() throws SQLException {
         ArrayList<BERole> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -219,6 +227,7 @@ public class DALRead {
      * @return ArrayList of RoleTimes
      * @throws SQLException
      */
+    @Override
     public ArrayList<BERoleTime> readRoleTime() throws SQLException {
         ArrayList<BERoleTime> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -281,6 +290,7 @@ public class DALRead {
      * @return ArrayList of Usage
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEUsage> readUsage() throws SQLException {
         ArrayList<BEUsage> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -320,6 +330,7 @@ public class DALRead {
      * @return ArrayList of Material
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEMaterial> readMaterial() throws SQLException {
         ArrayList<BEMaterial> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
@@ -341,6 +352,7 @@ public class DALRead {
      * @return ArrayList of IncidentDetails
      * @throws SQLException
      */
+    @Override
     public ArrayList<BEIncidentDetails> readIncidentDetails() throws SQLException {
         ArrayList<BEIncidentDetails> res = new ArrayList<>();
         Statement stm = m_connection.createStatement();
