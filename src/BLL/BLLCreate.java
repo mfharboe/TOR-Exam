@@ -7,6 +7,7 @@ import BE.BERole;
 import BE.BERoleTime;
 import BE.BEUsage;
 import DAL.DALCreate;
+import DAL.Intefaces.IDALCreate;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -15,8 +16,10 @@ import java.util.logging.Logger;
 public class BLLCreate {
 
     private static BLLCreate m_instance;
+    private final IDALCreate dalCreate;
 
     private BLLCreate() {
+        dalCreate = DALCreate.getInstance();
     }
 
     /**
@@ -37,14 +40,8 @@ public class BLLCreate {
      * @return
      */
     public boolean createIncident(BEIncident incident) {
-        
         try {
-            int x = Integer.parseInt("x");
-            
-        } catch (NumberFormatException e) {
-            BLLError.getInstance().dbError();
-        }
-        try {
+            dalCreate.createIncident(incident);
             DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
             BLLError.getInstance().createIncidentError();

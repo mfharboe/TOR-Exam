@@ -1,6 +1,6 @@
 package GUI;
 
-import ObserverPattern.IErrorObserver;
+import Observer.IErrorObserver;
 import javax.swing.JOptionPane;
 
 public class MessageDialog implements IErrorObserver{

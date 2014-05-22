@@ -1,5 +1,5 @@
 
-package ObserverPattern;
+package Observer;
 
 public interface ISubject {
     public void register(IObserver o);

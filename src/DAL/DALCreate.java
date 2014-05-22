@@ -43,22 +43,17 @@ public class DALCreate implements IDALCreate{
     @Override
         public void createIncident(BEIncident incident) throws SQLException {
         String sql = "insert into Incident values (?,?,?,?,?); ";
-        PreparedStatement ps = m_connection.prepareStatement(sql);
+        PreparedStatement ps = m_connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, incident.getM_incidentName());
         ps.setDate(2, incident.getM_date());
         ps.setTime(3, incident.getM_time());
         ps.setInt(4, incident.getM_incidentType().getM_id());
         ps.setBoolean(5, incident.isM_isDone());
         ps.executeUpdate();
-
-        String sql2 = "Select * from Incident where incident.id = (Select MAX(id) from Incident);";
-        Statement stm = m_connection.createStatement();
-        stm.execute(sql2);
-        ResultSet result = stm.getResultSet();
+        ResultSet result = ps.getGeneratedKeys();
         while (result.next()) {
-            incident.setM_id(result.getInt("id"));
+            incident.setM_id(result.getInt(1));
         }
-
     }
 
     /**
@@ -94,18 +89,14 @@ public class DALCreate implements IDALCreate{
     @Override
         public void createUsage(BEUsage usage) throws SQLException {
         String sql = "insert into Usage values (?,?,?)";
-        PreparedStatement ps = m_connection.prepareStatement(sql);
+        PreparedStatement ps = m_connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, usage.getM_material().getM_id());
         ps.setInt(2, usage.getM_amount());
         ps.setInt(3, usage.getM_incident().getM_id());
         ps.executeUpdate();
-
-        String sql2 = "Select * from Usage where Usage.id = (Select MAX(id) from Usage);";
-        Statement stm = m_connection.createStatement();
-        stm.execute(sql2);
-        ResultSet result = stm.getResultSet();
+        ResultSet result = ps.getGeneratedKeys();
         while (result.next()) {
-            usage.setM_id(result.getInt("id"));
+            usage.setM_id(result.getInt(1));
         }
     }
 

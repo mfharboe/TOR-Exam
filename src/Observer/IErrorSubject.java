@@ -1,4 +1,4 @@
-package ObserverPattern;
+package Observer;
 
 public interface IErrorSubject {
     public void register(IErrorObserver o);

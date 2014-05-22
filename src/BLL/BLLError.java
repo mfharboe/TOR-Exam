@@ -1,7 +1,7 @@
 package BLL;
 
-import ObserverPattern.IErrorObserver;
-import ObserverPattern.IErrorSubject;
+import Observer.IErrorObserver;
+import Observer.IErrorSubject;
 import java.util.ArrayList;
 
 public class BLLError implements IErrorSubject {

@@ -1,7 +1,7 @@
 package GUI.TableModel;
 
 import BE.BEUsage;
-import ObserverPattern.IObserver;
+import Observer.IObserver;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
