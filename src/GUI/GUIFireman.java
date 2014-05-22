@@ -9,6 +9,8 @@ import BLL.BLLAdapter;
 import BLL.BLLCreate;
 import BLL.BLLDelete;
 import BLL.BLLRead;
+import DAL.DALCreate;
+import DAL.DALRead;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -47,6 +49,8 @@ public class GUIFireman extends javax.swing.JFrame {
      * Creates new form GUIFireman.
      */
     private GUIFireman() {
+        BLLCreate.getInstance().setDAL(DALCreate.getInstance());
+        BLLRead.getInstance().setDAL(DALRead.getInstance());
         initComponents();
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

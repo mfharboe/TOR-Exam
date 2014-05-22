@@ -10,13 +10,14 @@ import BE.BERole;
 import BE.BERoleTime;
 import BE.BEUsage;
 import BE.BEVehicle;
-import DAL.DALRead;
+import DAL.Intefaces.IDALRead;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BLLRead {
 
     private static BLLRead m_instance;
+    IDALRead dalRead;
     ArrayList<BEIncidentType> incidentTypes;
     ArrayList<BEIncident> incidents;
     ArrayList<BEIncident> incompleteIncidents;
@@ -44,6 +45,9 @@ public class BLLRead {
         return m_instance;
     }
 
+    public void setDAL(IDALRead d){
+        dalRead = d;
+    }
     /**
      * Invokes the method in DAL that reads Firemen
      *
@@ -52,7 +56,7 @@ public class BLLRead {
     public ArrayList<BEFireman> readAllFiremen() {
         if (firemen == null) {
             try {
-                firemen = DALRead.getInstance().readFiremen();
+                firemen = dalRead.readFiremen();
             } catch (SQLException ex) {
                 BLLError.getInstance().readFiremanError();
                 return null;
@@ -70,7 +74,7 @@ public class BLLRead {
     public ArrayList<BEVehicle> readAllVehicles() {
         if (vehicles == null) {
             try {
-                vehicles = DALRead.getInstance().readVehicles();
+                vehicles = dalRead.readVehicles();
             } catch (SQLException ex) {
                 BLLError.getInstance().readVehicleError();
                 return null;
@@ -87,7 +91,7 @@ public class BLLRead {
     public ArrayList<BEIncidentType> readAllIncidentTypes() {
         if (incidentTypes == null) {
             try {
-                incidentTypes = DALRead.getInstance().readIncidentTypes();
+                incidentTypes = dalRead.readIncidentTypes();
             } catch (SQLException ex) {
                 BLLError.getInstance().readIncidentTypesError();
                 return null;
@@ -104,7 +108,7 @@ public class BLLRead {
     public ArrayList<BEIncident> readAllIncidents() {
         if (incidents == null) {
             try {
-                incidents = DALRead.getInstance().readIncidents();
+                incidents = dalRead.readIncidents();
             } catch (SQLException ex) {
                 BLLError.getInstance().readIncidentError();
                 return null;
@@ -119,6 +123,7 @@ public class BLLRead {
      * @param incident
      */
     public void addToIncident(BEIncident incident) {
+        
         incidents.add(incident);
     }
 
@@ -130,7 +135,7 @@ public class BLLRead {
     public ArrayList<BERole> readAllRoles() {
         if (roles == null) {
             try {
-                roles = DALRead.getInstance().readRoles();
+                roles = dalRead.readRoles();
             } catch (SQLException ex) {
                 BLLError.getInstance().readRoleError();
                 return null;
@@ -147,7 +152,7 @@ public class BLLRead {
     public ArrayList<BERoleTime> readAllRoleTimes() {
         if (roletimes == null) {
             try {
-                roletimes = DALRead.getInstance().readRoleTime();
+                roletimes = dalRead.readRoleTime();
             } catch (SQLException ex) {
                 BLLError.getInstance().readRoleTimeError();
                 return null;
@@ -162,6 +167,9 @@ public class BLLRead {
      * @param roleTime
      */
     public void addToRoleTime(BERoleTime roleTime) {
+        if(roletimes == null){
+            readAllRoleTimes();
+        }
         roletimes.add(roleTime);
     }
 
@@ -172,7 +180,6 @@ public class BLLRead {
      */
     public void removeFromRoleTime(BERoleTime roleTime) {
         roletimes.remove(roleTime);
-        //notifyObservers();
     }
 
     /**
@@ -183,7 +190,7 @@ public class BLLRead {
     public ArrayList<BEUsage> readUsages() {
         if (usages == null) {
             try {
-                usages = DALRead.getInstance().readUsage();
+                usages = dalRead.readUsage();
             } catch (SQLException ex) {
                 BLLError.getInstance().readUsageError();
                 return null;
@@ -218,7 +225,7 @@ public class BLLRead {
     public ArrayList<BEMaterial> readMaterials() {
         if (materials == null) {
             try {
-                materials = DALRead.getInstance().readMaterial();
+                materials = dalRead.readMaterial();
             } catch (SQLException ex) {
                 BLLError.getInstance().readMaterialError();
                 return null;
@@ -235,7 +242,7 @@ public class BLLRead {
     public ArrayList<BEAlarm> readAlarms() {
         if (alarms == null) {
             try {
-                alarms = DALRead.getInstance().readAlarms();
+                alarms = dalRead.readAlarms();
             } catch (SQLException ex) {
                 BLLError.getInstance().readAlarmError();
                 return null;
@@ -253,7 +260,7 @@ public class BLLRead {
     public ArrayList<BEIncidentDetails> readIncidentDetails() {
         if (incidentDetails == null) {
             try {
-                incidentDetails = DALRead.getInstance().readIncidentDetails();
+                incidentDetails = dalRead.readIncidentDetails();
             } catch (SQLException ex) {
                 BLLError.getInstance().readIncidentDetailsError();
                 return null;

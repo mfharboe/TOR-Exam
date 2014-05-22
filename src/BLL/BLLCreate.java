@@ -6,7 +6,6 @@ import BE.BEIncidentDetails;
 import BE.BERole;
 import BE.BERoleTime;
 import BE.BEUsage;
-import DAL.DALCreate;
 import DAL.Intefaces.IDALCreate;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,14 +15,14 @@ import java.util.logging.Logger;
 public class BLLCreate {
 
     private static BLLCreate m_instance;
-    private final IDALCreate dalCreate;
+    private IDALCreate dalCreate;
 
     private BLLCreate() {
-        dalCreate = DALCreate.getInstance();
+
     }
 
     /**
-     * 
+     *
      * @return current m_instance of BLLCreate
      */
     public static BLLCreate getInstance() {
@@ -33,6 +32,10 @@ public class BLLCreate {
         return m_instance;
     }
 
+    public void setDAL(IDALCreate d) {
+        dalCreate = d;
+    }
+
     /**
      * Creates a new Incident
      *
@@ -40,9 +43,13 @@ public class BLLCreate {
      * @return
      */
     public boolean createIncident(BEIncident incident) {
+        if (incident == null) {
+            BLLError.getInstance().createIncidentError();
+            return false;
+        }
+
         try {
             dalCreate.createIncident(incident);
-            DALCreate.getInstance().createIncident(incident);
         } catch (SQLException ex) {
             BLLError.getInstance().createIncidentError();
             return false;
@@ -57,19 +64,33 @@ public class BLLCreate {
      * @param roleNumber
      */
     public void createRoleOnIncident(ArrayList<BERoleTime> roleTime, int roleNumber) {
-        BERole tmpPrevRole = null;
+        if (roleTime == null) {
+            BLLError.getInstance().functionError();
+            return;
+        }
+
+        if (roleNumber > 4 || roleNumber < 1) {
+            BLLError.getInstance().functionError();
+            return;
+        }
+
+        for (BERoleTime tmpRoleTimes : roleTime) {
+            if (tmpRoleTimes == null) {
+                BLLError.getInstance().functionError();
+                return;
+            }
+        }
+
         for (BERoleTime tmpRoleTimes : roleTime) {
             for (BERole role : BLLRead.getInstance().readAllRoles()) {
-                tmpPrevRole = tmpRoleTimes.getM_role();
                 if (role.getM_id() == roleNumber) {
-                    tmpRoleTimes.setM_role(role);
                     try {
-                        DALCreate.getInstance().createRoleTime(tmpRoleTimes);
+                        dalCreate.createRoleTime(tmpRoleTimes);
                     } catch (SQLException ex) {
-                        tmpRoleTimes.setM_role(tmpPrevRole);
                         BLLError.getInstance().functionError();
                         return;
                     }
+                    tmpRoleTimes.setM_role(role);
                     BLLRead.getInstance().addToRoleTime(tmpRoleTimes);
                     break;
                 }
@@ -83,8 +104,13 @@ public class BLLCreate {
      * @param usage
      */
     public void createUsage(BEUsage usage) {
+        if (usage == null) {
+            BLLError.getInstance().createUsageError();
+            return;
+        }
+
         try {
-            DALCreate.getInstance().createUsage(usage);
+            dalCreate.createUsage(usage);
         } catch (SQLException ex) {
             BLLError.getInstance().createUsageError();
             return;
@@ -99,12 +125,17 @@ public class BLLCreate {
      * @param incident
      */
     public void createInitialIncidentDetails(BEIncident incident) {
+        if (incident == null) {
+            BLLError.getInstance().dbError();
+            return;
+        }
+
         BEIncidentDetails details = new BEIncidentDetails(null, null, null, incident, null, null, null, null, null, null);
+
         try {
             BLLRead.getInstance().readIncidentDetails();
-            DALCreate.getInstance().createInitialIncidentDetails(details);
+            dalCreate.createInitialIncidentDetails(details);
         } catch (SQLException ex) {
-            Logger.getLogger(BLLCreate.class.getName()).log(Level.SEVERE, null, ex);
             BLLError.getInstance().dbError();
             return;
         }
@@ -117,8 +148,13 @@ public class BLLCreate {
      * @param error
      */
     public void createErrorReport(BEError error) {
+        if (error == null) {
+            BLLError.getInstance().createErrorReportError();
+            return;
+        }
+
         try {
-            DALCreate.getInstance().createErrorReport(error);
+            dalCreate.createErrorReport(error);
         } catch (SQLException ex) {
             BLLError.getInstance().createErrorReportError();
         }

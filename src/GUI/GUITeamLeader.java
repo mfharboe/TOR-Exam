@@ -489,11 +489,11 @@ public class GUITeamLeader extends javax.swing.JFrame {
         lblIncidentLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblIncidentLeader.setText("Indsatsleder");
         pnlTeamLeader.add(lblIncidentLeader);
-        lblIncidentLeader.setBounds(10, 70, 120, 19);
+        lblIncidentLeader.setBounds(10, 40, 120, 19);
 
         txtIncidentLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         pnlTeamLeader.add(txtIncidentLeader);
-        txtIncidentLeader.setBounds(120, 60, 200, 30);
+        txtIncidentLeader.setBounds(120, 30, 200, 30);
 
         lblFireReportNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         lblFireReportNumber.setText("Brandrapport nr.");

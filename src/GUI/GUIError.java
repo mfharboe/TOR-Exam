@@ -5,6 +5,7 @@ import BE.BEVehicle;
 import BLL.BLLCreate;
 import BLL.BLLError;
 import BLL.BLLRead;
+import DAL.DALCreate;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ public class GUIError extends javax.swing.JFrame {
     private static GUIError m_instance;
 
     private GUIError() {
+        BLLCreate.getInstance().setDAL(DALCreate.getInstance());
         initComponents();
         this.setTitle(MessageDialog.getInstance().errorTitle());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
