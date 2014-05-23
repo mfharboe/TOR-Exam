@@ -3,7 +3,6 @@ package GUI;
 import BE.BEError;
 import BE.BEVehicle;
 import BLL.BLLCreate;
-import BLL.BLLError;
 import BLL.BLLRead;
 import DAL.DALCreate;
 import java.awt.Color;
