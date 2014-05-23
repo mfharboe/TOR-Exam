@@ -114,7 +114,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnCH.addActionListener(btn);
         btnHL.addActionListener(btn);
         btnST.addActionListener(btn);
-        btnTeamLeader.addActionListener(btn);
+        btnDetails.addActionListener(btn);
         btnError.addActionListener(btn);
         btnCreate.addActionListener(btn);
         btnRemove.addActionListener(btn);
@@ -128,7 +128,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Sets the table with the initial settings
      */
     private void setTable() {
-        btnTeamLeader.setEnabled(false);
+        btnDetails.setEnabled(false);
         txtManHours.setText(MessageDialog.getInstance().txtHours());
 
         firemanListModel = new DefaultListModel<>();
@@ -279,7 +279,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onComboIncidentChange() {
         setManpowerEnabled(cmbIncident.getSelectedIndex() != 0);
-        btnTeamLeader.setEnabled(cmbIncident.getSelectedIndex() != 0);
+        btnDetails.setEnabled(cmbIncident.getSelectedIndex() != 0);
         lstManpower.clearSelection();
         lblImage.setIcon(null);
         if (cmbIncident.getSelectedIndex() != 0) {
@@ -484,7 +484,7 @@ public class GUIFireman extends javax.swing.JFrame {
                 onClickCH();
             } else if (e.getSource().equals(btnHL)) {
                 onClickHL();
-            } else if (e.getSource().equals(btnTeamLeader)) {
+            } else if (e.getSource().equals(btnDetails)) {
                 onClickTeamLeader();
             } else if (e.getSource().equals(btnError)) {
                 onClickErrorReport();
@@ -547,7 +547,7 @@ public class GUIFireman extends javax.swing.JFrame {
         btnCH = new javax.swing.JButton();
         lblImage = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
-        btnTeamLeader = new javax.swing.JButton();
+        btnDetails = new javax.swing.JButton();
         pnlAttendance = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblRoleTime = new javax.swing.JTable();
@@ -616,8 +616,8 @@ public class GUIFireman extends javax.swing.JFrame {
         lblLogo.setFont(new java.awt.Font("Calibri", 0, 72)); // NOI18N
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        btnTeamLeader.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        btnTeamLeader.setText("Holdleder");
+        btnDetails.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        btnDetails.setText("Beretning");
 
         pnlAttendance.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fremmødeliste", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Calibri", 0, 24))); // NOI18N
         pnlAttendance.setLayout(null);
@@ -675,11 +675,12 @@ public class GUIFireman extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(463, 463, 463)
-                        .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addComponent(pnlAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
@@ -693,12 +694,11 @@ public class GUIFireman extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlManPower, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlAttendance, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnError, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTeamLeader, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -708,11 +708,11 @@ public class GUIFireman extends javax.swing.JFrame {
     private javax.swing.JButton btnBM;
     private javax.swing.JButton btnCH;
     private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDetails;
     private javax.swing.JButton btnError;
     private javax.swing.JButton btnHL;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnST;
-    private javax.swing.JButton btnTeamLeader;
     private javax.swing.JComboBox cmbIncident;
     private javax.swing.JComboBox cmbVehicle;
     private javax.swing.JScrollPane jScrollPane2;
