@@ -163,6 +163,8 @@ public class BLLCreateTest {
 
     @AfterClass
     public static void tearDownClass() {
+        arrayIncidents.clear();
+        arrayRoleTime.clear();
     }
 
     /**
@@ -333,7 +335,7 @@ public class BLLCreateTest {
      */
     @Test
     public void testCreateRoleOnIncidentSingle() {
-        System.out.println("createRoleOnIncident");
+        System.out.println("create-Role-On-Incident-Single");
         int roleNumber = 1;
 
         ArrayList<BERoleTime> roleTimes = new ArrayList<>();
@@ -358,7 +360,7 @@ public class BLLCreateTest {
      */
     @Test
     public void testCreateRoleOnIncidentMultiple() {
-        System.out.println("createRoleOnIncidentMultiple");
+        System.out.println("create-Role-On-Incident-Multiple");
         int roleNumber = 1;
 
         ArrayList<BERoleTime> roleTimes = new ArrayList<>();
