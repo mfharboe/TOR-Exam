@@ -78,17 +78,18 @@ public class BLLCreate {
                 return;
             }
         }
-
         for (BERoleTime tmpRoleTimes : roleTime) {
+            BERole prevRole = tmpRoleTimes.getM_role();
             for (BERole role : BLLRead.getInstance().readAllRoles()) {
                 if (role.getM_id() == roleNumber) {
                     try {
+                        tmpRoleTimes.setM_role(role);
                         dalCreate.createRoleTime(tmpRoleTimes);
                     } catch (SQLException ex) {
+                        tmpRoleTimes.setM_role(prevRole);
                         BLLError.getInstance().functionError();
                         return;
                     }
-                    tmpRoleTimes.setM_role(role);
                     BLLRead.getInstance().addToRoleTime(tmpRoleTimes);
                     break;
                 }

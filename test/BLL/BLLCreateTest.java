@@ -306,7 +306,8 @@ public class BLLCreateTest {
     }
 
     /**
-     * Test that the call returns, if the given array of BERoleTime contains null.
+     * Test that the call returns, if the given array of BERoleTime contains
+     * null.
      */
     @Test
     public void testCreateRoleOnIncidentIfArrayContainsNull() {
@@ -349,7 +350,7 @@ public class BLLCreateTest {
 
         m_bllCreate.createRoleOnIncident(roleTimes, roleNumber);
         for (int i = 0; i < arrayRoleTime.size(); i++) {
-            int result = arrayRoleTime.get(0).getM_role().getM_id();
+            int result = arrayRoleTime.get(i).getM_role().getM_id();
             assertEquals(roleNumber, result);
         }
         arrayRoleTime.clear();
@@ -382,9 +383,31 @@ public class BLLCreateTest {
 
         m_bllCreate.createRoleOnIncident(roleTimes, roleNumber);
         for (int i = 0; i < arrayRoleTime.size(); i++) {
-            int result = arrayRoleTime.get(0).getM_role().getM_id();
+            int result = arrayRoleTime.get(i).getM_role().getM_id();
             assertEquals(roleNumber, result);
         }
+
+        arrayRoleTime.clear();
+    }
+
+    /**
+     * Tests if the BERoleTime's BERole changes back if there is caught an exception
+     */
+    @Test
+    public void testCreateRoleOnIncidentSqlException() {
+        System.out.println("create-Role-On-Incident-Sql-Exception");
+        int roleNumber = 1;
+        ArrayList<BERoleTime> roleTimes = new ArrayList<>();
+        BEFireman fireman = null;
+        BEVehicle vehicle = new BEVehicle(1000, "AA12345", "MAN", "27", "Sprøjte");
+        BEIncident incident = null;
+        BERoleTime roletime = new BERoleTime(incident, fireman, true, null, vehicle, 6);
+        roleTimes.add(roletime);
+        m_bllCreate.createRoleOnIncident(roleTimes, roleNumber);
+       
+        BERole expResult = null;
+        BERole result = null;
+        assertEquals(expResult, result);
 
         arrayRoleTime.clear();
     }
