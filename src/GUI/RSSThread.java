@@ -10,7 +10,7 @@ public class RSSThread implements Runnable {
     
     private ArrayList<BERSS> currentFeed;
     private BERSS m_RSS;
-    private final int SECONDS_TO_SLEEP = 5;
+    private final int SECONDS_TO_SLEEP = 60*5;
     private boolean doRunRSS = true;
     @Override
     public void run() {

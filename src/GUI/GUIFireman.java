@@ -8,6 +8,7 @@ import BE.BEVehicle;
 import BLL.BLLAdapter;
 import BLL.BLLCreate;
 import BLL.BLLDelete;
+import BLL.BLLError;
 import BLL.BLLRead;
 import DAL.DALCreate;
 import DAL.DALRead;
@@ -49,6 +50,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Creates new form GUIFireman.
      */
     private GUIFireman() {
+        BLLError.getInstance().register(MessageDialog.getInstance());
         BLLCreate.getInstance().setDAL(DALCreate.getInstance());
         BLLRead.getInstance().setDAL(DALRead.getInstance());
         initComponents();

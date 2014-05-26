@@ -40,7 +40,7 @@ public class BLLCreate {
      * @param incident
      * @return
      */
-    public boolean createIncident(BEIncident incident) {
+    public boolean createIncident(BEIncident incident) {   
         if (incident == null) {
             BLLError.getInstance().createIncidentError();
             return false;
