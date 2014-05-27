@@ -10,8 +10,11 @@ import BLL.BLLCreate;
 import BLL.BLLDelete;
 import BLL.BLLError;
 import BLL.BLLRead;
+import BLL.BLLUpdate;
 import DAL.DALCreate;
+import DAL.DALDelete;
 import DAL.DALRead;
+import DAL.DALUpdate;
 import GUI.TableModel.TableModelRoleTime;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -50,9 +53,7 @@ public class GUIFireman extends javax.swing.JFrame {
      * Creates new form GUIFireman.
      */
     private GUIFireman() {
-        BLLError.getInstance().register(MessageDialog.getInstance());
-        BLLCreate.getInstance().setDAL(DALCreate.getInstance());
-        BLLRead.getInstance().setDAL(DALRead.getInstance());
+        setUpBLL();
         initComponents();
         this.setTitle(MessageDialog.getInstance().firemanTitle());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -69,6 +70,14 @@ public class GUIFireman extends javax.swing.JFrame {
         return m_instance;
     }
 
+    private void setUpBLL(){
+        BLLError.getInstance().register(MessageDialog.getInstance());
+        BLLCreate.getInstance().setDAL(DALCreate.getInstance());
+        BLLDelete.getInstance().setDAL(DALDelete.getInstance());
+        BLLUpdate.getInstance().setDAL(DALUpdate.getInstance());
+        BLLRead.getInstance().setDAL(DALRead.getInstance());
+    
+    }
     /**
      * THe initial settings for this class.
      */
@@ -155,12 +164,12 @@ public class GUIFireman extends javax.swing.JFrame {
      * Fills the Fireman List ordered by HL-BM and then lastname.
      */
     private void fillFiremanList() {
-        for (BEFireman befireman : BLLRead.getInstance().readAllFiremen()) {
+        for (BEFireman befireman : BLLRead.getInstance().readFiremen()) {
             if (befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
         }
-        for (BEFireman befireman : BLLRead.getInstance().readAllFiremen()) {
+        for (BEFireman befireman : BLLRead.getInstance().readFiremen()) {
             if (!befireman.isM_isTeamLeader()) {
                 firemanListModel.addElement(befireman);
             }
@@ -172,7 +181,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void fillVehicleCombo() {
         cmbVehicle.addItem(MessageDialog.getInstance().cmbVehicle());
-        for (BEVehicle bevehicle : BLLRead.getInstance().readAllVehicles()) {
+        for (BEVehicle bevehicle : BLLRead.getInstance().readVehicles()) {
             cmbVehicle.addItem(bevehicle);
         }
     }
@@ -182,7 +191,7 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void fillIncidentCombo() {
         cmbIncident.addItem(MessageDialog.getInstance().cmbIncidents());
-        for (BEIncident beincident : BLLRead.getInstance().readAllIncidents()) {
+        for (BEIncident beincident : BLLRead.getInstance().readIncidents()) {
             cmbIncident.addItem(beincident);
         }
     }

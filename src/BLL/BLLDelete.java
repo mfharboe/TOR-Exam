@@ -3,12 +3,14 @@ package BLL;
 import BE.BERoleTime;
 import BE.BEUsage;
 import DAL.DALDelete;
+import DAL.Intefaces.IDALDelete;
 import java.sql.SQLException;
 
 
 public class BLLDelete {
     
     private static BLLDelete m_instance;
+    IDALDelete dalDelete;
     
     private BLLDelete(){}
     
@@ -22,6 +24,10 @@ public class BLLDelete {
         return m_instance;
     }
     
+    public void setDAL(IDALDelete d){
+        dalDelete = d;
+    }
+    
     
     /**
      * Deletes the used material from a incident
@@ -29,7 +35,7 @@ public class BLLDelete {
      */
     public void deleteMaterialFromUsage(BEUsage usage){
         try {
-            DALDelete.getInstance().deleteMaterialFromUsage(usage);
+            dalDelete.deleteMaterialFromUsage(usage);
         } catch (SQLException ex) {
             BLLError.getInstance().deleteMaterialFromUsageError();
             return;
@@ -43,7 +49,7 @@ public class BLLDelete {
      */
     public void deleteFiremanFromRoleTime(BERoleTime roleTime){
         try {
-            DALDelete.getInstance().deleteFiremanFromRoleTime(roleTime);
+           dalDelete.deleteFiremanFromRoleTime(roleTime);
         } catch (SQLException ex) {
             BLLError.getInstance().deleteFiremanFromRoleTimeError();
             return;

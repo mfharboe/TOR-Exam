@@ -1,12 +1,13 @@
 package BLL;
 
 import BE.BEIncidentDetails;
-import DAL.DALUpdate;
+import DAL.Intefaces.IDALUpdate;
 import java.sql.SQLException;
 
 public class BLLUpdate {
 
     private static BLLUpdate m_instance;
+    IDALUpdate dalUpdate;
 
     private BLLUpdate() {
     }
@@ -22,6 +23,9 @@ public class BLLUpdate {
         return m_instance;
     }
 
+    public void setDAL(IDALUpdate d){
+        dalUpdate = d;
+    }
     /**
      * Updates IncidentDetails for an Incident and sets new values in
      * BEIncidentDetails
@@ -30,7 +34,7 @@ public class BLLUpdate {
      */
     public void updateIncidentDetails(BEIncidentDetails incidentDetails) {
         try {
-            DALUpdate.getInstance().updateIncidentDetails(incidentDetails);
+            dalUpdate.updateIncidentDetails(incidentDetails);
         } catch (SQLException ex) {
             BLLError.getInstance().updateIncidentDetailsError();
             return;

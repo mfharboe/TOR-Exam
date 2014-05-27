@@ -65,8 +65,7 @@ public class BLLRSS {
             BEIncident incident = BLLAdapter.getInstance().RSStoIncident(feed);
             BLLCreate.getInstance().createIncident(incident);
             BLLCreate.getInstance().createInitialIncidentDetails(incident);
-            GUIFireman.getInstance().addToIncidentCombo(incident);
-            
+            GUIFireman.getInstance().addToIncidentCombo(incident);          
         }
         return feed;
     }

@@ -36,7 +36,7 @@ public class GUIError extends javax.swing.JFrame {
      */
     private void initialSettings() {
         addListeners();
-        fillCmbVehicle();
+        fillVehicleCombo();
         addColors();
         clearGUI();
     }
@@ -73,9 +73,9 @@ public class GUIError extends javax.swing.JFrame {
     /**
      * Fills the Vehicle ComboBox.
      */
-    private void fillCmbVehicle() {
+    private void fillVehicleCombo() {
         cmbVehicle.addItem(MessageDialog.getInstance().cmbVehicle());
-        for (BEVehicle beVehicle : BLLRead.getInstance().readAllVehicles()) {
+        for (BEVehicle beVehicle : BLLRead.getInstance().readVehicles()) {
             cmbVehicle.addItem(beVehicle);
         }
 

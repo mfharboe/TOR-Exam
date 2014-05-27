@@ -42,7 +42,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
     private void initialSettings() {
         addListeners();
         fillIncidentTypeCombo();
-        clearMyInformation();
+        clearGUI();
     }
 
     private void addColors() {
@@ -63,12 +63,12 @@ public class GUICreateIncident extends javax.swing.JFrame {
 
     private void fillIncidentTypeCombo() {
         cmbIncidentType.addItem(MessageDialog.getInstance().cmbIncidentType());
-        for (BEIncidentType beincidenttype : BLLRead.getInstance().readAllIncidentTypes()) {
+        for (BEIncidentType beincidenttype : BLLRead.getInstance().readIncidentTypes()) {
             cmbIncidentType.addItem(beincidenttype);
         }
     }
 
-    private void clearMyInformation() {
+    private void clearGUI() {
         cmbIncidentType.setSelectedIndex(0);
         ((JTextField) dateChooser.getDateEditor().getUiComponent()).setText(MessageDialog.getInstance().txtDate());
         resetIncidentName();
@@ -122,7 +122,7 @@ public class GUICreateIncident extends javax.swing.JFrame {
     }
 
     private void onClickClose() {
-        clearMyInformation();
+        clearGUI();
         this.dispose();
     }
 

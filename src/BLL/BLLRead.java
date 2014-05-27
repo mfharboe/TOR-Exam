@@ -53,7 +53,7 @@ public class BLLRead {
      *
      * @return ArrayList of Firemen
      */
-    public ArrayList<BEFireman> readAllFiremen() {
+    public ArrayList<BEFireman> readFiremen() {
         if (firemen == null) {
             try {
                 firemen = dalRead.readFiremen();
@@ -71,7 +71,7 @@ public class BLLRead {
      *
      * @return ArrayList of Vehicles
      */
-    public ArrayList<BEVehicle> readAllVehicles() {
+    public ArrayList<BEVehicle> readVehicles() {
         if (vehicles == null) {
             try {
                 vehicles = dalRead.readVehicles();
@@ -88,7 +88,7 @@ public class BLLRead {
      *
      * @return ArrayList of IncidentTypes
      */
-    public ArrayList<BEIncidentType> readAllIncidentTypes() {
+    public ArrayList<BEIncidentType> readIncidentTypes() {
         if (incidentTypes == null) {
             try {
                 incidentTypes = dalRead.readIncidentTypes();
@@ -105,7 +105,7 @@ public class BLLRead {
      *
      * @return ArrayList of Incidents
      */
-    public ArrayList<BEIncident> readAllIncidents() {
+    public ArrayList<BEIncident> readIncidents() {
         if (incidents == null) {
             try {
                 incidents = dalRead.readIncidents();
@@ -132,7 +132,7 @@ public class BLLRead {
      *
      * @return ArrayList of Roles
      */
-    public ArrayList<BERole> readAllRoles() {
+    public ArrayList<BERole> readRoles() {
         if (roles == null) {
             try {
                 roles = dalRead.readRoles();
@@ -149,7 +149,7 @@ public class BLLRead {
      *
      * @return ArrayList of RoleTimes
      */
-    public ArrayList<BERoleTime> readAllRoleTimes() {
+    public ArrayList<BERoleTime> readRoleTimes() {
         if (roletimes == null) {
             try {
                 roletimes = dalRead.readRoleTime();
@@ -168,7 +168,7 @@ public class BLLRead {
      */
     public void addToRoleTime(BERoleTime roleTime) {
         if(roletimes == null){
-            readAllRoleTimes();
+            readRoleTimes();
         }
         roletimes.add(roleTime);
     }

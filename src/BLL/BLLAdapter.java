@@ -42,7 +42,7 @@ public class BLLAdapter implements ISubject{
      */
     public void incidentToRoleTime(BEIncident incident) {
         roletimes.clear();
-        for (BERoleTime be : BLLRead.getInstance().readAllRoleTimes()) {
+        for (BERoleTime be : BLLRead.getInstance().readRoleTimes()) {
             if (be.getM_incident().getM_id() == incident.getM_id()) {
                 roletimes.add(be);
             }
@@ -97,7 +97,7 @@ public class BLLAdapter implements ISubject{
 
         String incidentName = feed.getM_message();
         String incidentDate = feed.getM_date();
-        incidentDate = incidentDate.substring(6, 16);
+        incidentDate = incidentDate.substring(5, 16);
         java.sql.Date sqlDate = null;
         
         try {
@@ -114,7 +114,7 @@ public class BLLAdapter implements ISubject{
         boolean isDone = false;
         BEIncidentType incidentType = null;
         final int INCIDENT_TYPE = 1; 
-        for(BEIncidentType type : BLLRead.getInstance().readAllIncidentTypes()){
+        for(BEIncidentType type : BLLRead.getInstance().readIncidentTypes()){
             if(type.getM_id() == INCIDENT_TYPE){
                 incidentType = type;
                 break;
