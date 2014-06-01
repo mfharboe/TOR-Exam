@@ -29,6 +29,8 @@ public class RSS_ReaderNewFeed {
     private final String NODE_DATE = "pubDate";
     private final String NODE_START = "Førstemelding: ";
     private final String NODE_ESBJERG = " Station: Esbjerg";
+    private final String HYPHEN = "-";
+    private final String SLASH = "/";
     private final String EMPTY = "";
     private final URL url;
     private BERSS currentFeed;
@@ -64,6 +66,7 @@ public class RSS_ReaderNewFeed {
                 if (message.contains(NODE_ESBJERG)) {
                     message = message.replace(NODE_START, EMPTY);
                     message = message.replace(NODE_ESBJERG, EMPTY);
+                    message = message.replace(SLASH, HYPHEN);
                     if (currentFeed == null) {
                         currentFeed = new BERSS(count, message, comment, date);
                     } else {

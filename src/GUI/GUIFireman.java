@@ -70,14 +70,15 @@ public class GUIFireman extends javax.swing.JFrame {
         return m_instance;
     }
 
-    private void setUpBLL(){
+    private void setUpBLL() {
         BLLError.getInstance().register(MessageDialog.getInstance());
         BLLCreate.getInstance().setDAL(DALCreate.getInstance());
         BLLDelete.getInstance().setDAL(DALDelete.getInstance());
         BLLUpdate.getInstance().setDAL(DALUpdate.getInstance());
         BLLRead.getInstance().setDAL(DALRead.getInstance());
-    
+
     }
+
     /**
      * THe initial settings for this class.
      */
@@ -134,7 +135,6 @@ public class GUIFireman extends javax.swing.JFrame {
 
     }
 
-
     /**
      * Sets the table with the initial settings
      */
@@ -150,7 +150,7 @@ public class GUIFireman extends javax.swing.JFrame {
         BLLAdapter.getInstance().register(roleTimeModel);
 
     }
-    
+
     /**
      * Fills all Comboboxes and Lists.
      */
@@ -213,6 +213,7 @@ public class GUIFireman extends javax.swing.JFrame {
     private void setMyContributionEnabled(boolean enable) {
         cmbVehicle.setEnabled(enable);
         txtManHours.setEnabled(enable);
+        txtManHours.setText(MessageDialog.getInstance().txtHours());
     }
 
     /**
@@ -256,7 +257,8 @@ public class GUIFireman extends javax.swing.JFrame {
 
     /**
      * Adds the given incident to the combobox of incidents
-     * @param incident 
+     *
+     * @param incident
      */
     public void addToIncidentCombo(BEIncident incident) {
         cmbIncident.addItem(incident);
@@ -397,16 +399,16 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void onListChange() {
         if (!lstManpower.isSelectionEmpty()) {
-            setMyContributionEnabled(lstManpower.getSelectedIndex() != -1);
-
+            setMyContributionEnabled(true);
             if (((BEFireman) lstManpower.getSelectedValue()).getM_photoPath() == null) {
                 lblImage.setIcon(null);
             } else {
                 image = new ImageIcon(((BEFireman) lstManpower.getSelectedValue()).getM_photoPath());
                 lblImage.setIcon(image);
             }
-            CheckHoursAndVehicles();
         }
+        CheckHoursAndVehicles();
+
     }
 
     /**
@@ -414,7 +416,8 @@ public class GUIFireman extends javax.swing.JFrame {
      */
     private void CheckHoursAndVehicles() {
         if (lstManpower.isSelectionEmpty()) {
-            setAllFunctionsEnabled(!lstManpower.isSelectionEmpty());
+            setAllFunctionsEnabled(false);
+            setMyContributionEnabled(false);
             return;
         }
         setSTFunctionEnabled(isTextFieldReady());

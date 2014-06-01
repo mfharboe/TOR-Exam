@@ -2,7 +2,6 @@ package BLL;
 
 import BE.BEIncident;
 import BE.BERSS;
-import DAL.RSS_ReaderAllFeed;
 import DAL.RSS_ReaderNewFeed;
 import GUI.GUIFireman;
 import java.io.IOException;
@@ -30,16 +29,6 @@ public class BLLRSS {
             m_instance = new BLLRSS();
         }
         return m_instance;
-    }
-
-    /**
-     * Reads the whole xml file
-     * @return
-     * @throws MalformedURLException
-     * @throws Exception 
-     */
-    public ArrayList<BERSS> readFeed() throws MalformedURLException, Exception {
-        return RSS_ReaderAllFeed.getInstance().readRSS();
     }
 
     /**

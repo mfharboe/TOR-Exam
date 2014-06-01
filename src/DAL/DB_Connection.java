@@ -7,9 +7,9 @@ import java.sql.Connection;
 
 public class DB_Connection {
 
-    private static final String SERVER_NAME = "vestergade.no-ip.org"; //localhost vestergade.no-ip.org
+    private static final String SERVER_NAME = "localhost"; //localhost vestergade.no-ip.org
     private static final String DATABASE_INSTANCE = "SQLEXPRESS";
-    private static final int PORTNO = 64877;//1433 64877
+    private static final int PORTNO = 1433;//1433 64877
     private static final String DATABASE_NAME = "TOR DB";
     private static final String USERNAME = "TOR";
     private static final String PASSWORD = "qwerty";
